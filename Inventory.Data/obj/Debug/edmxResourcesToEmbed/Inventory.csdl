@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Ingredient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PantryItem" Relationship="Self.FK_PantryItem_Ingredient" FromRole="Ingredient" ToRole="PantryItem" />
+    <NavigationProperty Name="RecipeItem" Relationship="Self.FK_RecipeItem_Ingredient" FromRole="Ingredient" ToRole="RecipeItem" />
+  </EntityType>
+  <EntityType Name="Measure">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Measurement" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PantryItem" Relationship="Self.FK_PantryItem_Measure" FromRole="Measure" ToRole="PantryItem" />
+    <NavigationProperty Name="RecipeItem" Relationship="Self.FK_RecipeItem_Measure" FromRole="Measure" ToRole="RecipeItem" />
+  </EntityType>
+  <EntityType Name="PantryItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IngredientId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Double" Nullable="false" />
+    <Property Name="MeasureId" Type="Int32" />
+    <Property Name="ExpirationDate" Type="DateTime" Precision="7" />
+    <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Ingredient" Relationship="Self.FK_PantryItem_Ingredient" FromRole="PantryItem" ToRole="Ingredient" />
+    <NavigationProperty Name="Measure" Relationship="Self.FK_PantryItem_Measure" FromRole="PantryItem" ToRole="Measure" />
+  </EntityType>
+  <EntityType Name="Recipe">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Serves" Type="Int32" />
+    <Property Name="Calories" Type="Int32" />
+    <Property Name="PrepTime" Type="Int32" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Directions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RecipeItem" Relationship="Self.FK_RecipeItem_Recipe" FromRole="Recipe" ToRole="RecipeItem" />
+    <Property Name="TagString" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RecipeItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Quantity" Type="Double" Nullable="false" />
+    <Property Name="MeasureID" Type="Int32" Nullable="false" />
+    <Property Name="IngredientID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RecipeID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ingredient" Relationship="Self.FK_RecipeItem_Ingredient" FromRole="RecipeItem" ToRole="Ingredient" />
+    <NavigationProperty Name="Measure" Relationship="Self.FK_RecipeItem_Measure" FromRole="RecipeItem" ToRole="Measure" />
+    <NavigationProperty Name="Recipe" Relationship="Self.FK_RecipeItem_Recipe" FromRole="RecipeItem" ToRole="Recipe" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_PantryItem_Ingredient">
+    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+    <End Role="PantryItem" Type="Self.PantryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PantryItem">
+        <PropertyRef Name="IngredientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeItem_Ingredient">
+    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+    <End Role="RecipeItem" Type="Self.RecipeItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RecipeItem">
+        <PropertyRef Name="IngredientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PantryItem_Measure">
+    <End Role="Measure" Type="Self.Measure" Multiplicity="0..1" />
+    <End Role="PantryItem" Type="Self.PantryItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Measure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PantryItem">
+        <PropertyRef Name="MeasureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeItem_Measure">
+    <End Role="Measure" Type="Self.Measure" Multiplicity="1" />
+    <End Role="RecipeItem" Type="Self.RecipeItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Measure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RecipeItem">
+        <PropertyRef Name="MeasureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RecipeItem_Recipe">
+    <End Role="Recipe" Type="Self.Recipe" Multiplicity="1" />
+    <End Role="RecipeItem" Type="Self.RecipeItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Recipe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RecipeItem">
+        <PropertyRef Name="RecipeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InventoryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
+    <EntitySet Name="Measure" EntityType="Self.Measure" />
+    <EntitySet Name="PantryItem" EntityType="Self.PantryItem" />
+    <EntitySet Name="Recipe" EntityType="Self.Recipe" />
+    <EntitySet Name="RecipeItem" EntityType="Self.RecipeItem" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_PantryItem_Ingredient" Association="Self.FK_PantryItem_Ingredient">
+      <End Role="Ingredient" EntitySet="Ingredient" />
+      <End Role="PantryItem" EntitySet="PantryItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeItem_Ingredient" Association="Self.FK_RecipeItem_Ingredient">
+      <End Role="Ingredient" EntitySet="Ingredient" />
+      <End Role="RecipeItem" EntitySet="RecipeItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PantryItem_Measure" Association="Self.FK_PantryItem_Measure">
+      <End Role="Measure" EntitySet="Measure" />
+      <End Role="PantryItem" EntitySet="PantryItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeItem_Measure" Association="Self.FK_RecipeItem_Measure">
+      <End Role="Measure" EntitySet="Measure" />
+      <End Role="RecipeItem" EntitySet="RecipeItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RecipeItem_Recipe" Association="Self.FK_RecipeItem_Recipe">
+      <End Role="Recipe" EntitySet="Recipe" />
+      <End Role="RecipeItem" EntitySet="RecipeItem" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="Tags" EntityType="InventoryModel.Tags" />
+  </EntityContainer>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Tag" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>
