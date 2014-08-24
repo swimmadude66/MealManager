@@ -5,9 +5,9 @@
     <Setting Name="InventoryEntities" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;data source=GREENMACHINE-PC\GREENMACHINESQL;initial catalog=Inventory;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;server=adamyost.writhem.com;user id=adamyost_system;password=CS4911-B;persistsecurityinfo=True;database=adamyost_Inventory&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">data source=GREENMACHINE-PC\GREENMACHINESQL;initial catalog=Inventory;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework</Value>
+      <Value Profile="(Default)">server=adamyost.writhem.com;user id=adamyost_system;password=CS4911-B;persistsecurityinfo=True;database=adamyost_Inventory</Value>
     </Setting>
   </Settings>
 </SettingsFile>

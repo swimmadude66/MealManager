@@ -34,3 +34,19 @@ X:\Repos\meal_manager\Inventory.Managers\bin\Debug\EntityFramework.SqlServer.xml
 X:\Repos\meal_manager\Inventory.Managers\obj\Debug\Inventory.Managers.csprojResolveAssemblyReference.cache
 X:\Repos\meal_manager\Inventory.Managers\obj\Debug\Inventory.Managers.dll
 X:\Repos\meal_manager\Inventory.Managers\obj\Debug\Inventory.Managers.pdb
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Managers.dll.config
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Managers.dll
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Managers.pdb
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Data.dll
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Data.Factory.dll
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Data.Interfaces.dll
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Models.dll
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\EntityFramework.dll
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Data.Factory.pdb
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Data.Interfaces.pdb
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Data.pdb
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\Inventory.Models.pdb
+X:\Repos\Meal Manager\Inventory.Managers\bin\Debug\EntityFramework.xml
+X:\Repos\Meal Manager\Inventory.Managers\obj\Debug\Inventory.Managers.csprojResolveAssemblyReference.cache
+X:\Repos\Meal Manager\Inventory.Managers\obj\Debug\Inventory.Managers.dll
+X:\Repos\Meal Manager\Inventory.Managers\obj\Debug\Inventory.Managers.pdb

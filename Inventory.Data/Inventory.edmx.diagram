@@ -4,19 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3edf8601b1dd4d649df2527f3293cd3b" Name="Diagram1">
-        <EntityTypeShape EntityType="InventoryModel.Ingredient" Width="1.5" PointX="2.875" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryModel.Measure" Width="1.5" PointX="0.5" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryModel.PantryItem" Width="1.5" PointX="0.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryModel.Recipe" Width="1.5" PointX="10.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="InventoryModel.RecipeItem" Width="1.5" PointX="6.25" PointY="3.75" IsExpanded="true" />
+      <Diagram DiagramId="bebc74ba7ad941a596474469ae520f65" Name="Diagram1">
+        <EntityTypeShape EntityType="InventoryModel.Ingredient" Width="1.5" PointX="4.375" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.Measure" Width="1.5" PointX="0.875" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.PantryItem" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.Recipe" Width="1.5" PointX="11" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.RecipeItem" Width="1.5" PointX="8.375" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventoryModel.Tags" Width="1.5" PointX="4.125" PointY="3.25" IsExpanded="true" />
         <AssociationConnector Association="InventoryModel.FK_PantryItem_Ingredient" ManuallyRouted="false" />
         <AssociationConnector Association="InventoryModel.FK_RecipeItem_Ingredient" ManuallyRouted="false" />
-        <AssociationConnector Association="InventoryModel.FK_PantryItem_Measure" ManuallyRouted="false" >
-        </AssociationConnector>
+        <AssociationConnector Association="InventoryModel.FK_PantryItem_Measure" ManuallyRouted="false" />
         <AssociationConnector Association="InventoryModel.FK_RecipeItem_Measure" ManuallyRouted="false" />
         <AssociationConnector Association="InventoryModel.FK_RecipeItem_Recipe" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="InventoryModel.Tags" Width="1.5" PointX="10.25" PointY="1.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

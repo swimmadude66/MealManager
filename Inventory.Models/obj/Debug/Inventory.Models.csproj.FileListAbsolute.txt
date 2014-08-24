@@ -17,3 +17,8 @@ X:\Repos\meal_manager\Inventory.Models\bin\Debug\EntityFramework.xml
 X:\Repos\meal_manager\Inventory.Models\bin\Debug\EntityFramework.SqlServer.xml
 X:\Repos\meal_manager\Inventory.Models\obj\Debug\Inventory.Models.dll
 X:\Repos\meal_manager\Inventory.Models\obj\Debug\Inventory.Models.pdb
+X:\Repos\Meal Manager\Inventory.Models\bin\Debug\Inventory.Models.dll.config
+X:\Repos\Meal Manager\Inventory.Models\bin\Debug\Inventory.Models.dll
+X:\Repos\Meal Manager\Inventory.Models\bin\Debug\Inventory.Models.pdb
+X:\Repos\Meal Manager\Inventory.Models\obj\Debug\Inventory.Models.dll
+X:\Repos\Meal Manager\Inventory.Models\obj\Debug\Inventory.Models.pdb

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="InventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="InventoryModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Ingredient">
     <Key>
       <PropertyRef Name="ID" />
@@ -21,9 +21,9 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IngredientId" Type="int" Nullable="false" />
-    <Property Name="Quantity" Type="float" Nullable="false" />
+    <Property Name="Quantity" Type="double" Nullable="false" />
     <Property Name="MeasureId" Type="int" />
-    <Property Name="ExpirationDate" Type="datetime2" Precision="7" />
+    <Property Name="ExpirationDate" Type="datetime" Precision="0" />
     <Property Name="Description" Type="varchar" MaxLength="4000" />
   </EntityType>
   <EntityType Name="Recipe">
@@ -37,16 +37,16 @@
     <Property Name="Calories" Type="int" />
     <Property Name="PrepTime" Type="int" />
     <Property Name="Rating" Type="int" />
-    <Property Name="ImagePath" Type="varchar(max)" />
-    <Property Name="Directions" Type="varchar(max)" />
-    <Property Name="TagString" Type="varchar(max)" />
+    <Property Name="ImagePath" Type="longtext" />
+    <Property Name="Directions" Type="longtext" />
+    <Property Name="TagString" Type="longtext" />
   </EntityType>
   <EntityType Name="RecipeItem">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Quantity" Type="float" Nullable="false" />
+    <Property Name="Quantity" Type="double" Nullable="false" />
     <Property Name="MeasureID" Type="int" Nullable="false" />
     <Property Name="IngredientID" Type="int" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="500" />
@@ -56,11 +56,11 @@
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="160" Nullable="false" />
     <Property Name="principal_id" Type="int" Nullable="false" />
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
+    <Property Name="definition" Type="longblob" />
   </EntityType>
   <EntityType Name="Tags">
     <Key>
@@ -129,45 +129,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-  </Function>
-  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="InventoryModelStoreContainer">
-    <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Measure" EntityType="Self.Measure" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="PantryItem" EntityType="Self.PantryItem" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="RecipeItem" EntityType="Self.RecipeItem" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="adamyost_Inventory" store:Type="Tables" />
+    <EntitySet Name="Measure" EntityType="Self.Measure" Schema="adamyost_Inventory" store:Type="Tables" />
+    <EntitySet Name="PantryItem" EntityType="Self.PantryItem" Schema="adamyost_Inventory" store:Type="Tables" />
+    <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="adamyost_Inventory" store:Type="Tables" />
+    <EntitySet Name="RecipeItem" EntityType="Self.RecipeItem" Schema="adamyost_Inventory" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="adamyost_Inventory" store:Type="Tables" />
+    <EntitySet Name="Tags" EntityType="Self.Tags" Schema="adamyost_Inventory" store:Type="Tables" />
     <AssociationSet Name="FK_PantryItem_Ingredient" Association="Self.FK_PantryItem_Ingredient">
       <End Role="Ingredient" EntitySet="Ingredient" />
       <End Role="PantryItem" EntitySet="PantryItem" />

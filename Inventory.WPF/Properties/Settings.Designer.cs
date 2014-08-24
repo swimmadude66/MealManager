@@ -26,8 +26,8 @@ namespace Inventory.WPF.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("data source=GREENMACHINE-PC\\GREENMACHINESQL;initial catalog=Inventory;integrated " +
-            "security=True;MultipleActiveResultSets=True;App=EntityFramework")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=adamyost.writhem.com;user id=adamyost_system;password=CS4911-B;persistsecu" +
+            "rityinfo=True;database=adamyost_Inventory")]
         public string InventoryEntities {
             get {
                 return ((string)(this["InventoryEntities"]));

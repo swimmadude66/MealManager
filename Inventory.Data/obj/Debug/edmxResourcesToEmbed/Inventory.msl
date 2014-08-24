@@ -33,7 +33,6 @@
     <EntitySetMapping Name="Recipe">
       <EntityTypeMapping TypeName="InventoryModel.Recipe">
         <MappingFragment StoreEntitySet="Recipe">
-          <ScalarProperty Name="TagString" ColumnName="TagString" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -43,6 +42,7 @@
           <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
           <ScalarProperty Name="Directions" ColumnName="Directions" />
+          <ScalarProperty Name="TagString" ColumnName="TagString" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -69,18 +69,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="InventoryModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="InventoryModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="InventoryModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="InventoryModel.Store.sp_helpdiagramdefinition" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="InventoryModel.Store.sp_helpdiagrams" />
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="InventoryModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="InventoryModel.Store.sp_upgraddiagrams" />
     <EntitySetMapping Name="Tags">
       <EntityTypeMapping TypeName="InventoryModel.Tags">
         <MappingFragment StoreEntitySet="Tags">
-          <ScalarProperty Name="Tag" ColumnName="Tag" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

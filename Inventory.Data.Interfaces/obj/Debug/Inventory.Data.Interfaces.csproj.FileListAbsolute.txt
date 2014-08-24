@@ -22,3 +22,11 @@ X:\Repos\meal_manager\Inventory.Data.Interfaces\bin\Debug\EntityFramework.SqlSer
 X:\Repos\meal_manager\Inventory.Data.Interfaces\obj\Debug\Inventory.Data.Interfaces.csprojResolveAssemblyReference.cache
 X:\Repos\meal_manager\Inventory.Data.Interfaces\obj\Debug\Inventory.Data.Interfaces.dll
 X:\Repos\meal_manager\Inventory.Data.Interfaces\obj\Debug\Inventory.Data.Interfaces.pdb
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\bin\Debug\Inventory.Data.Interfaces.dll.config
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\bin\Debug\Inventory.Data.Interfaces.dll
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\bin\Debug\Inventory.Data.Interfaces.pdb
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\bin\Debug\Inventory.Models.dll
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\bin\Debug\Inventory.Models.pdb
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\obj\Debug\Inventory.Data.Interfaces.csprojResolveAssemblyReference.cache
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\obj\Debug\Inventory.Data.Interfaces.dll
+X:\Repos\Meal Manager\Inventory.Data.Interfaces\obj\Debug\Inventory.Data.Interfaces.pdb

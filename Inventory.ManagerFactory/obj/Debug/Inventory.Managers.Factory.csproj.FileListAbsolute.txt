@@ -38,3 +38,21 @@ X:\Repos\meal_manager\Inventory.ManagerFactory\bin\Debug\Inventory.Models.pdb
 X:\Repos\meal_manager\Inventory.ManagerFactory\obj\Debug\Inventory.Managers.Factory.csprojResolveAssemblyReference.cache
 X:\Repos\meal_manager\Inventory.ManagerFactory\obj\Debug\Inventory.ManagerFactory.dll
 X:\Repos\meal_manager\Inventory.ManagerFactory\obj\Debug\Inventory.ManagerFactory.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.ManagerFactory.dll.config
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.ManagerFactory.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.ManagerFactory.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Data.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Data.Factory.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Data.Interfaces.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Managers.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Models.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\EntityFramework.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Data.Factory.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Data.Interfaces.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Data.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Managers.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\Inventory.Models.pdb
+X:\Repos\Meal Manager\Inventory.ManagerFactory\bin\Debug\EntityFramework.xml
+X:\Repos\Meal Manager\Inventory.ManagerFactory\obj\Debug\Inventory.Managers.Factory.csprojResolveAssemblyReference.cache
+X:\Repos\Meal Manager\Inventory.ManagerFactory\obj\Debug\Inventory.ManagerFactory.dll
+X:\Repos\Meal Manager\Inventory.ManagerFactory\obj\Debug\Inventory.ManagerFactory.pdb

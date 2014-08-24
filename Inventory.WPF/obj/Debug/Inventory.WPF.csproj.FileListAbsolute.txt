@@ -78,3 +78,46 @@ X:\Repos\meal_manager\Inventory.WPF\obj\Debug\Inventory.WPF.Properties.Resources
 X:\Repos\meal_manager\Inventory.WPF\obj\Debug\Inventory.WPF.csproj.GenerateResource.Cache
 X:\Repos\meal_manager\Inventory.WPF\obj\Debug\Inventory.WPF.exe
 X:\Repos\meal_manager\Inventory.WPF\obj\Debug\Inventory.WPF.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.WPF.exe.config
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.WPF.exe
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.WPF.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\EntityFramework.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\EntityFramework.SqlServer.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Data.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Data.Factory.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Data.Interfaces.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.ManagerFactory.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Managers.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Models.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Tools.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\MySql.Data.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\mysql.data.entity.EF6.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\MySql.Web.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\WPFToolkit.dll
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Data.Factory.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Data.Interfaces.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Data.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.ManagerFactory.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Managers.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Models.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\Inventory.Tools.pdb
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\EntityFramework.xml
+X:\Repos\Meal Manager\Inventory.WPF\bin\Debug\EntityFramework.SqlServer.xml
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF.csprojResolveAssemblyReference.cache
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\RecipeControl.baml
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\MainWindow.g.cs
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\PantryControl.g.cs
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\RecipeControl.g.cs
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\App.g.cs
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF_MarkupCompile.cache
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF_MarkupCompile.lref
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\MainWindow.baml
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\PantryControl.baml
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF.g.resources
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF.Properties.Resources.resources
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF.csproj.GenerateResource.Cache
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF.exe
+X:\Repos\Meal Manager\Inventory.WPF\obj\Debug\Inventory.WPF.pdb

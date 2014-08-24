@@ -18,3 +18,8 @@ X:\Repos\meal_manager\Inventory.Tools\bin\Debug\EntityFramework.SqlServer.xml
 X:\Repos\meal_manager\Inventory.Tools\obj\Debug\Inventory.Tools.csprojResolveAssemblyReference.cache
 X:\Repos\meal_manager\Inventory.Tools\obj\Debug\Inventory.Tools.dll
 X:\Repos\meal_manager\Inventory.Tools\obj\Debug\Inventory.Tools.pdb
+X:\Repos\Meal Manager\Inventory.Tools\bin\Debug\Inventory.Tools.dll.config
+X:\Repos\Meal Manager\Inventory.Tools\bin\Debug\Inventory.Tools.dll
+X:\Repos\Meal Manager\Inventory.Tools\bin\Debug\Inventory.Tools.pdb
+X:\Repos\Meal Manager\Inventory.Tools\obj\Debug\Inventory.Tools.dll
+X:\Repos\Meal Manager\Inventory.Tools\obj\Debug\Inventory.Tools.pdb

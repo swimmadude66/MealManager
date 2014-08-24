@@ -9,7 +9,7 @@
       d:DesignHeight="800" d:DesignWidth="1100">
 
     <Grid>
-        <Canvas x:Name="listPanel" Visibility="Hidden">
+        <Canvas x:Name="listPanel" Visibility="Visible">
             <DataGrid x:Name="recipeGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="600" VerticalAlignment="Top">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
@@ -18,7 +18,7 @@
             </DataGrid>
             <Button Content="Add Recipe" Height="46" Click="Button_Click" Canvas.Left="501" Canvas.Top="501"/>
         </Canvas>
-        <Canvas  x:Name="addPanel" Visibility="Visible" Background="Aqua">
+        <Canvas  x:Name="addPanel" Visibility="Hidden" Background="Aqua">
             <Image  HorizontalAlignment="Left" Height="224" VerticalAlignment="Top" Width="500" Canvas.Left="50" Canvas.Top="50"/>
             <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" Canvas.Left="674" Canvas.Top="50"/>
             <Label Content="Name" x:Name="lblName" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="606" Canvas.Top="50"/>
