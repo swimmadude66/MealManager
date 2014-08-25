@@ -1,1 +1,0 @@
-c:\users\adam\documents\visual studio 2012\Projects\Inventory\Inventory\bin\Debug\Inventory.exe.config
