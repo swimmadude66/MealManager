@@ -14,5 +14,6 @@ namespace Inventory.Data.Interfaces
         void SaveTag(String tag);
         int SaveRecipe(string name, string description, string directions, string tagstring);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
+        List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria);
     }
 }
