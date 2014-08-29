@@ -113,5 +113,64 @@ namespace Inventory.Data
             catch { throw; }
         }
 
+        public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria)
+        {
+            try
+            {
+                using (var context = new InventoryEntities())
+                {
+                    String searchquery = "Select * "
+                                            + "From Recipes"
+                                            + "Where";
+                    int numParams = 0;
+                    //id
+                    if (criteria.ID != null && criteria.ID >= 0)
+                    {
+                        searchquery += " Id = " + criteria.ID;
+                        numParams++;
+                    }
+                    //name
+                    if (!String.IsNullOrEmpty(criteria.Name.Trim()))
+                    {
+                        if (numParams > 0)
+                        {
+                            searchquery += " AND";
+                        }
+                        searchquery += " Name LIKE %" + criteria.Name + "%";
+                        numParams++;
+                    }
+                    //description
+                    if (!String.IsNullOrEmpty(criteria.Description.Trim()))
+                    {
+                        if (numParams > 0)
+                        {
+                            searchquery += " AND";
+                        }
+                        searchquery += " Description LIKE %" + criteria.Description + "%";
+                        numParams++;
+                    }
+                    //tags
+                    foreach(String tag in criteria.Tags)
+                    {
+                        if (numParams > 0)
+                        {
+                            searchquery += " AND";
+                        }
+                        searchquery += " TagString LIKE %" + tag + "%";
+                        numParams++;
+                    }
+                    //ingredients must be done higher up
+
+
+                    List<Recipe> result = context.Recipe.SqlQuery(searchquery).ToList();
+                    return RecipeMapper.BindItems(result);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

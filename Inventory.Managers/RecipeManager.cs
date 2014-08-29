@@ -78,6 +78,10 @@ namespace Inventory.Managers
         {
             return _recipeDAO.SaveRecipeItem(recipeid, model);
         }
+
+        public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
+            return _recipeDAO.SearchRecipes(criteria);
+        }
        
     }
 }
