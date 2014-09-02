@@ -91,6 +91,7 @@
     <Compile Include="Mappers\IngredientMapper.cs" />
     <Compile Include="Mappers\MeasureMapper.cs" />
     <Compile Include="Mappers\PantryItemMapper.cs" />
+    <Compile Include="Mappers\RecipeItemMapper.cs" />
     <Compile Include="Mappers\RecipeMapper.cs" />
     <Compile Include="Measure.cs">
       <DependentUpon>Inventory.tt</DependentUpon>

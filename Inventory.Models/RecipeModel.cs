@@ -15,6 +15,8 @@ namespace Inventory.Models
         public int? Time { get; set; }
         public String Directions { get; set; }
         public String Tags { get; set; }
+        public List<RecipeItemModel> Items { get; set; }
+        public List<IngredientModel> Ingredients { get; set; }
 /*
  * ------------------------------------------------------------------------------------------------------------------------------- 
 */
@@ -27,6 +29,6 @@ namespace Inventory.Models
  * -------------------------------------------------------------------------------------------------------------------------------
 */ 
 
-        //public List<RecipeItemModel> Ingredients { get; set; }
+
     }
 }

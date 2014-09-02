@@ -91,6 +91,21 @@ namespace Inventory.Data
             }
         }
 
+        public List<RecipeItemModel> getRecipeItems(int rid)
+        {
+            try
+            {
+                using (var context = new InventoryEntities())
+                {
+                    List<RecipeItem> items = (from i in context.RecipeItem
+                                              where i.RecipeID == rid
+                                              select i).ToList();
+                    return RecipeItemMapper.BindItems(items);
+                }
+            }
+            catch { throw; }
+        }
+
         public int SaveRecipeItem(int recipeid, TempRecipeItemModel model)
         {
             try
