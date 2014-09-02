@@ -16,7 +16,7 @@ namespace Inventory.Models
         public String Directions { get; set; }
         public String Tags { get; set; }
         public List<RecipeItemModel> Items { get; set; }
-        public List<IngredientModel> Ingredients { get; set; }
+        public List<int> IngredientIDs { get; set; }
 /*
  * ------------------------------------------------------------------------------------------------------------------------------- 
 */

@@ -134,8 +134,8 @@ namespace Inventory.Data
             {
                 using (var context = new InventoryEntities())
                 {
-                    String basequery = "Select * From Recipe ";
-                    String searchquery = "Where";
+                    String basequery = "Select * From Recipe";
+                    String searchquery = " WHERE";
                     int numParams = 0;
                     //id
                     if (criteria.ID != null && criteria.ID >= 0)
@@ -150,7 +150,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Name LIKE %" + criteria.Name + "%";
+                        searchquery += " Name LIKE \"%" + criteria.Name + "%\"";
                         numParams++;
                     }
                     //description
@@ -160,7 +160,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Description LIKE %" + criteria.Description + "%";
+                        searchquery += " Description LIKE \"%" + criteria.Description + "%\"";
                         numParams++;
                     }
                     //tags
@@ -172,7 +172,7 @@ namespace Inventory.Data
                             {
                                 searchquery += " AND";
                             }
-                            searchquery += " TagString LIKE %" + tag + "%";
+                            searchquery += " TagString LIKE \"%" + tag + "%\"";
                             numParams++;
                         }
                     }
@@ -186,7 +186,7 @@ namespace Inventory.Data
                     {
                         searchquery = basequery;
                     }
-                    List<Recipe> result = context.Recipe.SqlQuery(searchquery).ToList();
+                    List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
                     return RecipeMapper.BindItems(result);
                 }
             }

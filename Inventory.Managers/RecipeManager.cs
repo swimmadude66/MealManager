@@ -37,10 +37,10 @@ namespace Inventory.Managers
         private void getRecipeData(RecipeModel rec)
         {
             rec.Items = _recipeDAO.getRecipeItems(rec.ID);
-            rec.Ingredients = new List<IngredientModel>();
+            rec.IngredientIDs = new List<int>();
             foreach (RecipeItemModel item in rec.Items)
             {
-                rec.Ingredients.Add(item.Ingredient);
+                rec.IngredientIDs.Add(item.Ingredient.ID);
             }
         }
         
@@ -96,7 +96,7 @@ namespace Inventory.Managers
 
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
             List<RecipeModel> recs = _recipeDAO.SearchRecipes(criteria);
-            if (criteria.Ingredients.Count > 0)
+            if (criteria.Ingredients != null && criteria.Ingredients.Count > 0)
             {
                 return FilterRecipes(recs, criteria);
             }
@@ -114,7 +114,7 @@ namespace Inventory.Managers
                 bool contains = true;
                 getRecipeData(rec);
                 foreach(IngredientModel ing in criteria.Ingredients){
-                    if (!rec.Ingredients.Contains(ing))
+                    if (!rec.IngredientIDs.Contains(ing.ID))
                     {
                         contains = false;
                         break;
