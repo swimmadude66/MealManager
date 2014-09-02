@@ -16,9 +16,9 @@
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="600"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Add Recipe" Height="46" Click="Button_Click" Canvas.Left="501" Canvas.Top="501"/>
+            <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Left="501" Canvas.Top="501"/>
         </Canvas>
-        <Canvas  x:Name="addPanel" Visibility="Hidden" Background="Aqua">
+        <Canvas  x:Name="addPanel" Visibility="Hidden" Background="Gray">
             <Image  HorizontalAlignment="Left" Height="224" VerticalAlignment="Top" Width="500" Canvas.Left="50" Canvas.Top="50"/>
             <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" Canvas.Left="674" Canvas.Top="50"/>
             <Label Content="Name" x:Name="lblName" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="606" Canvas.Top="50"/>
@@ -44,7 +44,9 @@
             <TextBlock x:Name="txtTags" Canvas.Left="674" TextWrapping="Wrap" Canvas.Top="647" Height="61" Width="374"/>
             <ComboBox x:Name="cbTags" Canvas.Left="674" Canvas.Top="592" Width="260" IsEditable="True"/>
             <Button x:Name="btnAdd_Tag" Content="Add Tag" Canvas.Left="973" Canvas.Top="592" Width="75" Click="btnAdd_Tag_Click"/>
-            <Button x:Name="btnSaveRecipe" Content="Save Recipe" Canvas.Left="973" Canvas.Top="728" Width="75" Click="btnSaveRecipe_Click"/>
+            <Button x:Name="btnSaveRecipe" Content="Save Recipe" Canvas.Left="859" Canvas.Top="730" Width="75" Click="btnSaveRecipe_Click"/>
+            <Label x:Name="lblError" Content="" Canvas.Left="578" Canvas.Top="724" Width="256"/>
+            <Button x:Name="btnCancel" Content="Cancel" Canvas.Left="973" Canvas.Top="730" Width="75" Click="btnCancel_Click"/>
         </Canvas>
     </Grid>
 </UserControl>
