@@ -29,14 +29,19 @@ namespace Inventory.Managers
             List<RecipeModel> rawList = _recipeDAO.getRecipes();
             foreach (RecipeModel rec in rawList)
             {
-                rec.Items = _recipeDAO.getRecipeItems(rec.ID);
-                rec.Ingredients = new List<IngredientModel>();
-                foreach (RecipeItemModel item in rec.Items)
-                {
-                    rec.Ingredients.Add(item.Ingredient);
-                }
+                getRecipeData(rec);
             }
             return rawList;
+        }
+
+        private void getRecipeData(RecipeModel rec)
+        {
+            rec.Items = _recipeDAO.getRecipeItems(rec.ID);
+            rec.Ingredients = new List<IngredientModel>();
+            foreach (RecipeItemModel item in rec.Items)
+            {
+                rec.Ingredients.Add(item.Ingredient);
+            }
         }
         
         public int SaveIngredient(string name, string description)
@@ -107,6 +112,7 @@ namespace Inventory.Managers
             foreach (RecipeModel rec in recipes)
             {
                 bool contains = true;
+                getRecipeData(rec);
                 foreach(IngredientModel ing in criteria.Ingredients){
                     if (!rec.Ingredients.Contains(ing))
                     {

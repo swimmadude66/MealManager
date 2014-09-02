@@ -28,12 +28,14 @@ namespace Inventory.WPF
         public String instructions;
         private List<TempRecipeItemModel> recipeItems;
         private List<String> newtags;
+        private List<IngredientModel> searchingredients;
 
         public RecipeControl()
         {
             InitializeComponent();
             recipeItems = new List<TempRecipeItemModel>();
             newtags = new List<String>();
+            searchingredients = new List<IngredientModel>();
             initSources();
             this.DataContext = this;
         }
@@ -43,9 +45,13 @@ namespace Inventory.WPF
             recipeGrid.ItemsSource = getRecipes();
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
-            txtIngredient.ItemsSource = getIngredients();
+            List<IngredientModel> ingredients = getIngredients();
+            txtIngredient.ItemsSource = ingredients;
             txtIngredient.SelectedIndex = -1;
             txtIngredient.Text = "";
+            cbSearchIngredients.ItemsSource = ingredients;
+            cbSearchIngredients.SelectedIndex = -1;
+            cbSearchIngredients.Text = "";
             cbMeasure.ItemsSource = getMeasures();
             cbMeasure.SelectedIndex = -1;
             cbMeasure.Text = "";
@@ -67,6 +73,36 @@ namespace Inventory.WPF
             recipeItems.Clear();
             instructions = "";
             newtags.Clear();
+        }
+
+        private void btnSearchAddIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbSearchIngredients.SelectedIndex < 0)
+            {
+                return;
+            }
+            IngredientModel sel = (IngredientModel)cbSearchIngredients.SelectedItem;
+            txtSearchIngredientsList.Text += sel.Name + ", ";
+            searchingredients.Add(sel);
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeSearchCriteriaModel criteria = new RecipeSearchCriteriaModel();
+            if (!String.IsNullOrEmpty(txtSearchName.Text.Trim()))
+            {
+                criteria.Name = txtSearchName.Text.Trim();
+            }
+            if (!String.IsNullOrEmpty(txtSearchDescription.Text.Trim()))
+            {
+                criteria.Description = txtSearchDescription.Text.Trim();
+            }
+            if (searchingredients.Count > 0)
+            {
+                criteria.Ingredients = searchingredients;
+            }
+            recipeGrid.ItemsSource = searchRecipes(criteria);
+            recipeGrid.Items.Refresh();
         }
 
         private void AddRecipe_Click(object sender, RoutedEventArgs e)
@@ -244,6 +280,14 @@ namespace Inventory.WPF
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.getAllTags();
         }
+
+        private List<RecipeModel> searchRecipes(RecipeSearchCriteriaModel criteria)
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            return manager.SearchRecipes(criteria);
+        }
+
+        
 
        
 

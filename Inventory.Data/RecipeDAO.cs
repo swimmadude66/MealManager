@@ -134,9 +134,8 @@ namespace Inventory.Data
             {
                 using (var context = new InventoryEntities())
                 {
-                    String searchquery = "Select * "
-                                            + "From Recipes"
-                                            + "Where";
+                    String basequery = "Select * From Recipe ";
+                    String searchquery = "Where";
                     int numParams = 0;
                     //id
                     if (criteria.ID != null && criteria.ID >= 0)
@@ -145,7 +144,7 @@ namespace Inventory.Data
                         numParams++;
                     }
                     //name
-                    if (!String.IsNullOrEmpty(criteria.Name.Trim()))
+                    if (!String.IsNullOrWhiteSpace(criteria.Name))
                     {
                         if (numParams > 0)
                         {
@@ -155,7 +154,7 @@ namespace Inventory.Data
                         numParams++;
                     }
                     //description
-                    if (!String.IsNullOrEmpty(criteria.Description.Trim()))
+                    if (!String.IsNullOrWhiteSpace(criteria.Description))
                     {
                         if (numParams > 0)
                         {
@@ -165,18 +164,28 @@ namespace Inventory.Data
                         numParams++;
                     }
                     //tags
-                    foreach(String tag in criteria.Tags)
+                    if (criteria.Tags != null)
                     {
-                        if (numParams > 0)
+                        foreach (String tag in criteria.Tags)
                         {
-                            searchquery += " AND";
+                            if (numParams > 0)
+                            {
+                                searchquery += " AND";
+                            }
+                            searchquery += " TagString LIKE %" + tag + "%";
+                            numParams++;
                         }
-                        searchquery += " TagString LIKE %" + tag + "%";
-                        numParams++;
                     }
                     //ingredients must be done higher up
 
-
+                    if (numParams > 0)
+                    {
+                        searchquery = basequery + searchquery;
+                    }
+                    else
+                    {
+                        searchquery = basequery;
+                    }
                     List<Recipe> result = context.Recipe.SqlQuery(searchquery).ToList();
                     return RecipeMapper.BindItems(result);
                 }
