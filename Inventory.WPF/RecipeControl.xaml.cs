@@ -55,8 +55,23 @@ namespace Inventory.WPF
             cbTags.Text = "";
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void clearAddRecipe()
         {
+            lblError.Content = "";
+            txtName.Text = "";
+            txtDescription.Text = "";
+            txtDirections.Text = "";
+            txtIngredient.Text = "";
+            txtQuantity.Text = "";
+            txtTags.Text = "";
+            recipeItems.Clear();
+            instructions = "";
+            newtags.Clear();
+        }
+
+        private void AddRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            clearAddRecipe();
             listPanel.Visibility = Visibility.Hidden;
             addPanel.Visibility = Visibility.Visible;
         }
@@ -67,10 +82,24 @@ namespace Inventory.WPF
             initSources();
         }
 
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            clearAddRecipe();
+            listPanel.Visibility = Visibility.Visible;
+            addPanel.Visibility = Visibility.Hidden;
+        }
+
         private void btnSaveRecipe_Click(object sender, RoutedEventArgs e)
         {
             //Validate
+            if ((String.IsNullOrEmpty(txtName.Text.Trim())) || (String.IsNullOrEmpty(txtDirections.Text.Trim())) || (recipeItems.Count < 1))
+            {
+                lblError.Content = "Invalid Recipe, Unable to save";
+                return;
+            }
+            //--------------------------------------
             SaveRecipe();
+            clearAddRecipe();
             initSources();
             listPanel.Visibility = Visibility.Visible;
             addPanel.Visibility = Visibility.Hidden;
@@ -215,6 +244,8 @@ namespace Inventory.WPF
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.getAllTags();
         }
+
+       
 
        
        
