@@ -26,7 +26,17 @@ namespace Inventory.Managers
         }
 
         public List<RecipeModel> getRecipes(){
-            return _recipeDAO.getRecipes();
+            List<RecipeModel> rawList = _recipeDAO.getRecipes();
+            foreach (RecipeModel rec in rawList)
+            {
+                rec.Items = _recipeDAO.getRecipeItems(rec.ID);
+                rec.Ingredients = new List<IngredientModel>();
+                foreach (RecipeItemModel item in rec.Items)
+                {
+                    rec.Ingredients.Add(item.Ingredient);
+                }
+            }
+            return rawList;
         }
         
         public int SaveIngredient(string name, string description)
