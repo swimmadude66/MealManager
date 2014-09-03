@@ -134,6 +134,7 @@ namespace Inventory.Data
             {
                 using (var context = new InventoryEntities())
                 {
+                    String filtwrapper = "Select * From (";
                     String basequery = "Select * From Recipe";
                     String searchquery = " WHERE";
                     int numParams = 0;
@@ -176,7 +177,6 @@ namespace Inventory.Data
                             numParams++;
                         }
                     }
-                    //ingredients must be done higher up
 
                     if (numParams > 0)
                     {
@@ -186,6 +186,26 @@ namespace Inventory.Data
                     {
                         searchquery = basequery;
                     }
+                    if (criteria.Ingredients != null && criteria.Ingredients.Count > 0)
+                    {
+                        searchquery = filtwrapper + searchquery + ") as init";
+
+                        String ingredSearch = "(Select ingf.* From( ";
+                        int ingredientcount = 0;
+                        foreach (IngredientModel ing in criteria.Ingredients)
+                        {
+                            ingredSearch += "(Select RecipeID from RecipeItem where IngredientID = " + ing.ID + ") ";
+                            if (ingredientcount + 1 < criteria.Ingredients.Count)
+                            {
+                                ingredSearch += "UNION ALL ";
+                            }
+                            ingredientcount++;
+                        }
+                        ingredSearch += ") as ingf Group By ingf.RecipeID Having Count(*)>=" + ingredientcount + ")";
+                        ingredSearch += "as result on result.RecipeID=init.ID";
+                        searchquery += " Join " + ingredSearch;
+                    }
+
                     List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
                     return RecipeMapper.BindItems(result);
                 }

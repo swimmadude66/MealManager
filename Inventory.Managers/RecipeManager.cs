@@ -95,7 +95,8 @@ namespace Inventory.Managers
         }
 
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
-            List<RecipeModel> recs = _recipeDAO.SearchRecipes(criteria);
+            return _recipeDAO.SearchRecipes(criteria);
+            /*
             if (criteria.Ingredients != null && criteria.Ingredients.Count > 0)
             {
                 return FilterRecipes(recs, criteria);
@@ -104,6 +105,7 @@ namespace Inventory.Managers
             {
                 return recs;
             }
+             */
         }
 
         public List<RecipeModel> FilterRecipes(List<RecipeModel> recipes, RecipeSearchCriteriaModel criteria)
