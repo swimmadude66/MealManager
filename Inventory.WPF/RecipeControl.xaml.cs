@@ -82,8 +82,22 @@ namespace Inventory.WPF
                 return;
             }
             IngredientModel sel = (IngredientModel)cbSearchIngredients.SelectedItem;
-            txtSearchIngredientsList.Text += sel.Name + ", ";
+            if (searchingredients.Count > 0)
+                txtSearchIngredientsList.Text += ", ";
+            txtSearchIngredientsList.Text += sel.Name;
             searchingredients.Add(sel);
+            cbSearchIngredients.Text = "";
+            cbSearchIngredients.SelectedIndex = -1;
+        }
+
+        private void btnClearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            cbSearchIngredients.Text = "";
+            cbSearchIngredients.SelectedIndex = -1;
+            txtSearchIngredientsList.Text = "";
+            txtSearchDescription.Text = "";
+            txtSearchName.Text = "";
+            searchingredients.Clear();
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -286,6 +300,8 @@ namespace Inventory.WPF
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.SearchRecipes(criteria);
         }
+
+        
 
         
 
