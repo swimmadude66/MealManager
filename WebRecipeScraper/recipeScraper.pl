@@ -44,9 +44,17 @@ our $recipe_ptr = \@recipes;
 my $count = 0;
 
 open my $url_list_fh, $url_list_file or die "Could not open $file: $!";
-while( my $part = <$url_list_fh>)  {   
-		    
+while( my $part = <$url_list_fh> )  {   
+
+	# regex text for the url to match to the correct scraper script
+	# scrape and get the recipe
+	# add recipe to the recipe array
+
+	$count++;
 }
+
+# dump JSON array to file
+# insert into DB (more details TBD)
 
 close $url_list_fh;
 
