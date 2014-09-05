@@ -34,9 +34,10 @@ my $scraper_parts = scraper {
 # params	url
 # return	true on success, false on error/failure logged
 # ----------------------------------------------------------
-sub scrapeRecipe {
+sub scrape_recipe 
+{
 	my $url = shift;
-	my $data = scrapeURL($url, $scraper_parts);
+	my $data = scrape_url($url, $scraper_parts);
 
 	# clean up and fill in what can be put in immediately
 	my @recipe = array(
