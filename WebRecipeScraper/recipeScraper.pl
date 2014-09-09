@@ -20,24 +20,12 @@ switch( $#ARGV )
 }
 
 my $stamp = strftime( "%Y%m%d", localtime );
+my $database = 'mealmanager-test';
+my $host = 'localhost';
+my $port = '3306';
+my $user = 'root';
+my $pass = '';
 
-#Creates Log settings and Logger for use during runtime
-Log::Log4perl::Logger::create_custom_level( "ERROR", "FATAL" );
-my $conf = "
-    log4perl.logger = INFO, screen, file
-    
-    log4perl.appender.file = Log::Log4perl::Appender::File
-	log4perl.appender.file.Threshold = DEBUG
-	log4perl.appender.file.filename = logs/recipe_".$stamp.".log
-	log4perl.appender.file.layout = PatternLayout
-	log4perl.appender.file.layout.ConversionPattern=[%d] %-5p 	%m%n
-
-	log4perl.appender.screen = Log::Log4perl::Appender::Screen
-	log4perl.appender.screen.Threshold = ERROR
-	log4perl.appender.screen.layout = PatternLayout
-	log4perl.appender.screen.layout.ConversionPattern=%p - %m%n
-	";
-Log::Log4perl::init( \$conf );
 my $logger = get_logger();
 
 $logger->( "----- Starting Recipe Scrape -----" );
