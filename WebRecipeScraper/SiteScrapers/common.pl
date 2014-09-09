@@ -21,10 +21,12 @@ sub scrape_url {
 	return $data;
 }
 
+
+
 # ----------------------------------------------------------
 # db_connect 	Connect to the database 
 #
-# params	(All Ooption After First Call)
+# params	(All Option After First Call)
 #			Database Name
 #			Hostname
 #			Port
@@ -50,7 +52,7 @@ sub db_connect
 }
 
 # ----------------------------------------------------------
-# db_disconnect 	Disconnect to the database 
+# db_disconnect 	Disconnect from the database 
 # ----------------------------------------------------------
 sub db_disconnect 
 {
