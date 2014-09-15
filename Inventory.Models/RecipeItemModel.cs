@@ -15,7 +15,7 @@ namespace Inventory.Models
         public string Description { get; set; }
         
         public IngredientModel Ingredient { get; set; }
-        public string Measure { get; set; }
+        public MeasureModel Measure { get; set; }
 
         
     }

@@ -91,6 +91,21 @@ namespace Inventory.Data
             }
         }
 
+        public List<RecipeItemModel> getRecipeItems(int rid)
+        {
+            try
+            {
+                using (var context = new InventoryEntities())
+                {
+                    List<RecipeItem> items = (from i in context.RecipeItem
+                                              where i.RecipeID == rid
+                                              select i).ToList();
+                    return RecipeItemMapper.BindItems(items);
+                }
+            }
+            catch { throw; }
+        }
+
         public int SaveRecipeItem(int recipeid, TempRecipeItemModel model)
         {
             try
@@ -111,6 +126,94 @@ namespace Inventory.Data
                 }
             }
             catch { throw; }
+        }
+
+        public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria)
+        {
+            try
+            {
+                using (var context = new InventoryEntities())
+                {
+                    String filtwrapper = "Select * From (";
+                    String basequery = "Select * From Recipe";
+                    String searchquery = " WHERE";
+                    int numParams = 0;
+                    //id
+                    if (criteria.ID != null && criteria.ID >= 0)
+                    {
+                        searchquery += " Id = " + criteria.ID;
+                        numParams++;
+                    }
+                    //name
+                    if (!String.IsNullOrWhiteSpace(criteria.Name))
+                    {
+                        if (numParams > 0)
+                        {
+                            searchquery += " AND";
+                        }
+                        searchquery += " Name LIKE \"%" + criteria.Name + "%\"";
+                        numParams++;
+                    }
+                    //description
+                    if (!String.IsNullOrWhiteSpace(criteria.Description))
+                    {
+                        if (numParams > 0)
+                        {
+                            searchquery += " AND";
+                        }
+                        searchquery += " Description LIKE \"%" + criteria.Description + "%\"";
+                        numParams++;
+                    }
+                    //tags
+                    if (criteria.Tags != null)
+                    {
+                        foreach (String tag in criteria.Tags)
+                        {
+                            if (numParams > 0)
+                            {
+                                searchquery += " AND";
+                            }
+                            searchquery += " TagString LIKE \"%" + tag + "%\"";
+                            numParams++;
+                        }
+                    }
+
+                    if (numParams > 0)
+                    {
+                        searchquery = basequery + searchquery;
+                    }
+                    else
+                    {
+                        searchquery = basequery;
+                    }
+                    if (criteria.Ingredients != null && criteria.Ingredients.Count > 0)
+                    {
+                        searchquery = filtwrapper + searchquery + ") as init";
+
+                        String ingredSearch = "(Select ingf.* From( ";
+                        int ingredientcount = 0;
+                        foreach (IngredientModel ing in criteria.Ingredients)
+                        {
+                            ingredSearch += "(Select RecipeID from RecipeItem where IngredientID = " + ing.ID + ") ";
+                            if (ingredientcount + 1 < criteria.Ingredients.Count)
+                            {
+                                ingredSearch += "UNION ALL ";
+                            }
+                            ingredientcount++;
+                        }
+                        ingredSearch += ") as ingf Group By ingf.RecipeID Having Count(*)>=" + ingredientcount + ")";
+                        ingredSearch += "as result on result.RecipeID=init.ID";
+                        searchquery += " Join " + ingredSearch;
+                    }
+
+                    List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
+                    return RecipeMapper.BindItems(result);
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
 
     }
