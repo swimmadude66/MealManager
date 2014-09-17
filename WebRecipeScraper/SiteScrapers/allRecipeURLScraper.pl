@@ -5,6 +5,7 @@ use WWW::Curl::Easy;
 use Data::Dumper;
 use DBI;
 use POSIX qw(ceil);
+use String::Util qw(trim);
 
 my $url_base = 'http://allrecipes.com/Recipes/Main.aspx?evt19=1&src=hn_parent&st=t&p34=HR_SortByTitle&vm=l&Page=';
 
@@ -60,7 +61,9 @@ for( $i = 2; $i <= $pages; $i++ )
 
 	for($j = 0; $j < scalar( @name ); $j++)
 	{
-		$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' . $name[$j] . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)' . "\n";
+
+		$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' 
+					.  trim($name[$j]) . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)' . "\n";
 		print $ins_str;
 		$processed_recipes++;
 	}
