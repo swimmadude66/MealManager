@@ -60,7 +60,7 @@ for( $i = 2; $i <= $pages; $i++ )
 
 	for($j = 0; $j < scalar( @name ); $j++)
 	{
-		$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' . $name[$j] . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)';
+		$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' . $name[$j] . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)' . "\n";
 		print $ins_str;
 		$processed_recipes++;
 	}
