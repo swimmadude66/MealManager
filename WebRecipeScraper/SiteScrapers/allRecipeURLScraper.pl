@@ -29,7 +29,7 @@ $curl->setopt( CURLOPT_HEADER, 1 );
 
 my $count = 0;
 my $pages = 0;
-my $i = 0;#, $j = 0;
+my $i = 0, $j = 0;
 my $processed_recipes = 0;
 my $response_body;
 
@@ -44,24 +44,36 @@ $count = ${$res}{ 'recipeCount' }[0];
 $count =~ s/,//;
 $pages = ceil( $count / 20 );
 
-#for( $i = 2; $i <= 2; $i++ )
-#{
+for( $i = 2; $i <= 2; $i++ )
+{
 	$| = 1;
 
 	if( !defined( ${$res}{'recipeName'} ) || !defined( ${$res}{'recipeLink'} ) )
 	{
 		print "Error scraping page $i : $url_base$i\n";
-		#next;
+		next;
 	}
 
-#	$curl->setopt( CURLOPT_URL, $url_base . $i );
-#	$curl->setopt( CURLOPT_WRITEDATA, \$response_body );
+	my @name = @{${$res}{'recipeName'}};
+	my @url = @{${$res}{'recipeLink'}};
+	my $ins_str = '';
 
-#	my $retcode = $curl->perform;
+	for($j = 0; $j < scalar( @name ); $j++)
+	{
+		$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' . $name[$j] . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)';
+		print $ins_str;
+		$processed_recipes++;
+	}
 
-#	my $res = $scraper->scrape( $response_body );
-	print Dumper( $res );
-#}
+	$curl->setopt( CURLOPT_URL, $url_base . $i );
+	$curl->setopt( CURLOPT_WRITEDATA, \$response_body );
+
+	$retcode = $curl->perform;
+	$res = $scraper->scrape( $response_body );
+}
+
+my $curr_exec = time() - $start_time;
+print "$i Pages Seen ($curr_exec seconds)\n";
 
 # Starts the actual request
 
