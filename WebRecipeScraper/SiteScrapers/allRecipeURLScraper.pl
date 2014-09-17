@@ -38,7 +38,7 @@ $curl->setopt( CURLOPT_URL, $url_base . '1' );
 $curl->setopt( CURLOPT_WRITEDATA, \$response_body );
 
 my $retcode = $curl->perform;
-my $res = $parts->scrape( $response_body );
+my $res = $scraper->scrape( $response_body );
 
 $count = ${$res}{ 'recipeCount' }[0];
 $count =~ s/,//;
@@ -59,7 +59,7 @@ $pages = ceil( $count / 20 );
 
 #	my $retcode = $curl->perform;
 
-#	my $res = $parts->scrape( $response_body );
+#	my $res = $scraper->scrape( $response_body );
 	print Dumper( $res );
 #}
 
