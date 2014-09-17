@@ -29,7 +29,7 @@ $curl->setopt( CURLOPT_HEADER, 1 );
 
 my $count = 0;
 my $pages = 0;
-my $i = 0, $j = 0;
+my $i = 0;#, $j = 0;
 my $processed_recipes = 0;
 my $response_body;
 
@@ -41,24 +41,24 @@ $count = ${$res}{ 'recipeCount' }[0];
 $count =~ s/,//;
 $pages = ceil( $count / 20 );
 
-for( my $i = 2; $i <= 2; $i++ )
-{
+#for( $i = 2; $i <= 2; $i++ )
+#{
 	$| = 1;
 
 	if( !defined( ${$res}{'recipeName'} ) || !defined( ${$res}{'recipeLink'} ) )
 	{
-		print "Error scraping page $i : $all_url$i\n";
+		print "Error scraping page $i : $url_base$i\n";
 		next;
 	}
 
-	$curl->setopt( CURLOPT_URL, $url_base . $i );
-	$curl->setopt( CURLOPT_WRITEDATA, \$response_body );
+#	$curl->setopt( CURLOPT_URL, $url_base . $i );
+#	$curl->setopt( CURLOPT_WRITEDATA, \$response_body );
 
 	my $retcode = $curl->perform;
 
 	my $res = $parts->scrape( $response_body );
 	print Dumper( $res );
-}
+#}
 
 # Starts the actual request
 
