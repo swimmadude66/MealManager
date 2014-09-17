@@ -41,7 +41,7 @@ $count = ${$res}{ 'recipeCount' }[0];
 $count =~ s/,//;
 $pages = ceil( $count / 20 );
 
-for( my $i = 2; $i < 2; $i++ )
+for( my $i = 2; $i <= 2; $i++ )
 {
 	$| = 1;
 
