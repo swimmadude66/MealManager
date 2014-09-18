@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Tools", "Inventory.Tools\Inventory.Tools.csproj", "{932A61F6-983D-44C8-935B-E36C02DA4124}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Managers", "Inventory.Managers\Inventory.Managers.csproj", "{9BCDE153-A095-430E-A92A-575F50C51D3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.WPF", "Inventory.WPF\Inventory.WPF.csproj", "{63072920-C094-40B8-A775-5B530E3C556C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "UnitTestProject1\TestHarness.csproj", "{6253784F-6272-40A7-A7D1-03A27FEB30B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{63072920-C094-40B8-A775-5B530E3C556C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63072920-C094-40B8-A775-5B530E3C556C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63072920-C094-40B8-A775-5B530E3C556C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6253784F-6272-40A7-A7D1-03A27FEB30B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6253784F-6272-40A7-A7D1-03A27FEB30B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6253784F-6272-40A7-A7D1-03A27FEB30B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6253784F-6272-40A7-A7D1-03A27FEB30B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

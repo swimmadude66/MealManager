@@ -34,7 +34,7 @@ namespace Inventory.Managers
             return rawList;
         }
 
-        private void getRecipeData(RecipeModel rec)
+        public void getRecipeData(RecipeModel rec)
         {
             rec.Items = _recipeDAO.getRecipeItems(rec.ID);
             rec.IngredientIDs = new List<int>();
@@ -95,17 +95,10 @@ namespace Inventory.Managers
         }
 
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
+            if (criteria.ToString() == "")
+                return getRecipes();
             return _recipeDAO.SearchRecipes(criteria);
-            /*
-            if (criteria.Ingredients != null && criteria.Ingredients.Count > 0)
-            {
-                return FilterRecipes(recs, criteria);
-            }
-            else
-            {
-                return recs;
-            }
-             */
+            
         }
 
         public List<RecipeModel> FilterRecipes(List<RecipeModel> recipes, RecipeSearchCriteriaModel criteria)
