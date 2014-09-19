@@ -1,6 +1,11 @@
 #!/usr/bin/perl
 # allRecipeScraper.pl
-use 'common.pl'
+use warnings;
+use utf8;
+binmode( STDOUT, ': utf8' );
+
+use Web::Scraper::LibXML;
+require 'SiteScrapers/common.pl';
 
 my $i;
 my $logger = get_logger();
@@ -39,20 +44,42 @@ sub scrape_recipe
 	my $url = shift;
 	my $data = scrape_url($url, $scraper_parts);
 
+	if( $data == 0 )
+	{
+		$logger->error( "Error Scraping URL: $url" );
+		return 0;
+	}
+
 	# clean up and fill in what can be put in immediately
-	my @recipe = array(
-		'name' => '',
-		'description' => '',
-		'yield' => '',
-		'ingredients' => array(),
-		'directions' => array()
+	my %recipe = (
+		'name' 		       , '',
+		'description'          , '',
+		'yield' 	       , '',
+		'ingredient_name_desc' , \(),
+		'ingredient_amounts'   , \(),
+		'directions' 	       , \()
 	);
 
-	# parse and split ingredient amounts
-	# parse and split ingredient description + name
+ 	$recipe{ 'name' }        = trim( ${ $data }{ 'recipe_name' } );
+	$recipe{ 'description' } = trim( ${ $data }{ 'recipe_description' } );
+	$recipe{ 'yield' }       = trim( ${ $data }{ 'recipe_yield' } );
 
+	@{ $recipe{ 'ingredient_name_desc' } } = @{ ${ $data }{ 'ingredient_name_desc' } };
+	@{ $recipe{ 'ingredient_amounts' } }   = @{ ${ $data }{ 'ingredient_amounts' } };
+	@{ $recipe{ 'directions' } }	       = @{ ${ $data }{ 'recipe_directions' } };
+
+	print Dumper( $data ) . "\n";
+
+	print "Ingredient Names + Descriptions\n";
+	print Dumper( %recipe ) . "\n";
+	#print Dumper( $recipe{ 'ingredient_amounts' } ) . "\n";
+	#print Dumper( $recipe{ 'directions' } ) . "\n";
+
+	return 1;
 }
 
 # subs to create
 #	amount_split		for spliting the ingredient_amounts entries into quantity and measure
 #	name_desc_split		for splitting the name and description of each ingredient
+
+1;

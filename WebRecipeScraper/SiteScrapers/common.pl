@@ -1,12 +1,17 @@
 #!/usr/bin/perl
 # common.pl
 use warnings;
+use utf8;
+binmode( STDOUT, ': utf8' );
+
 use File::Spec;
-use URI;
-use Web::Scraper;
+use Web::Scraper::LibXML;
+use WWW::Curl::Easy;
 use Data::Dumper;
 use Log::Log4perl qw(get_logger);
 use DBI;
+use String::Util qw(trim);
+use POSIX qw(ceil strftime);
 
 my $database_handle;
 my $i;
@@ -56,18 +61,36 @@ sub log_init
 # ----------------------------------------------------------
 sub scrape_url 
 {
-	$url 			 = shift;
-	$parts_to_scrape = shift;
+	my $url	    = shift;
+	my $scraper = shift;
 
-	if( !defined( $url ) || !defined( $parts_to_scrape ) )
+	if( !defined( $url ) || !defined( $scraper ) )
 	{
 		$logger->error( 'Invalid scrape_url call ( No Parameters Supplied )' );
-		exit();
+		return 0;
 	}
 	
-	# scrape the data
-	my $data = $parts_to_scrape->scrape( URI->new( $url ) );
-	return $data;
+	my $curl_handle  = WWW::Curl::Easy->new();
+	my $page_content = '';
+	my $scraped_data = '';
+	
+	$curl_handle->setopt( CURLOPT_HEADER, 0 );
+	$curl_handle->setopt( CURLOPT_URL, $url );
+	$curl_handle->setopt( CURLOPT_WRITEDATA, \$page_content );
+	
+	my $curl_status = $curl_handle->perform;
+	if( $curl_status != CURLE_OK )
+	{
+		$logger->error( "Error Scraping $url - " . $curl_handle->errbuf );
+		return 0;	
+	}
+
+	$scraped_data = $scraper->scrape( $page_content );
+
+	undef $curl_handle;
+	undef $page_content;
+
+	return $scraped_data;
 }
 
 # ----------------------------------------------------------
@@ -86,8 +109,8 @@ sub db_connect
 	if( !defined( $database_handle ) )
 	{
 		my $db_name 	 = shift;
-		my $host 		 = shift;
-		my $port 		 = shift;
+		my $host 	 = shift;
+		my $port 	 = shift;
 		my $db_user 	 = shift;
 		my $db_user_pass = shift;
 
@@ -115,3 +138,5 @@ sub db_disconnect
 		$database_handle = undef;
 	}
 }
+
+1;
