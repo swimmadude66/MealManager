@@ -1,4 +1,4 @@
-#/usr/bin/perl
+#!usr/bin/perl
 use warnings;
 use Web::Scraper::LibXML;
 use WWW::Curl::Easy;
@@ -6,6 +6,9 @@ use Data::Dumper;
 use DBI;
 use POSIX qw(ceil);
 use String::Util qw(trim);
+
+use utf8;
+binmode (STDOUT, ': utf8' );
 
 my $url_base = 'http://allrecipes.com/Recipes/Main.aspx?evt19=1&src=hn_parent&st=t&p34=HR_SortByTitle&vm=l&Page=';
 
@@ -25,14 +28,14 @@ my $start_time = time();
 
 # print "Connected to DB\n";
 
-my $curl = WWW::Curl::Easy->new;
-$curl->setopt( CURLOPT_HEADER, 1 );
+my $curl = WWW::Curl::Easy->new();
+$curl->setopt( CURLOPT_HEADER, 0 );
 
 my $count = 0;
 my $pages = 0;
 my $i = 0, $j = 0;
 my $processed_recipes = 0;
-my $response_body;
+my $response_body = '';
 
 # First Page Scrape
 $curl->setopt( CURLOPT_URL, $url_base . '1' );
@@ -45,9 +48,14 @@ $count = ${$res}{ 'recipeCount' }[0];
 $count =~ s/,//;
 $pages = ceil( $count / 20 );
 
-for( $i = 2; $i <= $pages; $i++ )
+print "Recipes: $count     Pages: $pages \n";
+print "Recipe Name, Recipe URL, Page #, Result #\n";
+
+$curl->cleanup();
+
+for( $i = 2; $i < $pages; $i++ )
 {
-	$| = 1;
+	#$| = 1;
 
 	if( !defined( ${$res}{'recipeName'} ) || !defined( ${$res}{'recipeLink'} ) )
 	{
@@ -57,16 +65,29 @@ for( $i = 2; $i <= $pages; $i++ )
 
 	my @name = @{${$res}{'recipeName'}};
 	my @url = @{${$res}{'recipeLink'}};
-	my $ins_str = '';
 
 	for($j = 0; $j < scalar( @name ); $j++)
 	{
-
-		$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' 
-					.  trim($name[$j]) . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)' . "\n";
-		print $ins_str;
+		#$ins_str = 'INSERT INTO recipe_link_2 (id, recipe_name, recipe_url, page, result, scraped) VALUES (NULL, "' 
+		#			.  trim($name[$j]) . '", "' . $url[$j] . '", ' . ($i-1) . ', ' . $j . ', 1)' . "\n";
+		my $csv_str = trim( $name[$j] ) . ', ' . $url[$j] . ', ' . ($i - 1) . ', ' . $j . "\n";
+		print $csv_str;
 		$processed_recipes++;
 	}
+
+	#if( $i % 10 == 0 )
+	#{
+	#	my $exec = time() - $start_time;
+	#	print "$i Pages Seen ($exec seconds)\n";
+	#}
+
+	$curl->cleanup;
+	undef $curl;
+	undef $response_body;
+	undef $res;
+	
+	$curl = WWW::Curl::Easy->new();
+	$curl->setopt( CURLOPT_HEADER, 0 );
 
 	$curl->setopt( CURLOPT_URL, $url_base . $i );
 	$curl->setopt( CURLOPT_WRITEDATA, \$response_body );
