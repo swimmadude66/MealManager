@@ -24,7 +24,7 @@
                 <local:RecipeControl/>
             </TabItem>
             <TabItem Header="Planner">
-                <Grid Background="#FFE5E5E5"/>
+                <local:PlannerControl/>
             </TabItem>
             <TabItem Header="Shopping List">
                 <Grid Background="#FFE5E5E5"/>

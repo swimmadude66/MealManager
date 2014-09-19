@@ -1,0 +1,36 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:MyNamespace="clr-namespace:Inventory.WPF"
+             xmlns:local="clr-namespace:Inventory.WPF" xmlns:Models="clr-namespace:Inventory.Models;assembly=Inventory.Models" x:Class="Inventory.WPF.PlannerControl" 
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
+        <Viewbox Height="790" Width="1090" Visibility="Visible">
+            <MyNamespace:PlannerCalendar DisplayDateChanged="plannerCalendar_DisplayDateChanged" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0"/>
+        </Viewbox>
+        <Viewbox Height="790" Width="1090" Visibility="Collapsed">
+            <Calendar x:Name="plannerCalendar" DisplayDateChanged="plannerCalendar_DisplayDateChanged" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
+                <Calendar.DataContext>
+                    <Models:PlannerItemModel/>
+                </Calendar.DataContext>
+            </Calendar>
+        </Viewbox>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <DataGrid x:Name="PlannerGrid" AutoGenerateColumns="false" Height="310" VerticalAlignment="Top" Margin="330,0,10,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Meal Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
+                    <DataGridTextColumn Header="Recipe Name" Binding="{Binding Recipe.Name}" IsReadOnly="True" Width="600"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="btnSubmit" Click="btnSubmit_Click"  Content="Submit" HorizontalAlignment="Left" Margin="160,618,0,0" VerticalAlignment="Top" Width="80"/>
+            <Label Content="Recipe" HorizontalAlignment="Left" Height="26" Margin="26,560,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192"/>
+            <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="115,560,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False"/>
+            <Label Content="Meal Name" HorizontalAlignment="Left" Height="26" Margin="26,480,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192"/>
+            <TextBox x:Name="MealName" HorizontalAlignment="Left" Height="23" Margin="115,483,0,0" TextWrapping="Wrap" Text='Type your Meal Name Here'  VerticalAlignment="Top" Width="210"/>
+        </Grid>
+    </Grid>
+
+</UserControl>
