@@ -16,6 +16,7 @@ use POSIX qw(ceil strftime);
 my $database_handle;
 my $i;
 my $logger;
+our @recipes;
 
 # ----------------------------------------------------------
 # log_init		Sets up logging for this application

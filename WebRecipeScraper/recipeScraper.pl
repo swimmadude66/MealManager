@@ -12,11 +12,11 @@ if( !@ARGV )
 
 my ( $url_list_file, $output_file );
 #my $stamp = strftime( "%Y%m%d", localtime );
-#my $database = 'mealmanager-test';
-#my $host = 'localhost';
+#my $database = 'mealmanager';
+#my $host = 'meal-manager-cs-4911.chplv1mpw4j4.us-west-2.rds.amazonaws.com';
 #my $port = '3306';
-#my $user = 'root';
-#my $pass = '';
+#my $user = 'recipesrc';
+#my $pass = 'giveMeMeals2014';
 
 if( scalar( @ARGV ) == 1 )
 {

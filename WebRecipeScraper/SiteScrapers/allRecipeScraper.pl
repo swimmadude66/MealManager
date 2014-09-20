@@ -55,26 +55,21 @@ sub scrape_recipe
 		'name' 		       , '',
 		'description'          , '',
 		'yield' 	       , '',
-		'ingredient_name_desc' , \(),
-		'ingredient_amounts'   , \(),
-		'directions' 	       , \()
+		'ingredient_name_desc' , (),
+		'ingredient_amounts'   , (),
+		'directions' 	       , ()
 	);
 
  	$recipe{ 'name' }        = trim( ${ $data }{ 'recipe_name' } );
 	$recipe{ 'description' } = trim( ${ $data }{ 'recipe_description' } );
 	$recipe{ 'yield' }       = trim( ${ $data }{ 'recipe_yield' } );
 
-	@{ $recipe{ 'ingredient_name_desc' } } = @{ ${ $data }{ 'ingredient_name_desc' } };
-	@{ $recipe{ 'ingredient_amounts' } }   = @{ ${ $data }{ 'ingredient_amounts' } };
-	@{ $recipe{ 'directions' } }	       = @{ ${ $data }{ 'recipe_directions' } };
+	$recipe{ 'ingredient_name_desc' } = ${ $data }{ 'ingredient_name_desc' };
+	$recipe{ 'ingredient_amounts' }   = ${ $data }{ 'ingredient_amounts' };
+	$recipe{ 'directions' }	       	  = ${ $data }{ 'recipe_directions' };
 
-	print Dumper( $data ) . "\n";
-
-	print "Ingredient Names + Descriptions\n";
-	print Dumper( %recipe ) . "\n";
-	#print Dumper( $recipe{ 'ingredient_amounts' } ) . "\n";
-	#print Dumper( $recipe{ 'directions' } ) . "\n";
-
+	
+	
 	return 1;
 }
 
