@@ -44,11 +44,13 @@ namespace Inventory.WPF
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
+    /// 
+
     public class PlannerCalendar : Calendar
     {
         static PlannerCalendar()
         {
-            //DefaultStyleKeyProperty.OverrideMetadata(typeof(PlannerCalendar), new FrameworkPropertyMetadata(typeof(PlannerCalendar)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(PlannerCalendar), new FrameworkPropertyMetadata(typeof(PlannerCalendar)));
         }
         public override void OnApplyTemplate()
         {

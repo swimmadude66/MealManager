@@ -5,31 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:MyNamespace="clr-namespace:Inventory.WPF"
              xmlns:local="clr-namespace:Inventory.WPF" xmlns:Models="clr-namespace:Inventory.Models;assembly=Inventory.Models" x:Class="Inventory.WPF.PlannerControl" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid>
-        <Viewbox Height="790" Width="1090" Visibility="Visible">
-            <MyNamespace:PlannerCalendar DisplayDateChanged="plannerCalendar_DisplayDateChanged" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0"/>
-        </Viewbox>
-        <Viewbox Height="790" Width="1090" Visibility="Collapsed">
-            <Calendar x:Name="plannerCalendar" DisplayDateChanged="plannerCalendar_DisplayDateChanged" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
-                <Calendar.DataContext>
-                    <Models:PlannerItemModel/>
-                </Calendar.DataContext>
-            </Calendar>
-        </Viewbox>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
-            <DataGrid x:Name="PlannerGrid" AutoGenerateColumns="false" Height="310" VerticalAlignment="Top" Margin="330,0,10,0">
+        <Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="710" Margin="0,10,0,80">
+            <Viewbox Visibility="Visible" Margin="10,35,635,375">
+                <MyNamespace:PlannerCalendar x:Name="plannerCalendar" SelectionMode="SingleDate"  SelectedDatesChanged="plannerCalendar_SelectedDatesChanged" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="0"/>
+            </Viewbox>
+            <DataGrid x:Name="PlannerGrid" AutoGenerateColumns="false" Height="385" VerticalAlignment="Top" Margin="480,25,30,0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Meal Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
                     <DataGridTextColumn Header="Recipe Name" Binding="{Binding Recipe.Name}" IsReadOnly="True" Width="600"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="btnSubmit" Click="btnSubmit_Click"  Content="Submit" HorizontalAlignment="Left" Margin="160,618,0,0" VerticalAlignment="Top" Width="80"/>
-            <Label Content="Recipe" HorizontalAlignment="Left" Height="26" Margin="26,560,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192"/>
-            <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="115,560,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False"/>
-            <Label Content="Meal Name" HorizontalAlignment="Left" Height="26" Margin="26,480,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192"/>
-            <TextBox x:Name="MealName" HorizontalAlignment="Left" Height="23" Margin="115,483,0,0" TextWrapping="Wrap" Text='Type your Meal Name Here'  VerticalAlignment="Top" Width="210"/>
+
+            <Button Content="Insert New Recipe" HorizontalAlignment="Left" Height="26" Margin="320,559,0,0" VerticalAlignment="Top" Width="160" Click="Insert_Recipe_Click"/>
+            <Button Content="Edit Recipe" HorizontalAlignment="Left" Height="26" Margin="640,559,0,0" VerticalAlignment="Top" Width="160" Click="Edit_Recipe_Click"/>
+        </Grid>
+        <Grid x:Name="PlannerItemGrid" Margin="0,0,10,10" Visibility="Collapsed">
+            <Button x:Name="btnSubmit" Click="btnSubmit_Click"  Content="Submit" HorizontalAlignment="Left" Margin="125,215,0,0" VerticalAlignment="Top" Width="80"/>
+            <Label Content="Recipe" HorizontalAlignment="Left" Margin="0,133,0,0" Width="70" RenderTransformOrigin="0.336,25.192" Height="26" VerticalAlignment="Top"/>
+            <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="89,134,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False"/>
+            <Label Content="Meal Name" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="0,50,0,0"/>
+            <TextBox x:Name="MealName" HorizontalAlignment="Left" Height="23" Margin="89,53,0,0" TextWrapping="Wrap" Text='Type your Meal Name Here'  VerticalAlignment="Top" Width="210"/>
         </Grid>
     </Grid>
 

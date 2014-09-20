@@ -27,14 +27,20 @@ namespace Inventory.WPF
     public partial class PlannerControl : UserControl
     {
 
-        private List<PlannerItemModel> plannerItems;
+        private List<PlannerItemModel> allPlannerItems;
+        private List<PlannerItemModel> selectedPlannerItems;
+        private DateTime tempDateTime;
 
         public PlannerControl()
         {
             InitializeComponent();
             this.DataContext = this;
-            plannerItems = new List<PlannerItemModel>();
+            allPlannerItems = new List<PlannerItemModel>();
+            selectedPlannerItems = new List<PlannerItemModel>();
+            plannerCalendar.SelectedDate = DateTime.Today;
+            //plannerCalendar.CalendarDayButtonStyle;
             initSources();
+            
         }
 
         private void initSources()
@@ -44,9 +50,11 @@ namespace Inventory.WPF
             PlannerGrid.Items.Refresh();
         }
 
-        private void plannerCalendar_DisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
+        private void plannerCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            Console.Write(e.ToString());
+            updateRecipesByDate();
+            //Console.WriteLine("Something at all");
+            //Console.WriteLine(plannerCalendar.DisplayDate);
         }
 
         private void recipeGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,15 +65,48 @@ namespace Inventory.WPF
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             String plannerItemName = MealName.Text;
-            //DateTime plannerItemDate = plannerCalendar.DisplayDate;
+            DateTime plannerItemDate = tempDateTime;
             RecipeModel plannerItemRecipe = (RecipeModel) RecipeCombo.SelectedItem;
             //TempPlannerItemModel tempPlannerItemModel = new TempPlannerItemModel(plannerItemName, plannerItemDate, plannerItemRecipes);
             PlannerItemModel plannerItemModel = new PlannerItemModel();
             plannerItemModel.Name = plannerItemName;
-            //plannerItemModel.Date = plannerItemDate;
+            plannerItemModel.Date = plannerItemDate;
             plannerItemModel.Recipe = plannerItemRecipe;
-            plannerItems.Add(plannerItemModel);
-            //initSources();
+            allPlannerItems.Add(plannerItemModel);
+
+            //Console.WriteLine("Here's our date" + plannerItemDate);
+
+            MainPlannerGrid.Visibility = Visibility.Visible;
+            PlannerItemGrid.Visibility = Visibility.Collapsed;
+
+            initSources();
+            updateRecipesByDate();
+        }
+
+        private void Insert_Recipe_Click(object sender, RoutedEventArgs e)
+        {
+            tempDateTime = plannerCalendar.SelectedDate ?? System.DateTime.Today;
+            tempDateTime = tempDateTime.Date;
+            //Console.WriteLine("Before change " + tempDateTime);
+            MainPlannerGrid.Visibility = Visibility.Collapsed;
+            PlannerItemGrid.Visibility = Visibility.Visible;
+            //Console.WriteLine("After change " + tempDateTime);
+        }
+
+        private void Edit_Recipe_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void updateRecipesByDate()
+        {
+            if (allPlannerItems != null && allPlannerItems.Count > 0)
+            {
+                tempDateTime = plannerCalendar.SelectedDate ?? default(DateTime);
+                selectedPlannerItems = allPlannerItems.FindAll(x => x.Date.CompareTo(plannerCalendar.SelectedDate) == 0);
+                initSources();
+            }
         }
 
         //Domain Calls
@@ -80,9 +121,10 @@ namespace Inventory.WPF
         {
             //IRecipeManager manager = ManagerFactory.GetRecipeManager();
             //return manager.getRecipes();
-            return plannerItems;
+            return selectedPlannerItems;
         }
 
+        
         
     }
 }
