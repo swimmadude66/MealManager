@@ -52,11 +52,13 @@
   <ItemGroup>
     <Compile Include="MeasureModel.cs" />
     <Compile Include="PantryItemModel.cs" />
+    <Compile Include="PlannerItemModel .cs" />
     <Compile Include="RecipeModel.cs" />
     <Compile Include="RecipeItemModel.cs" />
     <Compile Include="IngredientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecipeSearchCriteriaModel.cs" />
+    <Compile Include="TempPlannerItemModel.cs" />
     <Compile Include="TempRecipeItemModel.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
