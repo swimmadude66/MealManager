@@ -10,6 +10,7 @@ namespace Inventory.Data.Interfaces
     public interface IRecipeManager
     {
         List<RecipeModel> getRecipes();
+        void getRecipeData(RecipeModel rec);
         int SaveIngredient(string name, string description);
         int SaveMeasure(string name);
         int getMeasureID(string name);
@@ -20,5 +21,6 @@ namespace Inventory.Data.Interfaces
         void SaveTag(String tag);
         int SaveRecipe(string name, string description, string directions, string tagstring);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
+        List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria);
     }
 }

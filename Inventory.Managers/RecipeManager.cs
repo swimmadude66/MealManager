@@ -26,7 +26,22 @@ namespace Inventory.Managers
         }
 
         public List<RecipeModel> getRecipes(){
-            return _recipeDAO.getRecipes();
+            List<RecipeModel> rawList = _recipeDAO.getRecipes();
+            foreach (RecipeModel rec in rawList)
+            {
+                getRecipeData(rec);
+            }
+            return rawList;
+        }
+
+        public void getRecipeData(RecipeModel rec)
+        {
+            rec.Items = _recipeDAO.getRecipeItems(rec.ID);
+            rec.IngredientIDs = new List<int>();
+            foreach (RecipeItemModel item in rec.Items)
+            {
+                rec.IngredientIDs.Add(item.Ingredient.ID);
+            }
         }
         
         public int SaveIngredient(string name, string description)
@@ -77,6 +92,35 @@ namespace Inventory.Managers
         public int SaveRecipeItem(int recipeid, TempRecipeItemModel model)
         {
             return _recipeDAO.SaveRecipeItem(recipeid, model);
+        }
+
+        public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
+            if (criteria.ToString() == "")
+                return getRecipes();
+            return _recipeDAO.SearchRecipes(criteria);
+            
+        }
+
+        public List<RecipeModel> FilterRecipes(List<RecipeModel> recipes, RecipeSearchCriteriaModel criteria)
+        {
+            List<RecipeModel> filteredList = new List<RecipeModel>();
+            foreach (RecipeModel rec in recipes)
+            {
+                bool contains = true;
+                getRecipeData(rec);
+                foreach(IngredientModel ing in criteria.Ingredients){
+                    if (!rec.IngredientIDs.Contains(ing.ID))
+                    {
+                        contains = false;
+                        break;
+                    }
+                }
+                if (contains)
+                {
+                    filteredList.Add(rec);
+                }
+            }
+            return filteredList;
         }
        
     }
