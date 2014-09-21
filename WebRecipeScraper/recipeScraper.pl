@@ -66,7 +66,10 @@ while( my $line = <$url_list_fh> )
 
 	# regex text for the url to match to the correct scraper script
 	# scrape and get the recipe
-	scrape_recipe( $url );
+	my %recipe = scrape_recipe( $url );
+
+	print $recipe{ 'ingredient_name_desc' }[14];
+	
 	exit();	
 
 	# add recipe to the recipe array

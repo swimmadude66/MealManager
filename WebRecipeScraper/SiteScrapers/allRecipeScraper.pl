@@ -42,7 +42,7 @@ my $scraper_parts = scraper {
 sub scrape_recipe 
 {
 	my $url = shift;
-	my $data = scrape_url($url, $scraper_parts);
+	my $data = scrape_url( $url, $scraper_parts );
 
 	if( $data == 0 )
 	{
@@ -52,12 +52,12 @@ sub scrape_recipe
 
 	# clean up and fill in what can be put in immediately
 	my %recipe = (
-		'name' 		       , '',
-		'description'          , '',
-		'yield' 	       , '',
-		'ingredient_name_desc' , (),
-		'ingredient_amounts'   , (),
-		'directions' 	       , ()
+		'name' 		       => '',
+		'description'          => '',
+		'yield' 	       => '',
+		'ingredient_name_desc' => [],
+		'ingredient_amounts'   => [],
+		'directions' 	       => []
 	);
 
  	$recipe{ 'name' }        = trim( ${ $data }{ 'recipe_name' } );
@@ -68,13 +68,57 @@ sub scrape_recipe
 	$recipe{ 'ingredient_amounts' }   = ${ $data }{ 'ingredient_amounts' };
 	$recipe{ 'directions' }	       	  = ${ $data }{ 'recipe_directions' };
 
-	
-	
-	return 1;
+	return %recipe;	
 }
 
-# subs to create
-#	amount_split		for spliting the ingredient_amounts entries into quantity and measure
-#	name_desc_split		for splitting the name and description of each ingredient
+sub get_db_inserts
+{
+	my %recipe  = shift;
+	my @inserts = ();
+
+	if( !defined %recipe )
+	{
+		$logger->error( "Error Creating Inserts. Recipe dump below: \n" . Dumper( %recipe ) );
+		return 0;
+	}
+
+	for( my $i = 0; $i < scalar( @{ $recipe{ 'ingredient_amounts' } ); $i++ )
+	{
+		
+	}
+
+}
+
+# for spliting the ingredient_amounts entries into quantity and measure
+sub split_amount
+{
+	my $amount_str = shift;
+
+	if( !defined $amount_str )
+	{
+		$logger->error('Error: No Amount String provided to split_amount' );
+		return 0;
+	}
+
+	my %amount = (
+		'quantity' => '',
+		'measure'  => ''
+	);
+
+	if( $amount_str =~ /^(\d+\/?\d*)\s?(\w+)$/ )
+	{
+		$amount{ 'quantity' } = $1 if( defined $1 );
+		$amount{ 'measure' }  = $2 if( defined $2 );
+	}
+	
+	return %amount;
+}
+
+# for splitting the name and description of each ingredient
+sub split_name_description
+{
+	# figure out thet pattern after the DB analysis
+}
+
 
 1;
