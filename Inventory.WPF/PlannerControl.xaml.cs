@@ -64,23 +64,7 @@ namespace Inventory.WPF
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            String plannerItemName = MealName.Text;
-            DateTime plannerItemDate = tempDateTime;
-            RecipeModel plannerItemRecipe = (RecipeModel) RecipeCombo.SelectedItem;
-            //TempPlannerItemModel tempPlannerItemModel = new TempPlannerItemModel(plannerItemName, plannerItemDate, plannerItemRecipes);
-            PlannerItemModel plannerItemModel = new PlannerItemModel();
-            plannerItemModel.Name = plannerItemName;
-            plannerItemModel.Date = plannerItemDate;
-            plannerItemModel.Recipe = plannerItemRecipe;
-            allPlannerItems.Add(plannerItemModel);
-
-            //Console.WriteLine("Here's our date" + plannerItemDate);
-
-            MainPlannerGrid.Visibility = Visibility.Visible;
-            PlannerItemGrid.Visibility = Visibility.Collapsed;
-
-            initSources();
-            updateRecipesByDate();
+            saveRecipe();
         }
 
         private void Insert_Recipe_Click(object sender, RoutedEventArgs e)
@@ -107,6 +91,27 @@ namespace Inventory.WPF
                 selectedPlannerItems = allPlannerItems.FindAll(x => x.Date.CompareTo(plannerCalendar.SelectedDate) == 0);
                 initSources();
             }
+        }
+
+        private void saveRecipe()
+        {
+            String plannerItemName = MealName.Text;
+            DateTime plannerItemDate = tempDateTime;
+            RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
+            //TempPlannerItemModel tempPlannerItemModel = new TempPlannerItemModel(plannerItemName, plannerItemDate, plannerItemRecipes);
+            PlannerItemModel plannerItemModel = new PlannerItemModel();
+            plannerItemModel.Name = plannerItemName;
+            plannerItemModel.Date = plannerItemDate;
+            plannerItemModel.Recipe = plannerItemRecipe;
+            allPlannerItems.Add(plannerItemModel);
+
+            //Console.WriteLine("Here's our date" + plannerItemDate);
+
+            MainPlannerGrid.Visibility = Visibility.Visible;
+            PlannerItemGrid.Visibility = Visibility.Collapsed;
+
+            initSources();
+            updateRecipesByDate();
         }
 
         //Domain Calls
