@@ -68,8 +68,8 @@ while( my $line = <$url_list_fh> )
 	# scrape and get the recipe
 	my %recipe = scrape_recipe( $url );
 
-	print $recipe{ 'ingredient_name_desc' }[14];
-	
+	get_db_inserts( \%recipe );		
+
 	exit();	
 
 	# add recipe to the recipe array

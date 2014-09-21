@@ -9,7 +9,7 @@ require 'SiteScrapers/common.pl';
 
 my $i;
 my $logger = get_logger();
-our $recipe_ptr;
+#our $recipe_ptr;
 
 # Parts we have to retrieve and clean up
 #	Recipe Name
@@ -71,22 +71,40 @@ sub scrape_recipe
 	return %recipe;	
 }
 
+# ----------------------------------------------------------
+# get_db_inserts - function that will take a recipe object
+#	and compose the queries to insert the recipe into
+#	the database
+#
+# params	recipe_object
+# return	@array of mysql statments on success, 
+#			false on error/failure logged
+# ----------------------------------------------------------
 sub get_db_inserts
 {
-	my %recipe  = shift;
+	my $recipe_pointer  = shift;
+	my %recipe = %{ $recipe_pointer };
 	my @inserts = ();
 
-	if( !defined %recipe )
+	if( !defined \%recipe )
 	{
 		$logger->error( "Error Creating Inserts. Recipe dump below: \n" . Dumper( %recipe ) );
 		return 0;
 	}
 
-	for( my $i = 0; $i < scalar( @{ $recipe{ 'ingredient_amounts' } ); $i++ )
+	for( $i = 0; $i < scalar( @{ $recipe{ 'ingredient_amounts' } } ); $i++ )
 	{
-		
+		my %amount = split_amount( $recipe{ 'ingredient_amounts' }[$i] );
 	}
 
+	# ingredient			INSERT / SELECT (include both)
+	# measure    			INSERT / SELECT (include both)
+	# recipe     			INSERT
+	# recipe_direction		INSERT
+	# foreach ingredient in recipe
+	#	recipe_ingredient	INSERT
+
+	return 1;
 }
 
 # for spliting the ingredient_amounts entries into quantity and measure
