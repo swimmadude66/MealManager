@@ -25,7 +25,6 @@ namespace Inventory.WPF
             InitializeComponent();
             InitializePantry();
             InitializeRecipes();
-            InitializePlanner();
         }
 
         public void InitializePantry()
@@ -35,18 +34,11 @@ namespace Inventory.WPF
             /*
             AddIngredient addIngredientControl = new AddIngredient();
             this.Activate();
-             */
+             */ 
         }
-
         public void InitializeRecipes()
         {
             RecipeControl recipeControl = new RecipeControl();
-            this.Activate();
-        }
-
-        public void InitializePlanner()
-        {
-            PlannerControl plannerControl = new PlannerControl();
             this.Activate();
         }
     }
