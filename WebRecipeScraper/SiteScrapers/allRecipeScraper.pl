@@ -64,9 +64,9 @@ sub scrape_recipe
  	$recipe{ 'name' }        	  = trim( ${ $data }{ 'recipe_name' } );
 	$recipe{ 'description' } 	  = trim( ${ $data }{ 'recipe_description' } );
 	$recipe{ 'yield' }       	  = trim( ${ $data }{ 'recipe_yield' } );
-	$recipe{ 'ingredient_name_desc' } = trim( ${ $data }{ 'ingredient_name_desc' } );
-	$recipe{ 'ingredient_amounts' }   = trim( ${ $data }{ 'ingredient_amounts' } );
-	$recipe{ 'directions' }	       	  = trim( ${ $data }{ 'recipe_directions' } );
+	$recipe{ 'ingredient_name_desc' } = ${ $data }{ 'ingredient_name_desc' };
+	$recipe{ 'ingredient_amounts' }   = ${ $data }{ 'ingredient_amounts' };
+	$recipe{ 'directions' }	       	  = ${ $data }{ 'recipe_directions' };
 
 	return %recipe;	
 }
@@ -95,28 +95,32 @@ sub get_db_inserts
 	for( $i = 0; $i < scalar( @{ $recipe{ 'ingredient_amounts' } } ); $i++ )
 	{
 		my %amount = split_amount( $recipe{ 'ingredient_amounts' }[$i] );
+
+		$ingredient_insert = 'INSERT INTO ingredient (id, name) VALUES (NULL, "' . $recipe{ 'ingredient_name_desc' }[$i] . '")';
+		$measure_insert = 'INSERT INTO measure (id, name) VALUES (NULL, "' . $amount{ 'measure' } .'")';
+		
+		push( @inserts, $ingredient_insert);
+		push( @inserts, $measure_insert);
 	}
 
 	# ingredient			INSERT / SELECT (include both)
-	$ingredient_select = 'SELECT * FROM ingredient WHERE name = "' . $recipe{ 'name' } . '"';
-	$ingrediend_insert = 'INSERT INTO ingredient (id, name) VALUES (NULL, "' . $recipe{ 'name' } . '")';
 	# measure    			INSERT / SELECT (include both)
-	$measure_select = 'SELECT * FROM measure WHERE name = "' . $recipe{ 'measure' } .'"';
-	$measure_insert = 'INSERT INTO measure (id, name) VALUES (NULL, "' . $recipe{ 'measure' } .'")';
 	# recipe     			INSERT
-	$recipe_insert = 'INSERT INTO recipe (id, name, description, yield, url) VALUES '
-		       . '(NULL, "' . $recipe{ 'name' } .'", "' . $recipe{ 'descrition' }
-		       . '", "' . $recipe{ 'yield' } . '", "' . $recipe{ 'url' } . '")';
+	#$recipe_insert = 'INSERT INTO recipe (id, name, description, yield, url) VALUES '
+	#	       . '(NULL, "' . $recipe{ 'name' } .'", "' . $recipe{ 'descrition' }
+	#	       . '", "' . $recipe{ 'yield' } . '", "' . $recipe{ 'url' } . '")';
 	# foreach direction in recipe
 	#	recipe_direction		INSERT
-	$recipe_direction_insert = 'INSERT INTO recipe_direction (id, recipe_id, step, direction) VALUES '
-				 . '(NULL, RECIPE_ID, INDEX, "' . $recipe{ 'directions' }[INDEX] . '")';
+	#$recipe_direction_insert = 'INSERT INTO recipe_direction (id, recipe_id, step, direction) VALUES '
+	#			 . '(NULL, RECIPE_ID, INDEX, "' . $recipe{ 'directions' }[INDEX] . '")';
 	# foreach ingredient in recipe
 	#	recipe_ingredient	INSERT
-	$recipe_ingredient_insert = 'INSERT INTO recipe_ingredient (id, recipe_id, ingredient_id, quantity, measure_id)'
-				  . 'VALUES (NULL, RECIPE_ID, INGREDIENT_ID, QUANTITY, MEASURE_ID)';
+	#$recipe_ingredient_insert = 'INSERT INTO recipe_ingredient (id, recipe_id, ingredient_id, quantity, measure_id)'
+	#			  . 'VALUES (NULL, RECIPE_ID, INGREDIENT_ID, QUANTITY, MEASURE_ID)';
 
-	return 1;
+
+
+	return @inserts;
 }
 
 # for spliting the ingredient_amounts entries into quantity and measure

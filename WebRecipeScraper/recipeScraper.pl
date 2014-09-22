@@ -68,7 +68,8 @@ while( my $line = <$url_list_fh> )
 	# scrape and get the recipe
 	my %recipe = scrape_recipe( $url );
 
-	get_db_inserts( \%recipe );		
+	my @inserts = get_db_inserts( \%recipe );		
+	print Dumper( @inserts );
 
 	exit();	
 
