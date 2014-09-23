@@ -47,7 +47,7 @@ sub scrape_recipe
 	if( $data == 0 )
 	{
 		$logger->error( "Error Scraping URL: $url" );
-		return 0;
+		return ( 0 => 0 );
 	}
 
 	# clean up and fill in what can be put in immediately

@@ -40,20 +40,21 @@ else
 log_init();
 
 my $logger = get_logger();
+my $start_time = time();
 
 $logger->info( "----- Starting Recipe Scrape -----" );
-
 
 #our $recipe_ptr = \@recipes;
 my $count = 0;
 my $i = 0;
 
 open my $url_list_fh, $url_list_file or die "Could not open $url_list_file: $!";
+open INSERTS, '>ingredient-measure-inserts-9-22.sql';
 while( my $line = <$url_list_fh> )  
 {   
 	my $name = '', $url = '';
 
-	if( $line =~ /^([^,]*), ([^,]*), .*$/ )
+	if( $line =~ /^(.*), (http:[^,]*), .*$/ )
 	{
 		$name = $1 if( defined $1 );
 		$url = $2 if( defined $2 );
@@ -67,19 +68,29 @@ while( my $line = <$url_list_fh> )
 	# regex text for the url to match to the correct scraper script
 	# scrape and get the recipe
 	my %recipe = scrape_recipe( $url );
+	next if( defined $recipe{ 0 } );
 
 	my @inserts = get_db_inserts( \%recipe );		
-	print Dumper( @inserts );
-
-	exit();	
+	
+	foreach my $insert ( @inserts )
+	{
+		print INSERTS "$insert\n";
+	}
 
 	# add recipe to the recipe array
 
 	$count++;
+
+	if( $count % 50 == 0 )
+	{
+		my $curr_exec = time() - $start_time;
+		print "$count recipes scraped ($curr_exec seconds) \n"; 
+	}
 }
 
 # dump JSON array to file
 # insert into DB (more details TBD)
 
+close INSERTS;
 close $url_list_fh;
 
