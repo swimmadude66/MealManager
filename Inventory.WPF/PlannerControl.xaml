@@ -24,7 +24,7 @@
             <Label Content="Recipe" HorizontalAlignment="Left" Margin="86,65,0,0" Width="70" RenderTransformOrigin="0.336,25.192" Height="26" VerticalAlignment="Top" Grid.Column="1"/>
             <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="175,66,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False" Grid.Column="1"/>
             <Label Content="Meal Name" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="20,68,0,0"/>
-            <TextBox x:Name="MealName" HorizontalAlignment="Left" Height="23" Margin="109,68,0,0" TextWrapping="Wrap" Text='Type your Meal Name Here'  VerticalAlignment="Top" Width="210"/>
+            <TextBox x:Name="MealName" HorizontalAlignment="Left" Height="23" Margin="109,68,0,0" TextWrapping="Wrap" Text='Type your Meal Name Here'  VerticalAlignment="Top" Width="210" AcceptsReturn="False" AcceptsTab="False"/>
             <DatePicker x:Name="PlannerDatePicker" HorizontalAlignment="Left" Margin="451,68,0,0" VerticalAlignment="Top" Width="208"/>
             <Label Content="Meal Date" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="362,67,0,0"/>
         </Grid>

@@ -27,21 +27,19 @@ namespace Inventory.WPF
     /// </summary>
     public partial class PlannerControl : UserControl
     {
-
-        private List<PlannerItemModel> allPlannerItems;
-        private List<PlannerItemModel> selectedPlannerItems;
-        private List<Appointment> _myAppointmentsList;
-        private DateTime tempDateTime;
+        //private List<Appointment> _myAppointmentsList;
+        public List<PlannerItemModel> allPlannerItems;
+        public List<RecipeModel> availableRecipes;
+        public List<Appointment> plannerAppointments;
 
 
         public PlannerControl()
         {
             InitializeComponent();
             allPlannerItems = new List<PlannerItemModel>();
-            selectedPlannerItems = new List<PlannerItemModel>();
-            _myAppointmentsList = new List<Appointment>();
+            availableRecipes = new List<RecipeModel>();
+            plannerAppointments = new List<Appointment>();
             PlannerDatePicker.SelectedDate = DateTime.Today;
-            Loaded += Planner_Loaded;
             initSources();
             this.DataContext = this;
             
@@ -49,9 +47,9 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            RecipeCombo.ItemsSource = getRecipes();
-            //PlannerGrid.ItemsSource = getPlannerItems();
-            //PlannerGrid.Items.Refresh();
+            availableRecipes = getRecipes();
+            RecipeCombo.ItemsSource = availableRecipes;
+            SetAppointments();
         }
 
         private void SetAppointments()
@@ -59,71 +57,72 @@ namespace Inventory.WPF
             //-- Use whatever function you want to load the MonthAppointments list, I happen to have a list filled by linq that has
             //   many (possibly the past several years) of them loaded, so i filter to only pass the ones showing up in the displayed
             //   month.  Note that the "setter" for MonthAppointments also triggers a redraw of the display.
-            AptCalendar.MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.StartTime != null && Convert.ToDateTime(apt.StartTime).Month == this.AptCalendar.DisplayStartDate.Month && Convert.ToDateTime(apt.StartTime).Year == this.AptCalendar.DisplayStartDate.Year));
-        }
+            //AptCalendar.MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.StartTime != null && Convert.ToDateTime(apt.StartTime).Month == this.AptCalendar.DisplayStartDate.Month && Convert.ToDateTime(apt.StartTime).Year == this.AptCalendar.DisplayStartDate.Year));
+            plannerAppointments.Clear();
 
-        private void Planner_Loaded(Object sender, EventArgs eventArgs){
-            Random rand = new Random(System.DateTime.Now.Second);
-
-            for (int i = 1; i <= 50; i++)
+            foreach (PlannerItemModel plannerItemModel in allPlannerItems)
             {
-                Appointment apt = new Appointment();
-                apt.AppointmentID = i;
-                apt.StartTime = new System.DateTime(System.DateTime.Now.Year, rand.Next(1, 12), rand.Next(1, System.DateTime.DaysInMonth(System.DateTime.Now.Year, System.DateTime.Now.Month)));
-                apt.EndTime = apt.StartTime;
-                apt.Subject = "Random apt, blah blah";
-                _myAppointmentsList.Add(apt);
+                Appointment appointment = new Appointment();
+                appointment.StartTime = plannerItemModel.Date;
+                appointment.EndTime = appointment.StartTime;
+                appointment.Subject = plannerItemModel.Name;
+                //appointment.AppointmentID = plannerItemModel.ID;
+                appointment.Details = plannerItemModel.Recipe.Name;
+                plannerAppointments.Add(appointment);
             }
-
-            SetAppointments();
+            AptCalendar.MonthAppointments = plannerAppointments;
         }
 
-        //private void plannerCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    updateRecipesByDate();
-        //    //Console.WriteLine("Something at all");
-        //    //Console.WriteLine(plannerCalendar.DisplayDate);
-        //}
-
-        //private void recipeGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    Console.Write(e.ToString());
-        //}
-
-        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        public void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            saveRecipe();
+            if(isValidInput())
+                saveRecipe();
         }
 
-        private void updateRecipesByDate()
+        public bool isValidInput()
         {
-            if (allPlannerItems != null && allPlannerItems.Count > 0)
+            return isValidMealName(MealName.Text) && isValidMealDate(PlannerDatePicker.SelectedDate) && isValidRecipe((RecipeModel) RecipeCombo.SelectedItem);
+        }
+
+        public bool isValidMealName(String mealName)
+        {
+            return Regex.IsMatch(mealName, @"[a-zA-Z0-9]");
+        }
+
+        public bool isValidMealDate(DateTime? mealDate)
+        {
+            DateTime? testedDateTime = mealDate;
+
+            if (testedDateTime != null && testedDateTime.HasValue && (testedDateTime.Value.CompareTo(System.DateTime.Today) >= 0))
             {
-                tempDateTime = PlannerDatePicker.SelectedDate ?? default(DateTime);
-                selectedPlannerItems = allPlannerItems.FindAll(x => x.Date.CompareTo(PlannerDatePicker.SelectedDate) == 0);
-                initSources();
+                return true;
             }
+            return false;
+        }
+
+        public bool isValidRecipe(RecipeModel mealRecipe)
+        {
+            if (availableRecipes.Contains(mealRecipe))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void saveRecipe()
         {
-            String plannerItemName = MealName.Text;
-            DateTime plannerItemDate = tempDateTime;
+            String plannerItemName = MealName.Text.Trim();
+            DateTime plannerItemDate = PlannerDatePicker.SelectedDate ?? System.DateTime.Today;
             RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
-            //TempPlannerItemModel tempPlannerItemModel = new TempPlannerItemModel(plannerItemName, plannerItemDate, plannerItemRecipes);
+
             PlannerItemModel plannerItemModel = new PlannerItemModel();
             plannerItemModel.Name = plannerItemName;
             plannerItemModel.Date = plannerItemDate;
             plannerItemModel.Recipe = plannerItemRecipe;
+
             allPlannerItems.Add(plannerItemModel);
 
-            //Console.WriteLine("Here's our date" + plannerItemDate);
-
-            //MainPlannerGrid.Visibility = Visibility.Visible;
-            //PlannerItemGrid.Visibility = Visibility.Collapsed;
-
             initSources();
-            //updateRecipesByDate();
         }
 
         //Domain Calls
