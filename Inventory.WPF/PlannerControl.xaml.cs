@@ -32,7 +32,6 @@ namespace Inventory.WPF
         public List<RecipeModel> availableRecipes;
         public List<Appointment> plannerAppointments;
 
-
         public PlannerControl()
         {
             InitializeComponent();
@@ -42,7 +41,6 @@ namespace Inventory.WPF
             PlannerDatePicker.SelectedDate = DateTime.Today;
             initSources();
             this.DataContext = this;
-            
         }
 
         private void initSources()
@@ -114,12 +112,10 @@ namespace Inventory.WPF
             String plannerItemName = MealName.Text.Trim();
             DateTime plannerItemDate = PlannerDatePicker.SelectedDate ?? System.DateTime.Today;
             RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
-
             PlannerItemModel plannerItemModel = new PlannerItemModel();
             plannerItemModel.Name = plannerItemName;
             plannerItemModel.Date = plannerItemDate;
             plannerItemModel.Recipe = plannerItemRecipe;
-
             allPlannerItems.Add(plannerItemModel);
 
             initSources();
