@@ -55,6 +55,23 @@ namespace Inventory.WPF
             }          
         }
 
+        private void editRow(object sender, MouseButtonEventArgs e)
+        {
+            Console.Write("You found a secret");
+
+            DataGrid pantryList = sender as DataGrid;
+            PantryItemModel itemToEdit = pantryList.SelectedItem as PantryItemModel;
+
+            //Do things with this model.
+            //Maybe populate lower list
+            //Or highlight row and allow edit
+            //Think on it
+
+            //Ask adam for a save runthrough
+            //Also ask him why his code sucks
+
+        }
+
         //Domain Calls
 
          public List<PantryItemModel> getPantry()
