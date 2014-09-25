@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Inventory.Tools
@@ -89,37 +90,30 @@ namespace Inventory.Tools
             }
         }
 
-        public static String simplifyFraction(double dec){
-            string str = dec.ToString();
-            if (str.Contains('.'))
-            {
-                String[] parts = str.Split('.');
-                long whole = long.Parse(parts[0]);
-                long numerator = long.Parse(parts[1]);
-                long denominator = (long)Math.Pow(10, parts[1].Length);
-                long divisor = GCD(numerator, denominator);
-                long num = numerator / divisor;
-                long den = denominator / divisor;
-                
-                String fraction = num + "/" + den;
-                if (whole > 0)
-                {
-                    return whole + " " + fraction;
-                }
-                else
-                {
-                    return fraction;
-                }
-            }
-            else
-            {
-                return str;
-            }
-        }
-
-        public static long GCD(long a, long b)
+        public static double FractionToDecimal(string fraction)
         {
-            return b == 0 ? a : GCD(b, a % b);
+            if (Regex.IsMatch(fraction, @"^([0-9]+(\.[0-9]+)?)$"))
+            {
+                return Double.Parse(fraction);
+            }
+            else if (Regex.IsMatch(fraction, @"^[0-9]+/[0-9]+$"))
+            {
+                double a = double.Parse(fraction.Substring(0, fraction.IndexOf('/')));
+                double b = double.Parse(fraction.Substring(fraction.IndexOf('/') + 1));
+                if (b != 0)
+                    return a / b;
+            }
+            else if (Regex.IsMatch(fraction, @"^[0-9]+\s+[0-9]+/[0-9]+$"))
+            {
+                string[] parts = Regex.Split(fraction, @"\s+");
+                double whole = double.Parse(parts[0]);
+                fraction = parts[1];
+                double a = double.Parse(fraction.Substring(0, fraction.IndexOf('/')));
+                double b = double.Parse(fraction.Substring(fraction.IndexOf('/') + 1));
+                if (b != 0)
+                    return whole + (a / b);
+            }
+            return -1;
         }
 
     }

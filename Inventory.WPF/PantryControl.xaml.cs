@@ -98,18 +98,8 @@ namespace Inventory.WPF
                 measureName = ddlMeasure.Text.Trim(); 
             }
 
-            double quant = -1.0;
             string quantstring = txtQuantity.Text.Trim();
-            if (Regex.IsMatch(quantstring, @"^([0-9]+(\.[0-9]+)?)$"))
-            {
-                quant = Double.Parse(quantstring);
-            }
-            else if (Regex.IsMatch(quantstring, @"^([0-9]+(\.[0-9]+)?)/([0-9]+(\.[0-9]{1,2})?)$"))
-            {
-                double a = double.Parse(quantstring.Substring(0, quantstring.IndexOf('/')));
-                double b = double.Parse(quantstring.Substring(quantstring.IndexOf('/') + 1));
-                quant = a / b;
-            }
+            double quant = Tools.ToolBox.FractionToDecimal(quantstring);            
 
             if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant < (1.0/64.0))
                 return false;
