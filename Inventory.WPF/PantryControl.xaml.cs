@@ -57,7 +57,7 @@ namespace Inventory.WPF
 
         //Domain Calls
 
-         public List<PantryItemModel> getPantry()
+        public List<PantryItemModel> getPantry()
         {
             IPantryManager manager = ManagerFactory.GetPantryManager();
             return manager.GetPantryContents();
