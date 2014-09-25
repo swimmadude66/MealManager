@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<!-- Select a Product Configuration -->
+		<InstallShieldProductConfiguration>Express</InstallShieldProductConfiguration>
+		<!-- Select a Visual Studio Configuration / InstallShield Release -->
+		<Configuration>Debug</Configuration>
+		<InstallShieldRelease>$(Configuration)</InstallShieldRelease>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- The InstallShieldProject item selects the project to build -->
+		<InstallShieldProject Include="$(MSBuildProjectDirectory)\$(MSBuildProjectName).isl"/>
+		<!-- The InstallShieldReleaseFlags sets Release Flags -->
+		<!--<InstallShieldReleaseFlags Include=""/>-->
+		<!-- The InstallShieldMergeModulePath specifies what directories are
+		searched for Merge Modules -->
+		<!--<InstallShieldMergeModulePath Include=""/>-->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The ProjectReference items refer to any Visual Studio solutions you want to automatically probe for Project Output Groups.  -->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The TaggedOutputs items allow you to explicitly add extra files to output groups. Each item must include both Name and OutputGroup, as well as TargetPath metadata values. -->
+		<!--<TaggedOutputs Include="C:\My Test Exe.exe">
+			<Name>My Test Project</Name>
+			<OutputGroup>Primary output</OutputGroup>
+			<TargetPath>My Test Exe.exe</TargetPath>
+		</TaggedOutputs> -->
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2013Limited\InstallShield.targets"/>
+	<ItemGroup>
+		<ProjectReference Include="..\Inventory.Data\Inventory.Data.csproj">
+			<Name>Inventory.Data</Name>
+			<Project>{C1B8669B-AC9A-4FE1-94B2-FC804AAA739B}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Inventory.Data.Factory\Inventory.Data.Factory.csproj">
+			<Name>Inventory.Data.Factory</Name>
+			<Project>{9F262594-1B2A-4ED8-A549-FC34C1B6C7B6}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Inventory.Data.Interfaces\Inventory.Data.Interfaces.csproj">
+			<Name>Inventory.Data.Interfaces</Name>
+			<Project>{3C204A49-B70C-4DAB-89A4-BAB0EEA7A257}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Inventory.Managers\Inventory.Managers.csproj">
+			<Name>Inventory.Managers</Name>
+			<Project>{9BCDE153-A095-430E-A92A-575F50C51D3F}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Inventory.ManagerFactory\Inventory.Managers.Factory.csproj">
+			<Name>Inventory.Managers.Factory</Name>
+			<Project>{C459BF17-CCCB-4D42-8099-E6849FCC9C41}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Inventory.Models\Inventory.Models.csproj">
+			<Name>Inventory.Models</Name>
+			<Project>{9E15CC8C-9B52-49F9-8544-7FC76FACCE05}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Inventory.WPF\Inventory.WPF.csproj">
+			<Name>Inventory.WPF</Name>
+			<Project>{63072920-C094-40B8-A775-5B530E3C556C}</Project>
+		</ProjectReference>
+	</ItemGroup>
+</Project>
