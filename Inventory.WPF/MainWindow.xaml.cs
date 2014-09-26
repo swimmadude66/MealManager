@@ -23,9 +23,6 @@ namespace Inventory.WPF
         public MainWindow()
         {
             InitializeComponent();
-            InitializePantry();
-            InitializeRecipes();
-            InitializePlanner();
         }
 
         public void InitializePantry()

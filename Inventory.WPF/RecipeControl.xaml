@@ -43,7 +43,7 @@
             <Button x:Name="btnAddIngredient" Content="Add" HorizontalAlignment="Left" Margin="425,469,0,0" VerticalAlignment="Top" Width="75" Click="btnAddIngredient_Click"/>
             <DataGrid x:Name="dgIngredients" HorizontalAlignment="Left" Margin="50,500,0,0" VerticalAlignment="Top" Width="450" Height="250" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Binding="{Binding Quantity}" IsReadOnly="True" Width="50"/>
+                    <DataGridTextColumn Header="#" Binding="{Binding QuantityString}" IsReadOnly="True" Width="50"/>
                     <DataGridTextColumn Header="Measure" Binding="{Binding MeasureName}" IsReadOnly="True" Width="125"/>
                     <DataGridTextColumn Header="Ingredient" Binding="{Binding IngredientName}" IsReadOnly="True" Width="275"/>
                 </DataGrid.Columns>

@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TestFractions.cs" />
     <Compile Include="TestPlanner.cs" />
     <Compile Include="TestSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
