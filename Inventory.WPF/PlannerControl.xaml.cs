@@ -31,45 +31,78 @@ namespace Inventory.WPF
         public List<PlannerItemModel> allPlannerItems;
         public List<RecipeModel> availableRecipes;
         public List<Appointment> plannerAppointments;
+        public List<Day> Days { get; set; }
+        public List<string> DayNames { get; set; }
+        public DateTime CurrentDate { get; set; }
 
         public PlannerControl()
         {
             InitializeComponent();
             allPlannerItems = new List<PlannerItemModel>();
             availableRecipes = new List<RecipeModel>();
-            plannerAppointments = new List<Appointment>();
+            //plannerAppointments = new List<Appointment>();
             PlannerDatePicker.SelectedDate = DateTime.Today;
             initSources();
             this.DataContext = this;
+            CurrentDate = DateTime.Today;
+            DayNames = new List<string> { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+            Days = new List<Day>();
+            BuildCalendar(DateTime.Today);
         }
 
         private void initSources()
         {
             availableRecipes = getRecipes();
             RecipeCombo.ItemsSource = availableRecipes;
-            SetAppointments();
+            //SetAppointments();
         }
 
-        private void SetAppointments()
+        public void BuildCalendar(DateTime targetDate)
         {
-            //-- Use whatever function you want to load the MonthAppointments list, I happen to have a list filled by linq that has
-            //   many (possibly the past several years) of them loaded, so i filter to only pass the ones showing up in the displayed
-            //   month.  Note that the "setter" for MonthAppointments also triggers a redraw of the display.
-            //AptCalendar.MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.StartTime != null && Convert.ToDateTime(apt.StartTime).Month == this.AptCalendar.DisplayStartDate.Month && Convert.ToDateTime(apt.StartTime).Year == this.AptCalendar.DisplayStartDate.Year));
-            plannerAppointments.Clear();
+            Days.Clear();
 
-            foreach (PlannerItemModel plannerItemModel in allPlannerItems)
+            //Calculate when the first day of the month is and work out an 
+            //offset so we can fill in any boxes before that.
+            DateTime d = new DateTime(targetDate.Year, targetDate.Month, 1);
+            int offset = DayOfWeekNumber(d.DayOfWeek);
+            if (offset != 1) d = d.AddDays(-offset);
+
+            //Show 6 weeks each with 7 days = 42
+            for (int box = 1; box <= 42; box++)
             {
-                Appointment appointment = new Appointment();
-                appointment.StartTime = plannerItemModel.Date;
-                appointment.EndTime = appointment.StartTime;
-                appointment.Subject = plannerItemModel.Name;
-                //appointment.AppointmentID = plannerItemModel.ID;
-                appointment.Details = plannerItemModel.Recipe.Name;
-                plannerAppointments.Add(appointment);
+                Day day = new Day();
+                day.Date = d;
+                day.IsTargetMonth = (d.Month == DateTime.Today.Month);
+                Days.Add(day);
+                d = d.AddDays(1);
             }
-            AptCalendar.MonthAppointments = plannerAppointments;
         }
+
+        private static int DayOfWeekNumber(DayOfWeek dow)
+        {
+            return Convert.ToInt32(dow.ToString("D"));
+        }
+
+        //private void SetAppointments()
+        //{
+        //    //-- Use whatever function you want to load the MonthAppointments list, I happen to have a list filled by linq that has
+        //    //   many (possibly the past several years) of them loaded, so i filter to only pass the ones showing up in the displayed
+        //    //   month.  Note that the "setter" for MonthAppointments also triggers a redraw of the display.
+        //    //AptCalendar.MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.StartTime != null && Convert.ToDateTime(apt.StartTime).Month == this.AptCalendar.DisplayStartDate.Month && Convert.ToDateTime(apt.StartTime).Year == this.AptCalendar.DisplayStartDate.Year));
+        //    plannerAppointments.Clear();
+
+        //    foreach (PlannerItemModel plannerItemModel in allPlannerItems)
+        //    {
+        //        Appointment appointment = new Appointment();
+        //        appointment.StartTime = plannerItemModel.Date;
+        //        appointment.EndTime = appointment.StartTime;
+        //        appointment.Subject = plannerItemModel.Name;
+        //        //appointment.AppointmentID = plannerItemModel.ID;
+        //        appointment.Details = plannerItemModel.Recipe.Name;
+        //        plannerAppointments.Add(appointment);
+        //    }
+        //    AptCalendar.MonthAppointments = plannerAppointments;
+        //}
 
         public void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
@@ -134,9 +167,12 @@ namespace Inventory.WPF
             //IRecipeManager manager = ManagerFactory.GetRecipeManager();
             //return manager.getRecipes();
             return allPlannerItems;
-        }
+        }     
+    }
 
-        
-        
+    public class Day
+    {
+        public bool IsTargetMonth { get; set; }
+        public DateTime Date { get; set; }
     }
 }
