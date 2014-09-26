@@ -30,34 +30,51 @@ namespace Inventory.Data
             }
         }
 
-        public void SavePantryItem(int ingredient, double quantity, int measure, string description, DateTime? expires)
+        public void SavePantryItem(PantryItemModel pantryItem, bool isEdit)
         {
             try
             {
                 using (var context = new InventoryEntities())
                 {
-                    PantryItem dup = (from p in context.PantryItem
-                                          where p.IngredientId == ingredient
-                                          && p.Description == description
-                                          && p.ExpirationDate == expires
-                                          && p.MeasureId == measure
-                                          select p).FirstOrDefault();
-                    if(dup == null)
+                    if (isEdit)
                     {
-                        PantryItem item = new PantryItem();
-                        item.Description = description;
-                        item.IngredientId = ingredient;
-                        item.MeasureId = measure;
-                        item.Quantity = quantity;
-                        if(expires != null)
-                            item.ExpirationDate = expires;
-                        context.PantryItem.Add(item);
+                        PantryItem item = (from p in context.PantryItem
+                                           where p.ID == pantryItem.ID
+                                           select p).FirstOrDefault();
+                        item.Description = pantryItem.Description;
+                        item.IngredientId = pantryItem.IngredientId;
+                        item.MeasureId = pantryItem.MeasureId;
+                        item.Quantity = pantryItem.Quantity;
+                        if (pantryItem.ExpirationDate != null)
+                            item.ExpirationDate = pantryItem.ExpirationDate;
                         context.SaveChanges();
                     }
                     else
                     {
-                        dup.Quantity += quantity;
-                        context.SaveChanges();
+                        PantryItem dup = (from p in context.PantryItem
+                                          where p.IngredientId == pantryItem.IngredientId
+                                          && p.Description == pantryItem.Description
+                                          && p.ExpirationDate == pantryItem.ExpirationDate
+                                          && p.MeasureId == pantryItem.MeasureId
+                                          select p).FirstOrDefault();
+
+                        if (dup == null)
+                        {
+                            PantryItem item = new PantryItem();
+                            item.Description = pantryItem.Description;
+                            item.IngredientId = pantryItem.IngredientId;
+                            item.MeasureId = pantryItem.MeasureId;
+                            item.Quantity = pantryItem.Quantity;
+                            if (pantryItem.ExpirationDate != null)
+                                item.ExpirationDate = pantryItem.ExpirationDate;
+                            context.PantryItem.Add(item);
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            dup.Quantity += pantryItem.Quantity;
+                            context.SaveChanges();
+                        }
                     }
                 }
             }

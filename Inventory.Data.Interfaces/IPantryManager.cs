@@ -10,6 +10,6 @@ namespace Inventory.Data.Interfaces
     public interface IPantryManager
     {
         List<PantryItemModel> GetPantryContents();
-        void SavePantryItem(int ingredient, double quantity, int measure, string description, DateTime? expires);
+        void SavePantryItem(PantryItemModel pantryItem, bool isEdit);
     }
 }

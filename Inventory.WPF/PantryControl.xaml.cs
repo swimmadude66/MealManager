@@ -67,6 +67,8 @@ namespace Inventory.WPF
             //Or highlight row and allow edit
             //Think on it
 
+            //Change save method args for manager to model and isedit flag
+
             //Ask adam for a save runthrough
             //Also ask him why his code sucks
 
@@ -125,9 +127,17 @@ namespace Inventory.WPF
 
             if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant <=0)
                 return;
+            //Instantiate pantry Item and send
+            PantryItemModel item = new PantryItemModel();
+
+            item.IngredientId = getIngredientId(name);
+            item.Quantity = quant;
+            item.MeasureId = getMeasureID(measureName);
+            item.Description = description;
+            item.ExpirationDate = expires;
 
             IPantryManager manager = ManagerFactory.GetPantryManager();
-            manager.SavePantryItem(getIngredientId(name), quant, getMeasureID(measureName), description, expires);
+            manager.SavePantryItem(item, false);
         }
 
         private List<IngredientModel> getIngredients()

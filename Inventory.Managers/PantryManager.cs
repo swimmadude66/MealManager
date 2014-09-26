@@ -24,9 +24,11 @@ namespace Inventory.Managers
             return _pantryDao.GetPantryContents();
         }
 
-        public void SavePantryItem(int ingredient, double quantity, int measure, string description,DateTime? expires)
+        //add get by id
+
+        public void SavePantryItem(PantryItemModel pantryItem, bool isEdit)
         {
-            _pantryDao.SavePantryItem(ingredient, quantity, measure, description, expires);
+            _pantryDao.SavePantryItem(pantryItem, isEdit);
         }
     }
 }
