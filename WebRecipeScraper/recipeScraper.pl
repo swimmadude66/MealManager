@@ -70,12 +70,19 @@ while( my $line = <$url_list_fh> )
 	my %recipe = scrape_recipe( $url );
 	next if( defined $recipe{ 0 } );
 
-	my @inserts = get_db_inserts( \%recipe );		
+	print Dumper( %recipe );
+
+	#print $recipe{ 'name' } . "\n";
+
+	#my @inserts = get_db_inserts( \%recipe );		
+
+	exit();
 	
-	foreach my $insert ( @inserts )
-	{
-		print INSERTS "$insert\n";
-	}
+#	foreach my $insert ( @inserts )
+#	{
+		#print INSERTS "$insert\n";
+		#print "$insert\n";
+#	}
 
 	# add recipe to the recipe array
 

@@ -140,4 +140,46 @@ sub db_disconnect
 	}
 }
 
+
+sub fraction_to_double
+{
+        return 0 if( is_missing_or_empty( $_[0] ) );
+ 		
+ 		my $num = $_[0];
+ 		my $value = 0;
+
+        return $num if( $num !~ /[\/]/ );
+
+        if( $num =~ /(\d+)[\/](\d+)/ )
+        {
+                $value = $1 if( !is_missing_or_empty( $1 ) );
+
+                if( !is_missing_or_empty( $2 ) )
+                {
+                        $value = $value / $2;
+                }
+        }
+
+        return $value;
+}
+
+sub is_missing_or_empty
+{
+	return 1 if( !defined $_[0] );
+	return 1 if( $_[0] eq '' );
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 1;

@@ -1,3 +1,6 @@
 *.suo
 */*/Debug/
 WebRecipeScraper/logs/
+test*
+temp_url.txt
+
