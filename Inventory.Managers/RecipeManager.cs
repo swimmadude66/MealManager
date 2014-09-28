@@ -17,31 +17,18 @@ namespace Inventory.Managers
         private IRecipeDAO _recipeDAO;
         private IIngredientDAO _ingredientDAO;
         private IMeasureDAO _measureDAO;
+        private IPlannerDAO _plannerDAO;
 
-        public RecipeManager (IRecipeDAO recipeDAO, IIngredientDAO ingredientDAO, IMeasureDAO measureDAO)
+        public RecipeManager (IRecipeDAO recipeDAO, IIngredientDAO ingredientDAO, IMeasureDAO measureDAO, IPlannerDAO plannerDAO)
         {
             _recipeDAO = recipeDAO;
             _ingredientDAO = ingredientDAO;
             _measureDAO = measureDAO;
+            _plannerDAO = plannerDAO;
         }
 
         public List<RecipeModel> getRecipes(){
-            List<RecipeModel> rawList = _recipeDAO.getRecipes();
-            foreach (RecipeModel rec in rawList)
-            {
-                getRecipeData(rec);
-            }
-            return rawList;
-        }
-
-        public void getRecipeData(RecipeModel rec)
-        {
-            rec.Items = _recipeDAO.getRecipeItems(rec.ID);
-            rec.IngredientIDs = new List<int>();
-            foreach (RecipeItemModel item in rec.Items)
-            {
-                rec.IngredientIDs.Add(item.Ingredient.ID);
-            }
+            return _recipeDAO.getRecipes();
         }
         
         public int SaveIngredient(string name, string description)
@@ -94,6 +81,16 @@ namespace Inventory.Managers
             return _recipeDAO.SaveRecipeItem(recipeid, model);
         }
 
+        public int PlanRecipe(PlannerItemModel model, bool isEdit)
+        {
+            return _plannerDAO.PlanRecipe(model, isEdit);
+        }
+
+        public List<PlannerItemModel> GetPlannedRecipes(DateTime? start, DateTime? end)
+        {
+            return _plannerDAO.GetPlannedRecipes(start, end);
+        }
+
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
             if (criteria.ToString() == "")
                 return getRecipes();
@@ -107,7 +104,6 @@ namespace Inventory.Managers
             foreach (RecipeModel rec in recipes)
             {
                 bool contains = true;
-                getRecipeData(rec);
                 foreach(IngredientModel ing in criteria.Ingredients){
                     if (!rec.IngredientIDs.Contains(ing.ID))
                     {

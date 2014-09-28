@@ -20,16 +20,20 @@ namespace Inventory.Data.Mappers
             model.Rating = r.Rating;
             model.Directions = r.Directions;
             model.Tags = r.TagString;
-            //foreach(RecipeItem i in r.RecipeItem){
-            //    RecipeItemModel rmodel = new RecipeItemModel();
-            //    rmodel.Description = i.Description;
-            //    rmodel.ID = i.ID;
-            //    rmodel.Ingredient = IngredientMapper.BindItem(i.Ingredient);
-            //    rmodel.Measure = i.Measure.Measurement;
-            //    rmodel.Quantity = i.Quantity;
-            //    rmodel.RecipeID = i.RecipeID;
-            //    model.Ingredients.Add(rmodel);
-            //}
+            model.IngredientIDs = new List<int>();
+            model.Items = new List<RecipeItemModel>();
+            foreach (RecipeItem i in r.RecipeItem)
+            {
+                RecipeItemModel rmodel = new RecipeItemModel();
+                rmodel.Description = i.Description;
+                rmodel.ID = i.ID;
+                rmodel.Ingredient = IngredientMapper.BindItem(i.Ingredient);
+                rmodel.Measure = MeasureMapper.BindItem(i.Measure);
+                rmodel.Quantity = i.Quantity;
+                rmodel.RecipeID = i.RecipeID;
+                model.IngredientIDs.Add(rmodel.Ingredient.ID);
+                model.Items.Add(rmodel);
+            }
             return model;
         }
 

@@ -16,7 +16,7 @@ namespace Inventory.Data
     public partial class InventoryEntities : DbContext
     {
         public InventoryEntities()
-            : base("InventoryEntities")
+            : base("name=InventoryEntities")
         {
         }
     
@@ -32,5 +32,6 @@ namespace Inventory.Data
         public virtual DbSet<RecipeItem> RecipeItem { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tags> Tags { get; set; }
+        public virtual DbSet<PlannedRecipe> PlannedRecipe { get; set; }
     }
 }

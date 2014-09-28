@@ -15,22 +15,6 @@ namespace TestHarness
         public PlannerControl plannerControl;
 
         [TestMethod]
-        public void TestEmptyMealName()
-        {   
-            plannerControl = new PlannerControl();
-            plannerControl.InitializeComponent();
-            Assert.IsFalse(plannerControl.isValidMealName(""));
-        }
-
-        [TestMethod]
-        public void TestGarbageMealName()
-        {
-            plannerControl = new PlannerControl();
-            plannerControl.InitializeComponent();
-            Assert.IsFalse(plannerControl.isValidMealName("#)(*$"));
-        }
-
-        [TestMethod]
         public void TestPastMealDate()
         {
             plannerControl = new PlannerControl();
@@ -56,6 +40,25 @@ namespace TestHarness
             RecipeModel recipeModel = new RecipeModel();
             recipeModel.Name = "A really cool recipe that doesn't exist";
             Assert.IsFalse(plannerControl.isValidRecipe(recipeModel));
+        }
+        
+        [TestMethod]
+        public void TestGettingPlannedRecipes()
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            List<DateTime?> starts = new List<DateTime?>(){ null, new DateTime(DateTime.Today.Year - 5, DateTime.Today.Month, 1) };
+            List<DateTime?> ends = new List<DateTime?>() { null, new DateTime(DateTime.Today.Year + 5, DateTime.Today.Month, 1) };
+            List<PlannerItemModel> results;
+            foreach (DateTime? start in starts)
+            {
+                foreach (DateTime? end in ends)
+                {
+                    results = manager.GetPlannedRecipes(start, end);
+                    Assert.IsTrue(results.Count > 0);
+                }
+            }
+            
+            
         }
     }
 }
