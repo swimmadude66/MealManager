@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 using MonthCalendar;
 
 
@@ -29,14 +30,18 @@ namespace Inventory.WPF
     {
         public List<RecipeModel> availableRecipes;
         private ILookup<DateTime, PlannerItemModel> PlannedRecipes;
-        public List<Day> Days { get; set; }
-        public List<string> DayNames { get; set; }
+        public ObservableCollection<Day> Days { get; set; }
+        public ObservableCollection<string> DayNames { get; set; }
         public DateTime CurrentDate { get; set; }
+        public int numWeeks { get; set; }
+        private String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
         public PlannerControl()
         {
             InitializeComponent();
             availableRecipes = new List<RecipeModel>();
+            DayNames = new ObservableCollection<string>();
+            numWeeks = 6;
             this.DataContext = this;
             initSources();
         }
@@ -47,8 +52,19 @@ namespace Inventory.WPF
             availableRecipes = getRecipes();
             RecipeCombo.ItemsSource = availableRecipes;
             CurrentDate = DateTime.Today;
-            DayNames = new List<string> { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-            Days = new List<Day>();
+            if(numWeeks > 1)
+                DayNames = new ObservableCollection<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            else
+            {
+                DateTime d = DateTime.Today.AddDays(1);
+                for (int i = 0; i < 7; i++)
+                {
+                    DayNames.Add(d.DayOfWeek.ToString());
+                    d = d.AddDays(1);
+
+                }
+            }
+            Days = new ObservableCollection<Day>();
             BuildCalendar(DateTime.Today);
         }
 
@@ -58,20 +74,31 @@ namespace Inventory.WPF
 
             //Calculate when the first day of the month is and work out an 
             //offset so we can fill in any boxes before that.
-            DateTime d = new DateTime(targetDate.Year, targetDate.Month, 1);
-            int offset = DayOfWeekNumber(d.DayOfWeek);
-            if (offset != 1) d = d.AddDays(-offset);
+            DateTime d;
+            if (numWeeks > 1) {
+                d = new DateTime(targetDate.Year, targetDate.Month, 1);
+                int offset = DayOfWeekNumber(d.DayOfWeek);
+                if (offset != 1) d = d.AddDays(-offset);
+            }
+            else
+            {
+                d = DateTime.Today;
+            }
             DateTime start = d;
-            DateTime end = start.AddDays(42);
-            PlannedRecipes = getPlannerItems(start, end).ToLookup(p => p.Date.Date);
+            DateTime end = start.AddDays(numWeeks*7);
+            if (PlannedRecipes == null || PlannedRecipes.Count < 1)
+            {
+                PlannedRecipes = getPlannerItems(start, end).ToLookup(p => p.Date.Date);
+            }
             //PlannedRecipes = getPlansByDateRange(start, end);
             //Show 6 weeks each with 7 days = 42
-            for (int box = 0; box < 42; box++)
+            for (int box = 0; box < numWeeks*7; box++)
             {
                 Day day = new Day();
                 day.Date = d;
                 day.IsTargetMonth = (d.Month == DateTime.Today.Month);
                 day.isToday = (d.Date == DateTime.Today.Date);
+                day.MonthName = months[d.Month - 1];
                 day.Recipes = new List<RecipeModel>();
                 if (PlannedRecipes.Contains(d.Date)){
                     foreach(PlannerItemModel m in PlannedRecipes[d].ToList()){
@@ -84,6 +111,23 @@ namespace Inventory.WPF
             }
         }
 
+        private void changeView()
+        {
+            if (numWeeks > 1)
+                DayNames = new ObservableCollection<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            else
+            {
+                DayNames.Clear();
+                DateTime d = DateTime.Today;
+                for (int i = 0; i < 7; i++)
+                {
+                    DayNames.Add(d.DayOfWeek.ToString());
+                    d = d.AddDays(1);
+                }
+            }
+            BuildCalendar(DateTime.Today);
+        }
+
         private static int DayOfWeekNumber(DayOfWeek dow)
         {
             return Convert.ToInt32(dow.ToString("D"));
@@ -93,6 +137,15 @@ namespace Inventory.WPF
         {
             if(isValidInput())
                 planRecipe();
+        }
+
+        private void BtnChangeView_Click(object sender, RoutedEventArgs e)
+        {
+            if (numWeeks > 1)
+                numWeeks = 1;
+            else
+                numWeeks = 6;
+            changeView();
         }
 
         public bool isValidInput()
@@ -155,6 +208,7 @@ namespace Inventory.WPF
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.PlanRecipe(model, isEdit);
         }
+
     }
 
     public class Day
@@ -162,6 +216,7 @@ namespace Inventory.WPF
         public bool IsTargetMonth { get; set; }
         public bool isToday { get; set; }
         public DateTime Date { get; set; }
+        public String MonthName { get; set; }
         public List<RecipeModel> Recipes { get; set; }
     }
 }

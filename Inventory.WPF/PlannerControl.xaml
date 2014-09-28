@@ -9,10 +9,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid>
-        <Grid Height="800">
-            <DockPanel Margin="0,0,0,230" Grid.ColumnSpan="2">
-                <!--<TextBlock Text="{Binding Date}" />-->
-                <ItemsControl ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
+        <Grid x:Name="CalendarGrid" Height="800">
+            <DockPanel Margin="0,0,0,230" Grid.ColumnSpan="2" x:Name="dpCalendar">
+                <ItemsControl x:Name="icDayNames" ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock TextAlignment="Center" Text="{Binding}"/>
@@ -24,7 +23,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <ItemsControl ItemsSource="{Binding Days}">
+                <ItemsControl x:Name="icDays" ItemsSource="{Binding Days}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="Black" BorderThickness="3" Padding="0">
@@ -39,11 +38,25 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    
+
                                     <DockPanel>
                                         <!--Day Number-->
                                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
                                             <TextBlock TextAlignment="Right" Text="{Binding Date.Day}" FontSize="14" Margin="5,5,5,5">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsTargetMonth}" Value="false">
+                                                                <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsTargetMonth}" Value="true">
+                                                                <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <TextBlock TextAlignment="Left" Text="{Binding MonthName}" FontSize="14" Margin="5,5,5,5">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Style.Triggers>
@@ -66,6 +79,7 @@
                                                   AutoGenerateColumns="False"
                                                   FontSize="10"
                                                   RowHeight="20"
+                                                  RowBackground="{x:Null}"
                                                   ItemsSource="{Binding Recipes}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Name}" Width="100"/>
@@ -86,7 +100,7 @@
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Rows="6" Columns="7" />
+                            <UniformGrid Columns="7" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
@@ -104,6 +118,7 @@
             <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="175,66,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False" Grid.Column="1"/>
             <DatePicker x:Name="PlannerDatePicker" HorizontalAlignment="Left" Margin="451,68,0,0" VerticalAlignment="Top" Width="208"/>
             <Label Content="Meal Date" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="362,67,0,0"/>
+            <Button x:Name="btnChangeView" Content="Change View Mode" HorizontalAlignment="Left" Margin="24,69,0,0" VerticalAlignment="Top" Width="157" Click="BtnChangeView_Click"/>
         </Grid>
     </Grid>
 
