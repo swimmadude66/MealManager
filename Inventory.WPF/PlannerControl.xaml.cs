@@ -27,10 +27,9 @@ namespace Inventory.WPF
     /// </summary>
     public partial class PlannerControl : UserControl
     {
-        //private List<Appointment> _myAppointmentsList;
         public List<PlannerItemModel> allPlannerItems;
         public List<RecipeModel> availableRecipes;
-        public List<Appointment> plannerAppointments;
+        private Dictionary<DateTime, List<RecipeModel>> PlannedRecipes;
         public List<Day> Days { get; set; }
         public List<string> DayNames { get; set; }
         public DateTime CurrentDate { get; set; }
@@ -40,20 +39,21 @@ namespace Inventory.WPF
             InitializeComponent();
             allPlannerItems = new List<PlannerItemModel>();
             availableRecipes = new List<RecipeModel>();
-            //plannerAppointments = new List<Appointment>();
-            PlannerDatePicker.SelectedDate = DateTime.Today;
-            initSources();
+            PlannedRecipes = new Dictionary<DateTime, List<RecipeModel>>();
             this.DataContext = this;
-            CurrentDate = DateTime.Today;
-            DayNames = new List<string> { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-            Days = new List<Day>();
-            BuildCalendar(DateTime.Today);
+            initSources();
         }
 
         private void initSources()
         {
+            PlannerDatePicker.SelectedDate = DateTime.Today;
             availableRecipes = getRecipes();
             RecipeCombo.ItemsSource = availableRecipes;
+            CurrentDate = DateTime.Today;
+            DayNames = new List<string> { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+            Days = new List<Day>();
+            PlannedRecipes.Add(DateTime.Today, new List<RecipeModel> { new RecipeModel() { Name = "Testing" }, new RecipeModel(){Name = "List Test"} });
+            BuildCalendar(DateTime.Today);
             //SetAppointments();
         }
 
@@ -66,13 +66,20 @@ namespace Inventory.WPF
             DateTime d = new DateTime(targetDate.Year, targetDate.Month, 1);
             int offset = DayOfWeekNumber(d.DayOfWeek);
             if (offset != 1) d = d.AddDays(-offset);
-
+            DateTime start = d;
+            DateTime end = start.AddDays(42);
+            //PlannedRecipes = getPlansByDateRange(start, end);
             //Show 6 weeks each with 7 days = 42
-            for (int box = 1; box <= 42; box++)
+            for (int box = 0; box < 42; box++)
             {
                 Day day = new Day();
                 day.Date = d;
                 day.IsTargetMonth = (d.Month == DateTime.Today.Month);
+                List<RecipeModel> plans;
+                if(PlannedRecipes.TryGetValue(d, out plans))
+                    day.Recipes = plans;
+                else
+                    day.Recipes = new List<RecipeModel>();
                 Days.Add(day);
                 d = d.AddDays(1);
             }
@@ -83,31 +90,10 @@ namespace Inventory.WPF
             return Convert.ToInt32(dow.ToString("D"));
         }
 
-        //private void SetAppointments()
-        //{
-        //    //-- Use whatever function you want to load the MonthAppointments list, I happen to have a list filled by linq that has
-        //    //   many (possibly the past several years) of them loaded, so i filter to only pass the ones showing up in the displayed
-        //    //   month.  Note that the "setter" for MonthAppointments also triggers a redraw of the display.
-        //    //AptCalendar.MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.StartTime != null && Convert.ToDateTime(apt.StartTime).Month == this.AptCalendar.DisplayStartDate.Month && Convert.ToDateTime(apt.StartTime).Year == this.AptCalendar.DisplayStartDate.Year));
-        //    plannerAppointments.Clear();
-
-        //    foreach (PlannerItemModel plannerItemModel in allPlannerItems)
-        //    {
-        //        Appointment appointment = new Appointment();
-        //        appointment.StartTime = plannerItemModel.Date;
-        //        appointment.EndTime = appointment.StartTime;
-        //        appointment.Subject = plannerItemModel.Name;
-        //        //appointment.AppointmentID = plannerItemModel.ID;
-        //        appointment.Details = plannerItemModel.Recipe.Name;
-        //        plannerAppointments.Add(appointment);
-        //    }
-        //    AptCalendar.MonthAppointments = plannerAppointments;
-        //}
-
         public void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             if(isValidInput())
-                saveRecipe();
+                planRecipe();
         }
 
         public bool isValidInput()
@@ -140,7 +126,7 @@ namespace Inventory.WPF
             return false;
         }
 
-        private void saveRecipe()
+        private void planRecipe()
         {
             String plannerItemName = MealName.Text.Trim();
             DateTime plannerItemDate = PlannerDatePicker.SelectedDate ?? System.DateTime.Today;
@@ -150,7 +136,7 @@ namespace Inventory.WPF
             plannerItemModel.Date = plannerItemDate;
             plannerItemModel.Recipe = plannerItemRecipe;
             allPlannerItems.Add(plannerItemModel);
-
+            //savePlan();
             initSources();
         }
 
@@ -174,5 +160,6 @@ namespace Inventory.WPF
     {
         public bool IsTargetMonth { get; set; }
         public DateTime Date { get; set; }
+        public List<RecipeModel> Recipes { get; set; }
     }
 }

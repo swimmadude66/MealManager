@@ -9,10 +9,78 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid Height="800">
+            <DockPanel Margin="0,0,0,230" Grid.ColumnSpan="2">
+                <!--<TextBlock Text="{Binding Date}" />-->
+                <ItemsControl ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextAlignment="Center" Text="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1" Columns="7" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding Days}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" BorderThickness="3" Padding="0">
+                                <Border Name="InnerBorder" BorderThickness="1">
+                                    <DockPanel>
+                                        <!--Day Number-->
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
+                                            <TextBlock TextAlignment="Right" Text="{Binding Date.Day}" FontSize="14" Margin="5,5,5,5">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsTargetMonth}" Value="false">
+                                                                <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsTargetMonth}" Value="true">
+                                                                <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <DataGrid x:Name="dgPlanned" 
+                                                  Background="{x:Null}" 
+                                                  CanUserAddRows="False" 
+                                                  GridLinesVisibility="None" 
+                                                  HeadersVisibility="None"
+                                                  AutoGenerateColumns="False"
+                                                  FontSize="10"
+                                                  RowHeight="20"
+                                                  ItemsSource="{Binding Recipes}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Name}" Width="100"/>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Content="Cancel" Height="10" Width="20" FontSize="8"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DockPanel>
+                                </Border>
+                            </Border>
+
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="6" Columns="7" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </DockPanel>
+        </Grid>
 
         <Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="220" Margin="10,570,0,10" Width="1090" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -28,68 +96,6 @@
             <DatePicker x:Name="PlannerDatePicker" HorizontalAlignment="Left" Margin="451,68,0,0" VerticalAlignment="Top" Width="208"/>
             <Label Content="Meal Date" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="362,67,0,0"/>
         </Grid>
-        <DockPanel Margin="0,0,0,230" Grid.ColumnSpan="2">
-            <TextBlock Text="{Binding Date}" />
-            <ItemsControl ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock TextAlignment="Center" Text="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Rows="1" Columns="7" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-            <ItemsControl ItemsSource="{Binding Days}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="3" Padding="0">
-                            <Border Name="InnerBorder" BorderThickness="1">
-                                <DockPanel>
-                                    <!--Day Number-->
-                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
-                                        <TextBlock TextAlignment="Right" Text="{Binding Date.Day}" FontSize="14" Margin="5,5,5,5">
-                                            <TextBlock.Style>
-                                                <Style TargetType="{x:Type TextBlock}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsTargetMonth}" Value="false">
-                                                            <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsTargetMonth}" Value="true">
-                                                            <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </StackPanel>
-                                    <DataGrid x:Name="dgPlanned" Background="{x:Null}" CanUserAddRows="False" GridLinesVisibility="None" HeadersVisibility="None">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn x:Name="dbcRecipe"/>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Content="Cancel" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </DockPanel>
-                            </Border>
-                        </Border>
-
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Rows="6" Columns="7" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </DockPanel>
     </Grid>
 
 </UserControl>
