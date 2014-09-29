@@ -27,7 +27,7 @@
                 <local:PlannerControl/>
             </TabItem>
             <TabItem Header="Shopping List">
-                <Grid Background="#FFE5E5E5"/>
+                <local:ShoppingListControl/>
             </TabItem>
             <TabItem Header="Random" Margin="0,-10,0,10">
                 <Grid Background="#FFE5E5E5"/>
