@@ -31,16 +31,6 @@ namespace TestHarness
             DateTime? dateTime = null;
             Assert.IsFalse(plannerControl.isValidMealDate(dateTime));
         }
-
-        [TestMethod]
-        public void TestExistingMealRecipe()
-        {
-            plannerControl = new PlannerControl();
-            plannerControl.InitializeComponent();
-            RecipeModel recipeModel = new RecipeModel();
-            recipeModel.Name = "A really cool recipe that doesn't exist";
-            Assert.IsFalse(plannerControl.isValidRecipe(recipeModel));
-        }
         
         [TestMethod]
         public void TestGettingPlannedRecipes()
