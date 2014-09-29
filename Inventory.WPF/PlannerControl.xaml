@@ -80,6 +80,7 @@
                                                   FontSize="10"
                                                   RowHeight="20"
                                                   RowBackground="{x:Null}"
+                                                  IsReadOnly="True"
                                                   ItemsSource="{Binding Recipes}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Name}" Width="100"/>

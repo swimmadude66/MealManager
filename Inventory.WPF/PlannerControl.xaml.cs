@@ -127,7 +127,7 @@ namespace Inventory.WPF
 
         public void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (isValidMealDate(PlannerDatePicker.SelectedDate))
+            if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
                 planRecipe();
         }
 
