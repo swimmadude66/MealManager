@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100">
     <Grid>
-        <DataGrid x:Name="pantryGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="600" VerticalAlignment="Top" CanUserAddRows="False">
+        <DataGrid x:Name="pantryGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="600" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient.Name}" IsReadOnly="True" Width="185"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding StringQuantity}" IsReadOnly="True" Width="83"/>
