@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Inventory.Data.Interfaces;
+using Inventory.Managers.Factory;
+using Inventory.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +23,38 @@ namespace Inventory.WPF
     /// </summary>
     public partial class ShoppingListControl : UserControl
     {
+        List<PantryItemModel> pantry;
+        List<RecipeModel> planned;
+
         public ShoppingListControl()
         {
             InitializeComponent();
         }
+
+        public List<IngredientModel> Compare()
+        {
+            //foreach pantryiem in pantry{
+            //foreach Recipe in planned{
+            //recipe.IngredientIDs.contains(pantryitem.Ingredient.ID);    
+            //}
+            //}
+            return new List<IngredientModel>();
+        }
+
+        //getPlannedRecipes();
+        //foreach(plannedrecipe r : plannedrecipes){
+        //planned.Add(r.recipe);
+        //}
+
+        //Domain Calls
+
+        public List<PantryItemModel> getPantryItems()
+        {
+            IPantryManager manager = ManagerFactory.GetPantryManager();
+            return manager.GetPantryContents();
+        }
+
+        //Get Planned recipes
+
     }
 }
