@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use strict;
 use warnings;
 require 'SiteScrapers/allRecipeScraper.pl';
 
@@ -49,10 +50,12 @@ my $count = 0;
 my $i = 0;
 
 open my $url_list_fh, $url_list_file or die "Could not open $url_list_file: $!";
-open INSERTS, '>ingredient-measure-inserts-9-22.sql';
+#open INSERTS, '>ingredient-measure-inserts-9-22.sql';
+open INGR, '>ingredients.csv';
 while( my $line = <$url_list_fh> )  
 {   
-	my $name = '', $url = '';
+	my $name = '';
+	my $url = '';
 
 	if( $line =~ /^(.*), (http:[^,]*), .*$/ )
 	{
@@ -70,14 +73,16 @@ while( my $line = <$url_list_fh> )
 	my %recipe = scrape_recipe( $url );
 	next if( defined $recipe{ 0 } );
 
-	print Dumper( %recipe );
-
-	#print $recipe{ 'name' } . "\n";
+	#print Dumper( %recipe );
+	
+	foreach my $ingredient ( @{ $recipe{ 'ingredients' } } )
+	{
+		print INGR $name . "||";
+		print INGR ${ $ingredient }{ 'name_desc' } . "\n";
+	}
 
 	#my @inserts = get_db_inserts( \%recipe );		
 
-	exit();
-	
 #	foreach my $insert ( @inserts )
 #	{
 		#print INSERTS "$insert\n";
@@ -98,6 +103,7 @@ while( my $line = <$url_list_fh> )
 # dump JSON array to file
 # insert into DB (more details TBD)
 
-close INSERTS;
+#close INSERTS;
+close INGR;
 close $url_list_fh;
 
