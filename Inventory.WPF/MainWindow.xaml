@@ -12,11 +12,9 @@
 
     </Window.Resources>
 
-    <Grid>
-        <TabControl HorizontalAlignment="Left" Width="1392" TabStripPlacement="Left">
-            <TabItem Header="Home">
-                Testing
-            </TabItem>
+    <Viewbox HorizontalAlignment="Left" Stretch="Fill">
+        <TabControl TabStripPlacement="Left" Height="770" Width="1392">
+            <TabItem Header="Home" Content="Testing"/>
             <TabItem Header="Pantry">
                 <local:PantryControl/>
             </TabItem>
@@ -34,5 +32,5 @@
             </TabItem>
         </TabControl>
 
-    </Grid>
+    </Viewbox>
 </Window>
