@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="MeasureModel.cs" />
     <Compile Include="PantryItemModel.cs" />
+    <Compile Include="PlannerItemModel .cs" />
     <Compile Include="RecipeModel.cs" />
     <Compile Include="RecipeItemModel.cs" />
     <Compile Include="IngredientModel.cs" />

@@ -7,27 +7,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100">
     <Grid>
-        <DataGrid x:Name="pantryGrid" MouseDoubleClick="editRow" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="600" VerticalAlignment="Top" CanUserAddRows="False">
+        <DataGrid x:Name="pantryGrid" MouseDoubleClick="editRow" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="600" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient.Name}" IsReadOnly="True" Width="185"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" IsReadOnly="True" Width="83"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding StringQuantity}" IsReadOnly="True" Width="83"/>
                 <DataGridTextColumn Header="Measure" Binding="{Binding Measure.Name}" IsReadOnly="True" Width="85"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="645"/>
                 <DataGridTextColumn Header="Expires" Binding="{Binding ExpirationDateString}" IsReadOnly="True" Width="84"/>
             </DataGrid.Columns>
         </DataGrid>
+        <!--make a label for add / edit-->
         <ComboBox x:Name="txtIngredientName" HorizontalAlignment="Left" Height="25" Margin="120,614,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name"/>
-        <Label x:Name="lblIngredientName" Content="Ingredient" HorizontalAlignment="Left" Margin="31,614,0,0" VerticalAlignment="Top" Height="32" RenderTransformOrigin="1.092,0.453"/>
+        <Label x:Name="lblIngredientName" Content="Ingredient" HorizontalAlignment="Left" Margin="31,614,0,0" VerticalAlignment="Top" Height="32"/>
         <Label x:Name="lblIngredientDescription" Content="Description" HorizontalAlignment="Left" Margin="480,651,0,0" VerticalAlignment="Top" Height="32"/>
         <Label x:Name="lblSuccess" Content="Ingredient Added Succesfully" HorizontalAlignment="Left" Margin="200,714,0,0" VerticalAlignment="Top" Width="280" Visibility="Hidden" Foreground="Green"/>
         <Label x:Name="lblQuantity" Content="Quantity" HorizontalAlignment="Left" Height="27" Margin="31,651,0,0" VerticalAlignment="Top" Width="65"/>
         <TextBox x:Name="txtQuantity" HorizontalAlignment="Left" Height="25" Margin="120,651,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="102"/>
-        <Label x:Name="lblMeasure" Content="Measure" HorizontalAlignment="Left" Height="26" Margin="31,683,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192"/>
+        <Label x:Name="lblMeasure" Content="Measure" HorizontalAlignment="Left" Height="26" Margin="31,683,0,0" VerticalAlignment="Top" Width="70"/>
         <ComboBox x:Name="ddlMeasure" HorizontalAlignment="Left" Height="25" Margin="120,683,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name"/>
-        <DatePicker Name="dpExpires" HorizontalAlignment="Left" Margin="560,615,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.539,0.208" Height="24" FirstDayOfWeek="Monday"/>
+        <DatePicker Name="dpExpires" HorizontalAlignment="Left" Margin="560,615,0,0" VerticalAlignment="Top" Height="24" FirstDayOfWeek="Monday"/>
         <Label Content="Expiration" Name="lblExpires" HorizontalAlignment="Left" Margin="480,615,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtIngredientDescription" HorizontalAlignment="Left" Height="75" Margin="560,651,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
         <Button Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Margin="120,714,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmit_Click"/>
-
+        <!--add a cancel button-->
     </Grid>
 </UserControl>

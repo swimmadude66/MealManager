@@ -26,6 +26,8 @@ namespace Inventory.WPF
     /// </summary>
     public partial class PantryControl : UserControl
     {
+        PantryItemModel itemToEdit = null;
+        
         public PantryControl()
         {
             InitializeComponent();
@@ -44,15 +46,25 @@ namespace Inventory.WPF
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtIngredientName.Text))
+            bool isEdit;
+            if (itemToEdit == null)
             {
-                SavePantryItem();
+                isEdit = false;
+            } 
+            else
+            {
+                isEdit = true;
+            }
+            if (SavePantryItem(isEdit))
+            {
                 txtIngredientName.Text = "";
                 txtIngredientDescription.Text = "";
+                txtQuantity.Text = "";
                 dpExpires.SelectedDate = null;
                 lblSuccess.Visibility = Visibility.Visible;
+                itemToEdit = null;
                 initSources();
-            }          
+            }       
         }
 
         private void editRow(object sender, MouseButtonEventArgs e)
@@ -60,30 +72,32 @@ namespace Inventory.WPF
             Console.Write("You found a secret");
 
             DataGrid pantryList = sender as DataGrid;
-            PantryItemModel itemToEdit = pantryList.SelectedItem as PantryItemModel;
+            itemToEdit = pantryList.SelectedItem as PantryItemModel;
 
-            //Do things with this model.
-            //Maybe populate lower list
-            //Or highlight row and allow edit
-            //Think on it
-
-            //Change save method args for manager to model and isedit flag
-
-            //Ask adam for a save runthrough
-            //Also ask him why his code sucks
-
+            txtIngredientName.Text = itemToEdit.Ingredient.toString();
+            txtIngredientDescription.Text = itemToEdit.Description;
+            txtQuantity.Text = itemToEdit.Quantity.ToString();
+            ddlMeasure.SelectedIndex = ddlMeasure.Items.IndexOf(itemToEdit.Measure);
+            dpExpires.SelectedDate = itemToEdit.ExpirationDate;
+            //lblSuccess.Visibility = Visibility.Visible;
+            //initSources();
         }
 
         //Domain Calls
 
-         public List<PantryItemModel> getPantry()
+        public List<PantryItemModel> getPantry()
         {
             IPantryManager manager = ManagerFactory.GetPantryManager();
-            return manager.GetPantryContents();
+            List<PantryItemModel> data = manager.GetPantryContents();
+            foreach (PantryItemModel datum in data)
+            {
+                datum.StringQuantity = Tools.ToolBox.DecimalToFraction(datum.Quantity);
+            }
+            return data;
         }
 
-        private void SavePantryItem()
-        {
+        private bool SavePantryItem(bool isEdit)
+        {   
             string description = "";
             if (!string.IsNullOrEmpty(txtIngredientDescription.Text))
             {
@@ -112,24 +126,21 @@ namespace Inventory.WPF
                 measureName = ddlMeasure.Text.Trim(); 
             }
 
-            double quant = -1.0;
             string quantstring = txtQuantity.Text.Trim();
-            if (Regex.IsMatch(quantstring,@"^[0-9\.]+$"))
-            {
-                quant = Double.Parse(quantstring);
-            }
-            else if (Regex.IsMatch(quantstring, @"^([0-9]*\.?[0-9]+)/([0-9]+\.?[0-9]*)$"))
-            {
-                double a = double.Parse(quantstring.Substring(0, quantstring.IndexOf('/')));
-                double b = double.Parse(quantstring.Substring(quantstring.IndexOf('/') + 1));
-                quant = a / b;
-            }
+            double quant = Tools.ToolBox.FractionToDecimal(quantstring);            
 
-            if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant <=0)
-                return;
+            if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant <=(1.0/64.0))
+                return false;
             //Instantiate pantry Item and send
-            PantryItemModel item = new PantryItemModel();
-
+            PantryItemModel item;
+            if (itemToEdit == null)
+            {
+                item = new PantryItemModel();
+            }
+            else
+            {
+                item = itemToEdit;
+            }
             item.IngredientId = getIngredientId(name);
             item.Quantity = quant;
             item.MeasureId = getMeasureID(measureName);
@@ -137,7 +148,8 @@ namespace Inventory.WPF
             item.ExpirationDate = expires;
 
             IPantryManager manager = ManagerFactory.GetPantryManager();
-            manager.SavePantryItem(item, false);
+            manager.SavePantryItem(item, isEdit);
+            return true;
         }
 
         private List<IngredientModel> getIngredients()

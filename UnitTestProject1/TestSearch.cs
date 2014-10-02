@@ -75,7 +75,6 @@ namespace TestHarness
             List<RecipeModel> models = manager.SearchRecipes(criteria);
             foreach (RecipeModel model in models)
             {
-                manager.getRecipeData(model);
                 List<int> ingredientIDs = new List<int>();
                 foreach (RecipeItemModel item in model.Items)
                 {
@@ -101,7 +100,6 @@ namespace TestHarness
             List<RecipeModel> models = manager.SearchRecipes(criteria);
             foreach (RecipeModel model in models)
             {
-                manager.getRecipeData(model);
                 List<int> ingredientIDs = new List<int>();
                 foreach (RecipeItemModel item in model.Items)
                 {
@@ -133,7 +131,6 @@ namespace TestHarness
             List<RecipeModel> models = manager.SearchRecipes(criteria);
             foreach (RecipeModel model in models)
             {
-                manager.getRecipeData(model);
                 List<int> ingredientIDs = new List<int>();
                 foreach (RecipeItemModel item in model.Items)
                 {

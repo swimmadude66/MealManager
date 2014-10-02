@@ -17,6 +17,7 @@ namespace Inventory.Data
         public Recipe()
         {
             this.RecipeItem = new HashSet<RecipeItem>();
+            this.PlannedRecipe = new HashSet<PlannedRecipe>();
         }
     
         public int ID { get; set; }
@@ -31,5 +32,6 @@ namespace Inventory.Data
         public string TagString { get; set; }
     
         public virtual ICollection<RecipeItem> RecipeItem { get; set; }
+        public virtual ICollection<PlannedRecipe> PlannedRecipe { get; set; }
     }
 }

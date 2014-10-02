@@ -11,6 +11,7 @@ namespace Inventory.Models
     {
         public int ID { get; set;}
         public double Quantity { get; set; }
+        public String StringQuantity { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public String ExpirationDateString { get; set; }
         public string Description { get; set; }

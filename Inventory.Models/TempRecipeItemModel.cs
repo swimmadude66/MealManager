@@ -10,6 +10,7 @@ namespace Inventory.Models
     public class TempRecipeItemModel
     {
         public double Quantity { get; set; }
+        public string QuantityString { get; set; }
         public string Description { get; set; }
         public string IngredientName { get; set; }
         public string MeasureName { get; set; }

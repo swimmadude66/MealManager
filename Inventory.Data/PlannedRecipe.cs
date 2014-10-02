@@ -12,20 +12,12 @@ namespace Inventory.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Measure
+    public partial class PlannedRecipe
     {
-        public Measure()
-        {
-            this.PantryItem = new HashSet<PantryItem>();
-            this.RecipeItem = new HashSet<RecipeItem>();
-        }
-    
         public int ID { get; set; }
-        public string Measurement { get; set; }
-        public string Singular { get; set; }
-        public string Plural { get; set; }
+        public System.DateTime Date { get; set; }
+        public int RecipeID { get; set; }
     
-        public virtual ICollection<PantryItem> PantryItem { get; set; }
-        public virtual ICollection<RecipeItem> RecipeItem { get; set; }
+        public virtual Recipe Recipe { get; set; }
     }
 }

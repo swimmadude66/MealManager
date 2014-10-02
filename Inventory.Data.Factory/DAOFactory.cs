@@ -31,5 +31,10 @@ namespace Inventory.Data.Factory
         {
             return new MeasureDAO();
         }
+
+        public static IPlannerDAO GetPlannerDAO()
+        {
+            return new PlannerDAO();
+        }
     }
 }
