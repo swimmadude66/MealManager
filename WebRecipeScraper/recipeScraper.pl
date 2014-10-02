@@ -50,13 +50,13 @@ my $count = 0;
 my $i = 0;
 
 open my $url_list_fh, $url_list_file or die "Could not open $url_list_file: $!";
-#open INSERTS, '>ingredient-measure-inserts-9-22.sql';
-open INGR, '>ingredients.csv';
+open INGR, '>allrecipes.csv';
+
 while( my $line = <$url_list_fh> )  
 {   
 	my $name = '';
 	my $url = '';
-
+	
 	if( $line =~ /^(.*), (http:[^,]*), .*$/ )
 	{
 		$name = $1 if( defined $1 );
@@ -73,23 +73,34 @@ while( my $line = <$url_list_fh> )
 	my %recipe = scrape_recipe( $url );
 	next if( defined $recipe{ 0 } );
 
-	#print Dumper( %recipe );
-	
+	print INGR $name . "||URL||" . $url . "\n";
+	print INGR $name . "||Description||" . $recipe{ 'description' } . "\n";
+	print INGR $name . "||Yield||" . $recipe{ 'yield' } . "\n";
+	print INGR $name . "||Prep Time||" . $recipe{ 'prep_time' } . "\n";
+	print INGR $name . "||Cook Time||" . $recipe{ 'cook_time' } . "\n";
+
 	foreach my $ingredient ( @{ $recipe{ 'ingredients' } } )
 	{
-		print INGR $name . "||";
+		print INGR $name . "||Ingredient||";
+		print INGR ${ $ingredient }{ 'amount' } . "||";
 		print INGR ${ $ingredient }{ 'name_desc' } . "\n";
 	}
 
-	#my @inserts = get_db_inserts( \%recipe );		
+	my $i = 0;
+	foreach my $direction( @{ $recipe{ 'directions' } } )
+	{
+		print INGR $name . "||Direction||$i||" . $direction . "\n";
+		$i++;
+	}
 
-#	foreach my $insert ( @inserts )
-#	{
-		#print INSERTS "$insert\n";
-		#print "$insert\n";
-#	}
+	foreach my $nutrient_ptr ( @{ $recipe{ 'nutrition' } } )
+	{	
+		my %nutrient = %{ $nutrient_ptr };
+		print INGR $name . "||Nutrition||" . $nutrient{ 'name' } . "||" 
+	 	    . $nutrient{ 'unit' } . "||" . $nutrient{ 'per_of_daily' } . "\n";
+	}
 
-	# add recipe to the recipe array
+	print INGR "\n";
 
 	$count++;
 
@@ -100,10 +111,6 @@ while( my $line = <$url_list_fh> )
 	}
 }
 
-# dump JSON array to file
-# insert into DB (more details TBD)
-
-#close INSERTS;
 close INGR;
 close $url_list_fh;
 

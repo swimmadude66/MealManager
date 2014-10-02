@@ -32,11 +32,17 @@ my $scraper_parts = scraper {
 		process "span.ingredient-name", 'name_desc' => 'TEXT';
 	} ); 
 	process "div.directions > div.directLeft > ol > li", 'recipe_directions[]' => 'TEXT';
-	#process "li#liPrep > span#prepMinsSpan > em", "prep_time_min" => 'TEXT';
-	#process "li#liPrep > span#prepHoursSpan > em", "prep_time_hour" => 'TEXT';
-	#process "li#liCook > span#cookMinsSpan > em", "cook_time_min" => 'TEXT';
-	#process "li#liCook > span#cookHoursSpan > em", "cook_time_hour" => 'TEXT';
-	#	Image ?
+	process "li#liPrep > span#prepMinsSpan > em", "prep_time_min" => 'TEXT';
+	process "li#liPrep > span#prepHoursSpan > em", "prep_time_hour" => 'TEXT';
+	process "li#liCook > span#cookMinsSpan > em", "cook_time_min" => 'TEXT';
+	process "li#liCook > span#cookHoursSpan > em", "cook_time_hour" => 'TEXT';
+
+	process "div#zoneNutrition > div#nutritionSummary > ul#ulNutrient", "nutrients[]" => scraper( sub {
+		process "li.categories", "name" => 'TEXT';
+		process "li.units", "unit" => 'TEXT';
+		process "li.percentages", "per_of_daily" => 'TEXT';
+	});
+	#	Parts for later scrape? Rating, Picture(s), Reviews	
 };
 
 
@@ -67,7 +73,8 @@ sub scrape_recipe
 		'ingredients' => [],
 		'directions'  => [],
 		'prep_time'   => 0,
-		'cook_time'   => 0
+		'cook_time'   => 0,
+		'nutrition'   => []
 	);
 	
 	$recipe{ 'url' }	 = trim( $url );
@@ -76,10 +83,13 @@ sub scrape_recipe
 	$recipe{ 'yield' }       = trim( ${ $data }{ 'recipe_yield' } );
 	$recipe{ 'ingredients' } = ${ $data }{ 'ingredients' };
 	$recipe{ 'directions' }	 = ${ $data }{ 'recipe_directions' };
-	#$recipe{ 'prep_time' }   += 60 * trim( ${ $data }{ 'prep_time_hour' } ) if( !is_missing_or_empty( ${ $data }{ 'prep_time_hour' } ) );
-	#$recipe{ 'cook_time' }   += 60 * trim( ${ $data }{ 'cook_time_hour' } ) if( !is_missing_or_empty( ${ $data }{ 'cook_time_hour' } ) );
-	#$recipe{ 'prep_time' }   += trim( ${ $data }{ 'prep_time_min' } ) if( !is_missing_or_empty( ${ $data }{ 'prep_time_min' } ) );
-	#$recipe{ 'cook_time' }   += trim( ${ $data }{ 'cook_time_min' } ) if( !is_missing_or_empty( ${ $data }{ 'cook_time_min' } ) );
+
+	$recipe{ 'prep_time' }   += 60 * trim( ${ $data }{ 'prep_time_hour' } ) if( !is_missing_or_empty( ${ $data }{ 'prep_time_hour' } ) );
+	$recipe{ 'cook_time' }   += 60 * trim( ${ $data }{ 'cook_time_hour' } ) if( !is_missing_or_empty( ${ $data }{ 'cook_time_hour' } ) );
+	$recipe{ 'prep_time' }   += trim( ${ $data }{ 'prep_time_min' } ) if( !is_missing_or_empty( ${ $data }{ 'prep_time_min' } ) );
+	$recipe{ 'cook_time' }   += trim( ${ $data }{ 'cook_time_min' } ) if( !is_missing_or_empty( ${ $data }{ 'cook_time_min' } ) );
+
+	$recipe{ 'nutrition' } = ${ $data }{ 'nutrients' };
 
 	return %recipe;	
 }
@@ -181,7 +191,10 @@ sub split_amount
 sub split_name_description
 {
 	# figure out thet pattern after the DB analysis
+	
 }
+
+
 
 
 1;
