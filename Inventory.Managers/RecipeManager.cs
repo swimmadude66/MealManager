@@ -61,6 +61,11 @@ namespace Inventory.Managers
             return _ingredientDAO.getIngredients();
         }
 
+        public IngredientModel GetIngredient(int id)
+        {
+            return _ingredientDAO.GetIngredient(id);
+        }
+
         public List<String> getAllTags()
         {
             return _recipeDAO.getAllTags();

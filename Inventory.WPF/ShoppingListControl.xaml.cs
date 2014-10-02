@@ -26,35 +26,56 @@ namespace Inventory.WPF
         List<PantryItemModel> pantry;
         List<RecipeModel> planned;
 
+        System.DateTime date1 = new System.DateTime(1996, 6, 3, 22, 15, 0);
+        System.DateTime date2 = new System.DateTime(2016, 12, 6, 13, 2, 0);
+
         public ShoppingListControl()
         {
             InitializeComponent();
+            listGrid.ItemsSource = Compare();
         }
 
         public List<IngredientModel> Compare()
         {
-            //foreach pantryiem in pantry{
-            //foreach Recipe in planned{
-            //recipe.IngredientIDs.contains(pantryitem.Ingredient.ID);    
-            //}
-            //}
-            return new List<IngredientModel>();
+            List<PantryItemModel> pantryItems = getPantryItems();
+            List<RecipeModel> recipes = getPlannedRecipes(date1, date2);
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            List<IngredientModel> shoppingList = new List<IngredientModel>();
+
+            foreach(RecipeModel recipe in recipes)
+            {
+                foreach(int ingredientID in recipe.IngredientIDs)
+                {
+                    int check = 0;
+                    foreach (PantryItemModel pantryItem in pantryItems)
+                    {
+                        if (pantryItem.IngredientId == ingredientID) check = 1;
+                    }
+                    if (check != 1) shoppingList.Add(manager.GetIngredient(ingredientID));
+                    
+                }
+            }
+            return shoppingList;
         }
 
-        //getPlannedRecipes();
-        //foreach(plannedrecipe r : plannedrecipes){
-        //planned.Add(r.recipe);
-        //}
+        public List<RecipeModel> getPlannedRecipes(DateTime? begin, DateTime? end)
+        {
+            List<RecipeModel> recipes = new List<RecipeModel>();
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            List<PlannerItemModel> plannedrecipes = manager.GetPlannedRecipes(begin, end);
+            foreach (PlannerItemModel plannedrecipe in plannedrecipes)
+            {
+                recipes.Add(plannedrecipe.Recipe);
+            }
 
-        //Domain Calls
+            return recipes;
+        }
 
         public List<PantryItemModel> getPantryItems()
         {
             IPantryManager manager = ManagerFactory.GetPantryManager();
             return manager.GetPantryContents();
         }
-
-        //Get Planned recipes
-
+        
     }
 }

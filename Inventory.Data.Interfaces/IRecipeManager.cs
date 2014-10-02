@@ -15,6 +15,7 @@ namespace Inventory.Data.Interfaces
         int getMeasureID(string name);
         List<MeasureModel> getMeasures();
         int getIngredientID(String name);
+        IngredientModel GetIngredient(int id);
         List<IngredientModel> getIngredients();
         List<String> getAllTags();
         void SaveTag(String tag);
