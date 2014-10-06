@@ -88,7 +88,7 @@
                                                 <DataGridTemplateColumn>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <Button Content="Cancel" Height="10" Width="20" FontSize="8"/>
+                                                            <Button Content="Cancel" Height="10" Width="20" FontSize="8" Click="CancelButton_Click"/>
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>

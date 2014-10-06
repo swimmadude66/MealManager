@@ -139,6 +139,48 @@ namespace Inventory.WPF
             changeView();
         }
 
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            //Console.Write(icDays.ItemContainerGenerator.ContainerFromIndex(1));
+            //FrameworkElement thing = button.DataContext;
+            DependencyObject context = (DependencyObject)e.OriginalSource;
+            var parent = VisualTreeHelper.GetParent(context);
+            DataGrid datagrid = ItemsControl.ItemsControlFromItemContainer(context) as DataGrid;
+            Console.Write(datagrid);
+            //var thing = icDays.dgPlanned;
+            //Console.Write(thing);
+            //int visibleDays = VisualTreeHelper.GetChildrenCount(icDays);
+            
+            //for(int i = 0; i < visibleDays; i ++){
+            //    var currentDay = VisualTreeHelper.GetChild(icDays, i);
+            //    Console.Write(currentDay);
+            //    int numPlannedRecipes = VisualTreeHelper.GetChildrenCount(currentDay);
+            //    for (int j = 0; j < numPlannedRecipes; j++)
+            //    {
+            //        var currentThing = VisualTreeHelper.GetChild(currentDay, j);
+            //        Console.Write(currentThing);
+            //    }
+            //}
+            //Console.Write(VisualTreeHelper.GetChild(icDays, 0);
+            //var parent = VisualTreeHelper.GetParent(button);
+            //while (parent != null && parent.GetType() != typeof(DataGridRow))
+            //{
+            //    parent = VisualTreeHelper.GetParent(parent);
+            //}
+            //Console.Write(parent)
+            //for (int i = 0; i < this.icDays.Items.Count; i++)
+            //{
+               
+                //DataGridCell cell = (DataGridCell)this.icDays.ItemContainerGenerator.ContainerFromIndex(i);
+                //Console.Write(cell);
+            //}
+            //Console.WriteLine(button.Parent);
+            //dataTemplate.
+            //Console.WriteLine();
+            //int plannedMealId = mealToCancel.ID;
+        }
+
         public bool isValidMealDate(DateTime? mealDate)
         {
             DateTime? testedDateTime = mealDate;
@@ -180,7 +222,6 @@ namespace Inventory.WPF
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.PlanRecipe(model, isEdit);
         }
-
     }
 
     public class Day
