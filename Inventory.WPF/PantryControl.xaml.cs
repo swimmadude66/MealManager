@@ -57,30 +57,50 @@ namespace Inventory.WPF
             }
             if (SavePantryItem(isEdit))
             {
+                lblAddEditHeader.Content = "Add a new panty item";
                 txtIngredientName.Text = "";
                 txtIngredientDescription.Text = "";
                 txtQuantity.Text = "";
                 dpExpires.SelectedDate = null;
+                ddlMeasure.SelectedIndex = 0;
+                if (lblSuccess != null)
+                {
+                    lblSuccess.Content = "Ingredient Updated Succesfully";
+                } 
+                else
+                {
+                    lblSuccess.Content = "Ingredient Added Succesfully";
+                }
                 lblSuccess.Visibility = Visibility.Visible;
                 itemToEdit = null;
                 initSources();
             }       
         }
 
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            lblAddEditHeader.Content = "Add a new panty item";
+            txtIngredientName.Text = "";
+            txtIngredientDescription.Text = "";
+            txtQuantity.Text = "";
+            ddlMeasure.SelectedIndex = 0;
+            dpExpires.SelectedDate = null;
+            itemToEdit = null;
+            pantryGrid.SelectedIndex = -1;
+        }
+
         private void editRow(object sender, MouseButtonEventArgs e)
         {
-            Console.Write("You found a secret");
-
             DataGrid pantryList = sender as DataGrid;
             itemToEdit = pantryList.SelectedItem as PantryItemModel;
 
+            lblSuccess.Visibility = Visibility.Hidden;
+            lblAddEditHeader.Content = "Edit the selected panty item";
             txtIngredientName.Text = itemToEdit.Ingredient.toString();
             txtIngredientDescription.Text = itemToEdit.Description;
             txtQuantity.Text = itemToEdit.Quantity.ToString();
             ddlMeasure.SelectedIndex = ddlMeasure.Items.IndexOf(itemToEdit.Measure);
             dpExpires.SelectedDate = itemToEdit.ExpirationDate;
-            //lblSuccess.Visibility = Visibility.Visible;
-            //initSources();
         }
 
         //Domain Calls

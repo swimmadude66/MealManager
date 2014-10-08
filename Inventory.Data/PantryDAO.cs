@@ -30,6 +30,32 @@ namespace Inventory.Data
             }
         }
 
+        public PantryItemModel GetPantryItemById(int ID)
+        {
+            try
+            {
+                using (var context = new InventoryEntities())
+                {
+                    PantryItem item = (from p in context.PantryItem
+                                       where p.ID == ID
+                                       select p).FirstOrDefault();
+                    if (item == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+
+                        return PantryItemMapper.BindItem(item);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public void SavePantryItem(PantryItemModel pantryItem, bool isEdit)
         {
             try

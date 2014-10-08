@@ -10,6 +10,7 @@ namespace Inventory.Data.Interfaces
     public interface IPantryManager
     {
         List<PantryItemModel> GetPantryContents();
+        PantryItemModel GetPantryItemById(int ID);
         void SavePantryItem(PantryItemModel pantryItem, bool isEdit);
     }
 }

@@ -29,6 +29,7 @@ namespace Inventory.Data.Mappers
             model.Description  = item.Description;
             model.Quantity = item.Quantity;
             model.Ingredient = IngredientMapper.BindItem(item.Ingredient);
+            model.IngredientId = item.IngredientId;
             model.ExpirationDate = item.ExpirationDate;
             if (item.ExpirationDate != null)
             {
@@ -41,8 +42,10 @@ namespace Inventory.Data.Mappers
             }
    
             if(item.MeasureId!=null)
+            {
                 model.Measure = MeasureMapper.BindItem(item.Measure);
-
+                model.MeasureId = (int) item.MeasureId;
+            }
             return model;
         }
 

@@ -24,7 +24,10 @@ namespace Inventory.Managers
             return _pantryDao.GetPantryContents();
         }
 
-        //add get by id
+        public PantryItemModel GetPantryItemById(int ID)
+        {
+            return _pantryDao.GetPantryItemById(ID);
+        }
 
         public void SavePantryItem(PantryItemModel pantryItem, bool isEdit)
         {
