@@ -91,10 +91,10 @@ namespace Inventory.WPF
                 day.IsTargetMonth = (d.Month == DateTime.Today.Month);
                 day.isToday = (d.Date == DateTime.Today.Date);
                 day.MonthName = months[d.Month - 1];
-                day.Recipes = new ObservableCollection<RecipeModel>();
+                day.PlannedRecipes = new ObservableCollection<PlannerItemModel>();
                 if (PlannedRecipes.Contains(d.Date)){
                     foreach(PlannerItemModel m in PlannedRecipes[d].ToList()){
-                        day.Recipes.Add(m.Recipe);
+                        day.PlannedRecipes.Add(m);
                     }
                 }
                 Days.Add(day);
@@ -142,43 +142,9 @@ namespace Inventory.WPF
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            //Console.Write(icDays.ItemContainerGenerator.ContainerFromIndex(1));
-            //FrameworkElement thing = button.DataContext;
-            DependencyObject context = (DependencyObject)e.OriginalSource;
-            var parent = VisualTreeHelper.GetParent(context);
-            DataGrid datagrid = ItemsControl.ItemsControlFromItemContainer(context) as DataGrid;
-            Console.Write(datagrid);
-            //var thing = icDays.dgPlanned;
-            //Console.Write(thing);
-            //int visibleDays = VisualTreeHelper.GetChildrenCount(icDays);
-            
-            //for(int i = 0; i < visibleDays; i ++){
-            //    var currentDay = VisualTreeHelper.GetChild(icDays, i);
-            //    Console.Write(currentDay);
-            //    int numPlannedRecipes = VisualTreeHelper.GetChildrenCount(currentDay);
-            //    for (int j = 0; j < numPlannedRecipes; j++)
-            //    {
-            //        var currentThing = VisualTreeHelper.GetChild(currentDay, j);
-            //        Console.Write(currentThing);
-            //    }
-            //}
-            //Console.Write(VisualTreeHelper.GetChild(icDays, 0);
-            //var parent = VisualTreeHelper.GetParent(button);
-            //while (parent != null && parent.GetType() != typeof(DataGridRow))
-            //{
-            //    parent = VisualTreeHelper.GetParent(parent);
-            //}
-            //Console.Write(parent)
-            //for (int i = 0; i < this.icDays.Items.Count; i++)
-            //{
-               
-                //DataGridCell cell = (DataGridCell)this.icDays.ItemContainerGenerator.ContainerFromIndex(i);
-                //Console.Write(cell);
-            //}
-            //Console.WriteLine(button.Parent);
-            //dataTemplate.
-            //Console.WriteLine();
-            //int plannedMealId = mealToCancel.ID;
+            PlannerItemModel plannedRecipe = (PlannerItemModel)button.DataContext;
+            int plannedRecipeId = plannedRecipe.ID;
+            Console.Write("Here is our the id of the recipe we want to cancel: " + plannedRecipeId);
         }
 
         public bool isValidMealDate(DateTime? mealDate)
@@ -230,6 +196,6 @@ namespace Inventory.WPF
         public bool isToday { get; set; }
         public DateTime Date { get; set; }
         public String MonthName { get; set; }
-        public ObservableCollection<RecipeModel> Recipes { get; set; }
+        public ObservableCollection<PlannerItemModel> PlannedRecipes { get; set; }
     }
 }

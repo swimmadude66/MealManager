@@ -82,9 +82,9 @@
                                                   RowHeight="20"
                                                   RowBackground="{x:Null}"
                                                   IsReadOnly="True"
-                                                  ItemsSource="{Binding Recipes}">
+                                                  ItemsSource="{Binding PlannedRecipes}">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Name}" Width="100"/>
+                                                <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Recipe.Name}" Width="100"/>
                                                 <DataGridTemplateColumn>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
