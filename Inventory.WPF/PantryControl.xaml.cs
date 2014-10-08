@@ -63,7 +63,7 @@ namespace Inventory.WPF
                 txtQuantity.Text = "";
                 dpExpires.SelectedDate = null;
                 ddlMeasure.SelectedIndex = 0;
-                if (lblSuccess != null)
+                if (itemToEdit != null)
                 {
                     lblSuccess.Content = "Ingredient Updated Succesfully";
                 } 
