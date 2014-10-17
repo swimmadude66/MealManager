@@ -44,26 +44,31 @@ namespace Inventory.WPF
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrEmpty(txtIngredientName.Text))
+            if (SavePantryItem())
             {
-                SavePantryItem();
                 txtIngredientName.Text = "";
                 txtIngredientDescription.Text = "";
+                txtQuantity.Text = "";
                 dpExpires.SelectedDate = null;
                 lblSuccess.Visibility = Visibility.Visible;
                 initSources();
-            }          
+            }       
         }
 
         //Domain Calls
 
-         public List<PantryItemModel> getPantry()
+        public List<PantryItemModel> getPantry()
         {
             IPantryManager manager = ManagerFactory.GetPantryManager();
-            return manager.GetPantryContents();
+            List<PantryItemModel> data = manager.GetPantryContents();
+            foreach (PantryItemModel datum in data)
+            {
+                datum.StringQuantity = Tools.ToolBox.DecimalToFraction(datum.Quantity);
+            }
+            return data;
         }
 
-        private void SavePantryItem()
+        private bool SavePantryItem()
         {
             string description = "";
             if (!string.IsNullOrEmpty(txtIngredientDescription.Text))
@@ -93,24 +98,15 @@ namespace Inventory.WPF
                 measureName = ddlMeasure.Text.Trim(); 
             }
 
-            double quant = -1.0;
             string quantstring = txtQuantity.Text.Trim();
-            if (Regex.IsMatch(quantstring,@"^[0-9\.]+$"))
-            {
-                quant = Double.Parse(quantstring);
-            }
-            else if (Regex.IsMatch(quantstring, @"^([0-9]*\.?[0-9]+)/([0-9]+\.?[0-9]*)$"))
-            {
-                double a = double.Parse(quantstring.Substring(0, quantstring.IndexOf('/')));
-                double b = double.Parse(quantstring.Substring(quantstring.IndexOf('/') + 1));
-                quant = a / b;
-            }
+            double quant = Tools.ToolBox.FractionToDecimal(quantstring);            
 
-            if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant <=0)
-                return;
+            if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant < (1.0/64.0))
+                return false;
 
             IPantryManager manager = ManagerFactory.GetPantryManager();
             manager.SavePantryItem(getIngredientId(name), quant, getMeasureID(measureName), description, expires);
+            return true;
         }
 
         private List<IngredientModel> getIngredients()

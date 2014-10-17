@@ -21,7 +21,8 @@ namespace Inventory.Managers.Factory
             IRecipeDAO _recipeDAO = DAOFactory.GetRecipeDAO();
             IIngredientDAO _ingredientDAO = DAOFactory.GetIngredientDAO();
             IMeasureDAO _measureDAO = DAOFactory.GetMeasureDAO();
-            return new RecipeManager(_recipeDAO, _ingredientDAO, _measureDAO);
+            IPlannerDAO _plannerDAO = DAOFactory.GetPlannerDAO();
+            return new RecipeManager(_recipeDAO, _ingredientDAO, _measureDAO, _plannerDAO);
         }
         public static PantryManager GetPantryManager()
         {

@@ -128,8 +128,8 @@ namespace Inventory.WPF
 
         private void btnAddIngredient_Click(object sender, RoutedEventArgs e)
         {
-            AddIngredient();
-            initSources();
+            if (AddIngredient())
+                initSources();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -182,7 +182,7 @@ namespace Inventory.WPF
             }
         }
 
-        private void AddIngredient()
+        private bool AddIngredient()
         {
             string ingredient = "";
 
@@ -211,19 +211,33 @@ namespace Inventory.WPF
             {
                 quant = Double.Parse(quantstring);
             }
-            else if (Regex.IsMatch(quantstring, @"^([0-9]*\.?[0-9]+)/([0-9]+\.?[0-9]*)$"))
+            else if (Regex.IsMatch(quantstring, @"^([0-9]+)/([0-9]+)$"))
             {
                 double a = double.Parse(quantstring.Substring(0, quantstring.IndexOf('/')));
                 double b = double.Parse(quantstring.Substring(quantstring.IndexOf('/') + 1));
                 quant = a / b;
             }
-
-            if (string.IsNullOrEmpty(ingredient) || quant <= 0)
+            else if (Regex.IsMatch(quantstring, @"^[0-9]+\s+[0-9]+/[0-9]+$"))
             {
-                return;
+                string[] parts = Regex.Split(quantstring, @"\s+");
+                double whole = double.Parse(parts[0]);
+                double a = double.Parse(parts[1].Substring(0, parts[1].IndexOf('/')));
+                double b = double.Parse(parts[1].Substring(parts[1].IndexOf('/') + 1));
+                quant = whole + (a / b);
+            }
+            else
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(ingredient) || quant < 1/64)
+            {
+                return false;
             }
             TempRecipeItemModel model = new TempRecipeItemModel(ingredient, quant, measureName);
+            model.QuantityString = Tools.ToolBox.DecimalToFraction(model.Quantity);
             recipeItems.Add(model);
+            return true;
         }
 
         private void SaveRecipe()

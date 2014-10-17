@@ -52,6 +52,7 @@
     <Compile Include="IMeasureDAO.cs" />
     <Compile Include="IPantryDAO.cs" />
     <Compile Include="IPantryManager.cs" />
+    <Compile Include="IPlannerDAO.cs" />
     <Compile Include="IRecipeDAO.cs" />
     <Compile Include="IRecipeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

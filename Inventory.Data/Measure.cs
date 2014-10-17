@@ -22,6 +22,8 @@ namespace Inventory.Data
     
         public int ID { get; set; }
         public string Measurement { get; set; }
+        public string Singular { get; set; }
+        public string Plural { get; set; }
     
         public virtual ICollection<PantryItem> PantryItem { get; set; }
         public virtual ICollection<RecipeItem> RecipeItem { get; set; }

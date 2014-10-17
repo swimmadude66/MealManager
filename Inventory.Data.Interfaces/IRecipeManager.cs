@@ -21,5 +21,7 @@ namespace Inventory.Data.Interfaces
         int SaveRecipe(string name, string description, string directions, string tagstring);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
         List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria);
+        int PlanRecipe(PlannerItemModel model, bool isEdit);
+        List<PlannerItemModel> GetPlannedRecipes(DateTime? start, DateTime? end);
     }
 }
