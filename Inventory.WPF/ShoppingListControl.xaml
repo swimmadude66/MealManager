@@ -16,6 +16,11 @@
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <DatePicker Name="fromPicker" SelectedDate="{Binding fromDate}" Height="26" Canvas.Left="74" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
+            <DatePicker Name="untilPicker" SelectedDate="{Binding untilDate}" Height="26" Canvas.Left="312" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
+            <Label Content="From:" Height="26" Canvas.Left="27" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
+            <Label Content="Until:" Height="26" Canvas.Left="265" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
+            <Button Click="DoComparison" Content="Compare" Height="28" Canvas.Left="506" Canvas.Top="85" Width="102"/>
 
         </Canvas>
         <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">

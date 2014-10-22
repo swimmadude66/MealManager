@@ -31,15 +31,21 @@ namespace Inventory.WPF
 
         public ShoppingListControl()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }
+
+        public void DoComparison(object sender, RoutedEventArgs e)
+        {
             listGrid.ItemsSource = Compare();
         }
 
         public List<IngredientModel> Compare()
         {
             List<PantryItemModel> pantryItems = getPantryItems();
-            List<RecipeModel> recipes = getPlannedRecipes(date1, date2);
-            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            DateTime? fromDate = fromPicker.SelectedDate;
+            DateTime? untilDate = untilPicker.SelectedDate;
+            List<RecipeModel> recipes = getPlannedRecipes(fromDate, untilDate);
+            
             List<IngredientModel> shoppingList = new List<IngredientModel>();
 
             foreach(RecipeModel recipe in recipes)
@@ -51,7 +57,7 @@ namespace Inventory.WPF
                     {
                         if (pantryItem.IngredientId == ingredientID) check = 1;
                     }
-                    if (check != 1) shoppingList.Add(manager.GetIngredient(ingredientID));
+                    if (check != 1) shoppingList.Add(getIngredientByID(ingredientID));
                     
                 }
             }
@@ -75,6 +81,12 @@ namespace Inventory.WPF
         {
             IPantryManager manager = ManagerFactory.GetPantryManager();
             return manager.GetPantryContents();
+        }
+
+        public IngredientModel getIngredientByID(int ingredientID)
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            return manager.GetIngredient(ingredientID);
         }
         
     }
