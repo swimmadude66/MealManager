@@ -9,13 +9,13 @@ namespace Inventory.Tools
 {
     public class ToolBox
     {
-        static List<Tuple<double, string>> fractionList = new List<Tuple<double, string>>();
+        static SortedSet<Tuple<double, string>> fractionList = new SortedSet<Tuple<double, string>>();
 
 
         public static String findClosestFraction(double dec){
             if (fractionList == null || fractionList.Count < 1)
             {
-                fractionList = new List<Tuple<double, string>>();
+                fractionList = new SortedSet<Tuple<double, string>>();
                 generateFractionList();
             }
             int i = 0;
@@ -44,7 +44,7 @@ namespace Inventory.Tools
 
         public static void generateFractionList()
         {
-            fractionList = new List<Tuple<double, string>>();
+            fractionList = new SortedSet<Tuple<double, string>>();
             List<double> done = new List<double>();
             fractionList.Add(new Tuple<double,string>(0,"0"));
             for (double denom = 1; denom <= 64; denom++)
@@ -59,7 +59,6 @@ namespace Inventory.Tools
                 }
             }
             fractionList.Add(new Tuple<double, string>(1, "1"));
-            fractionList.Sort();
         }
 
 
