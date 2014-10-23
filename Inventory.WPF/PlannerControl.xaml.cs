@@ -78,6 +78,7 @@ namespace Inventory.WPF
             {
                 d = DateTime.Today;
             }
+            icYear.Text = d.Year.ToString();
             DateTime start = d;
             DateTime end = start.AddDays(numWeeks*7);
             if (newStuff)

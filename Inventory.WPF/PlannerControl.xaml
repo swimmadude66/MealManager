@@ -10,12 +10,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid>
-        <Grid x:Name="CalendarGrid" Height="800">
-            <DockPanel Margin="0,0,0,230" Grid.ColumnSpan="2" x:Name="dpCalendar">
+        <Grid x:Name="CalendarGrid" Height="800" ShowGridLines="False" >
+            <TextBlock x:Name="icYear" FontSize="44" VerticalAlignment="Top" FontWeight="SemiBold"/>
+            <DockPanel Margin="0,60,0,230" Grid.ColumnSpan="2" x:Name="dpCalendar">
                 <ItemsControl x:Name="icDayNames" ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock TextAlignment="Center" Text="{Binding}"/>
+                            <TextBlock TextAlignment="Center" Text="{Binding}" TextElement.FontWeight="ExtraBold"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
@@ -24,17 +25,17 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <ItemsControl x:Name="icDays" ItemsSource="{Binding Days}">
+                <ItemsControl x:Name="icDays" ItemsSource="{Binding Days}" Margin="0,0,0,-70">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="Black" BorderThickness="3" Padding="0">
-                                <Border Name="InnerBorder" BorderThickness="1">
+                            <Border BorderBrush="Black" BorderThickness="0">
+                                <Border BorderBrush="Black" Name="InnerBorder" BorderThickness="1">
                                     <Border.Style>
                                         <Style TargetType="{x:Type Border}">
                                             <Style.Triggers>
                                                 <!--Current Day-->
                                                 <DataTrigger Binding="{Binding isToday}" Value="true">
-                                                    <Setter Property="Border.Background" Value="AntiqueWhite"/>
+                                                    <Setter Property="Border.Background" Value="#FFE1EAFB"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -42,7 +43,7 @@
 
                                     <DockPanel>
                                         <!--Day Number-->
-                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
+                                        <StackPanel  Background="LightGray" Orientation="Horizontal" DockPanel.Dock="Top" FlowDirection="RightToLeft">
                                             <TextBlock TextAlignment="Right" Text="{Binding Date.Day}" FontSize="14" Margin="5,5,5,5">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
@@ -72,10 +73,11 @@
                                                 </TextBlock.Style>
                                             </TextBlock>
                                         </StackPanel>
+                                        <!--"-->
                                         <DataGrid x:Name="dgPlanned" 
-                                                  Background="{x:Null}" 
+                                                  Background="{x:Null}"
                                                   CanUserAddRows="False" 
-                                                  GridLinesVisibility="None" 
+                                                  GridLinesVisibility="None"
                                                   HeadersVisibility="None"
                                                   AutoGenerateColumns="False"
                                                   FontSize="10"
@@ -83,12 +85,18 @@
                                                   RowBackground="{x:Null}"
                                                   IsReadOnly="True"
                                                   ItemsSource="{Binding Recipes}">
+                                            <DataGrid.Style>
+                                                <Style TargetType="{x:Type DataGrid}">
+                                                    <Setter Property="BorderThickness" Value="0"></Setter>
+                                                    <!--<Setter Property="BorderBrush" Value="Black"></Setter>-->
+                                                </Style>
+                                            </DataGrid.Style>
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Name}" Width="100"/>
                                                 <DataGridTemplateColumn>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <Button Content="Cancel" Height="10" Width="20" FontSize="8"/>
+                                                            <Button Height="10" Width="20"/>
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
@@ -109,7 +117,7 @@
             </DockPanel>
         </Grid>
 
-        <Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="220" Margin="10,570,0,10" Width="1090" Grid.ColumnSpan="2">
+        <Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="220" Margin="10,630,0,10" Width="1090">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="27*"/>
                 <ColumnDefinition Width="17*"/>
