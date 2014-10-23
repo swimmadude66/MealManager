@@ -32,6 +32,7 @@ namespace Inventory.WPF
         public ObservableCollection<string> DayNames { get; set; }
         public int numWeeks { get; set; }
         private String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        private String[] SunStart = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
         public PlannerControl()
         {
@@ -40,8 +41,13 @@ namespace Inventory.WPF
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
             numWeeks = 1;
-            if (numWeeks > 1)
-                DayNames = new ObservableCollection<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            if (numWeeks > 1){
+                DayNames.Clear();
+                foreach(String day in SunStart)
+                {
+                    DayNames.Add(day);
+                }
+            }
             else
             {
                 DayNames.Clear();
@@ -78,7 +84,7 @@ namespace Inventory.WPF
             {
                 d = DateTime.Today;
             }
-            icYear.Text = d.Year.ToString();
+            txtYear.Text = d.Year.ToString();
             DateTime start = d;
             DateTime end = start.AddDays(numWeeks*7);
             if (newStuff)
@@ -106,7 +112,13 @@ namespace Inventory.WPF
         private void changeView()
         {
             if (numWeeks > 1)
-                DayNames = new ObservableCollection<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            {
+                DayNames.Clear();
+                foreach (String day in SunStart)
+                {
+                    DayNames.Add(day);
+                }
+            }
             else
             {
                 DayNames.Clear();
