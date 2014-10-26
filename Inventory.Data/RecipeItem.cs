@@ -20,6 +20,7 @@ namespace Inventory.Data
         public int IngredientID { get; set; }
         public string Description { get; set; }
         public int RecipeID { get; set; }
+        public string MeasureDescription { get; set; }
     
         public virtual Ingredient Ingredient { get; set; }
         public virtual Measure Measure { get; set; }
