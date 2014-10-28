@@ -4,33 +4,68 @@
         xmlns:local="clr-namespace:Inventory.WPF"
         Title="Inventory" Height="800" Width="1400">
 
+
     <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="greenButton">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#FF1E5F14">
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF3EC92A" />
+                                <Setter Property="Cursor" Value="Hand" />
+                            </Trigger>
+                            <Trigger Property="IsPressed"  Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF173A12" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="TabItem">
             <Setter Property="Height" Value="130" />
             <Setter Property="Width" Value="300"/>
         </Style>
+        <Style TargetType="Separator">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Separator}">
+                        <Rectangle Height="{TemplateBinding Height}"  
+                           Fill="#FF267A1E" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Window.Resources>
-
     <Viewbox HorizontalAlignment="Left" Stretch="Fill">
-        <TabControl TabStripPlacement="Left" Height="770" Width="1392">
-            <TabItem Header="Home" Content="Testing"/>
-            <TabItem Header="Pantry">
-                <local:PantryControl/>
-            </TabItem>
-            <TabItem Header="Recipes">
-                <local:RecipeControl/>
-            </TabItem>
-            <TabItem Header="Planner">
-                <local:PlannerControl/>
-            </TabItem>
-            <TabItem Header="Shopping List">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Header="Random" Margin="0,-10,0,10">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-        </TabControl>
+        <Grid  Height="800" Width="1400">
+            <Grid  Background="#FF216A16" Margin="0,0,1200,0">
+                <StackPanel CanHorizontallyScroll="True">
+                    <Button x:Name="HomeBtn" Content="Home" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp"/>
+                    <Separator Height="1"></Separator>
+                    <Button x:Name="PantryBtn" Content="Pantry" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp"/>
+                    <Separator Height="1"></Separator>
+                    <Button x:Name="RecipesBtn" Content="Recipes" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp"/>
+                    <Separator Height="1"></Separator>
+                    <Button x:Name="PlannerBtn" Content="Planner" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp"/>
+                    <Separator Height="1"></Separator>
+                    <Button x:Name="RandomBtn" Content="Random" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp"/>
 
+                </StackPanel>
+            </Grid>
+            <Grid Margin="200,0,0,0" >
+                <local:PantryControl x:Name="pantryCtl" Visibility="Visible" Loaded="PantryControl_Loaded"/>
+                <local:RecipeControl x:Name="recipeCtl" Visibility="Collapsed"/>
+                <local:PlannerControl x:Name="plannerCtl" Visibility="Collapsed"/>
+            </Grid>
+        </Grid>
     </Viewbox>
 </Window>
