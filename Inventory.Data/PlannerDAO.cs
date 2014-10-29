@@ -24,6 +24,7 @@ namespace Inventory.Data
                                               select p).FirstOrDefault();
                         plan.RecipeID = model.Recipe.ID;
                         plan.Date = model.Date;
+                        plan.Active = true;
                         context.PlannedRecipe.Attach(plan);
                         context.SaveChanges();
                         return plan.ID;
@@ -33,6 +34,7 @@ namespace Inventory.Data
                         PlannedRecipe pr = new PlannedRecipe();
                         pr.RecipeID = model.Recipe.ID;
                         pr.Date = model.Date;
+                        pr.Active = true;
                         context.PlannedRecipe.Add(pr);
                         context.SaveChanges();
                         return pr.ID;
@@ -75,7 +77,7 @@ namespace Inventory.Data
                             if (start.Equals(end))
                             {
                                 recs = (from p in context.PlannedRecipe
-                                        where p.Date.Equals(start) && p.Active == true
+                                        where p.Date == start && p.Active == true
                                         select p).ToList();
                             }
                             else
