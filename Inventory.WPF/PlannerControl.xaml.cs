@@ -40,7 +40,7 @@ namespace Inventory.WPF
             RecipeCombo.ItemsSource = getRecipes();
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
-            numWeeks = 1;
+            numWeeks = 6;
             if (numWeeks > 1){
                 DayNames.Clear();
                 foreach(String day in SunStart)
@@ -111,6 +111,7 @@ namespace Inventory.WPF
 
         private void changeView()
         {
+            bool newstuff;
             if (numWeeks > 1)
             {
                 DayNames.Clear();
@@ -156,8 +157,8 @@ namespace Inventory.WPF
         {
             Button button = (Button)sender;
             PlannerItemModel plannedRecipe = (PlannerItemModel)button.DataContext;
-            int plannedRecipeId = plannedRecipe.ID;
-            Console.Write("Here is our the id of the recipe we want to cancel: " + plannedRecipeId);
+            cancelPlan(plannedRecipe.ID);
+            BuildCalendar(DateTime.Today, true);
         }
 
         public bool isValidMealDate(DateTime? mealDate)
@@ -200,6 +201,11 @@ namespace Inventory.WPF
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.PlanRecipe(model, isEdit);
+        }
+
+        private void cancelPlan(int id){
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            manager.cancelPlan(id);
         }
     }
 
