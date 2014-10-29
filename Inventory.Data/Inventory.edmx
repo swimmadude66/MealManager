@@ -41,6 +41,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="RecipeID" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -398,6 +399,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" />
           <Property Name="RecipeID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Recipe" Relationship="InventoryModel.PlannedRecipe_ibfk_1" FromRole="PlannedRecipe" ToRole="Recipe" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="PlannedRecipe_ibfk_1">
           <End Type="InventoryModel.Recipe" Role="Recipe" Multiplicity="1" />
@@ -508,6 +510,7 @@
           <EntitySetMapping Name="PlannedRecipe">
             <EntityTypeMapping TypeName="InventoryModel.PlannedRecipe">
               <MappingFragment StoreEntitySet="PlannedRecipe">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

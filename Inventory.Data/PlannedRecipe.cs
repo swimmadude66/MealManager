@@ -17,6 +17,7 @@ namespace Inventory.Data
         public int ID { get; set; }
         public System.DateTime Date { get; set; }
         public int RecipeID { get; set; }
+        public bool Active { get; set; }
     
         public virtual Recipe Recipe { get; set; }
     }

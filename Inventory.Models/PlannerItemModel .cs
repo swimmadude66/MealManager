@@ -12,5 +12,10 @@ namespace Inventory.Models
         public int ID { get; set; }
         public DateTime Date { get; set; }
         public RecipeModel Recipe { get; set; }
+
+        public override string ToString()
+        {
+            return Recipe.Name;
+        }
     }
 }
