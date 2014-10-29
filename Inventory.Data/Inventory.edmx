@@ -21,6 +21,7 @@
           <Property Name="Measurement" Type="varchar" MaxLength="100" />
           <Property Name="Singular" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Plural" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Abbreviation" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="PantryItem">
           <Key>
@@ -40,6 +41,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="RecipeID" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -48,13 +50,21 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="500" />
-          <Property Name="Serves" Type="int" />
+          <Property Name="Yield" Type="varchar" MaxLength="100" />
           <Property Name="Calories" Type="int" />
+          <Property Name="Carbohydrates" Type="int" />
+          <Property Name="Cholesterol" Type="int" />
+          <Property Name="Fat" Type="int" />
+          <Property Name="Fiber" Type="int" />
+          <Property Name="Protein" Type="int" />
+          <Property Name="Sodium" Type="int" />
           <Property Name="PrepTime" Type="int" />
+          <Property Name="CookTime" Type="int" />
           <Property Name="Rating" Type="int" />
           <Property Name="ImagePath" Type="longtext" />
           <Property Name="Directions" Type="longtext" />
           <Property Name="TagString" Type="longtext" />
+          <Property Name="URL" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="RecipeItem">
           <Key>
@@ -63,6 +73,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Quantity" Type="double" Nullable="false" />
           <Property Name="MeasureID" Type="int" Nullable="false" />
+          <Property Name="MeasureDescription" Type="varchar" MaxLength="100" />
           <Property Name="IngredientID" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="500" />
           <Property Name="RecipeID" Type="int" Nullable="false" />
@@ -214,6 +225,7 @@
           <NavigationProperty Name="RecipeItem" Relationship="Self.FK_RecipeItem_Measure" FromRole="Measure" ToRole="RecipeItem" />
           <Property Name="Singular" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Plural" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Abbreviation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PantryItem">
           <Key>
@@ -235,7 +247,6 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Serves" Type="Int32" />
           <Property Name="Calories" Type="Int32" />
           <Property Name="PrepTime" Type="Int32" />
           <Property Name="Rating" Type="Int32" />
@@ -244,6 +255,15 @@
           <Property Name="TagString" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RecipeItem" Relationship="Self.FK_RecipeItem_Recipe" FromRole="Recipe" ToRole="RecipeItem" />
           <NavigationProperty Name="PlannedRecipe" Relationship="InventoryModel.PlannedRecipe_ibfk_1" FromRole="Recipe" ToRole="PlannedRecipe" />
+          <Property Name="Yield" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Carbohydrates" Type="Int32" />
+          <Property Name="Cholesterol" Type="Int32" />
+          <Property Name="Fat" Type="Int32" />
+          <Property Name="Fiber" Type="Int32" />
+          <Property Name="Protein" Type="Int32" />
+          <Property Name="Sodium" Type="Int32" />
+          <Property Name="CookTime" Type="Int32" />
+          <Property Name="URL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RecipeItem">
           <Key>
@@ -258,6 +278,7 @@
           <NavigationProperty Name="Ingredient" Relationship="Self.FK_RecipeItem_Ingredient" FromRole="RecipeItem" ToRole="Ingredient" />
           <NavigationProperty Name="Measure" Relationship="Self.FK_RecipeItem_Measure" FromRole="RecipeItem" ToRole="Measure" />
           <NavigationProperty Name="Recipe" Relationship="Self.FK_RecipeItem_Recipe" FromRole="RecipeItem" ToRole="Recipe" />
+          <Property Name="MeasureDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -378,6 +399,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" />
           <Property Name="RecipeID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Recipe" Relationship="InventoryModel.PlannedRecipe_ibfk_1" FromRole="PlannedRecipe" ToRole="Recipe" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="PlannedRecipe_ibfk_1">
           <End Type="InventoryModel.Recipe" Role="Recipe" Multiplicity="1" />
@@ -409,6 +431,7 @@
           <EntitySetMapping Name="Measure">
             <EntityTypeMapping TypeName="InventoryModel.Measure">
               <MappingFragment StoreEntitySet="Measure">
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
                 <ScalarProperty Name="Plural" ColumnName="Plural" />
                 <ScalarProperty Name="Singular" ColumnName="Singular" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -431,10 +454,18 @@
           <EntitySetMapping Name="Recipe">
             <EntityTypeMapping TypeName="InventoryModel.Recipe">
               <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="CookTime" ColumnName="CookTime" />
+                <ScalarProperty Name="Sodium" ColumnName="Sodium" />
+                <ScalarProperty Name="Protein" ColumnName="Protein" />
+                <ScalarProperty Name="Fiber" ColumnName="Fiber" />
+                <ScalarProperty Name="Fat" ColumnName="Fat" />
+                <ScalarProperty Name="Cholesterol" ColumnName="Cholesterol" />
+                <ScalarProperty Name="Carbohydrates" ColumnName="Carbohydrates" />
+                <ScalarProperty Name="Yield" ColumnName="Yield" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Serves" ColumnName="Serves" />
                 <ScalarProperty Name="Calories" ColumnName="Calories" />
                 <ScalarProperty Name="PrepTime" ColumnName="PrepTime" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
@@ -447,6 +478,7 @@
           <EntitySetMapping Name="RecipeItem">
             <EntityTypeMapping TypeName="InventoryModel.RecipeItem">
               <MappingFragment StoreEntitySet="RecipeItem">
+                <ScalarProperty Name="MeasureDescription" ColumnName="MeasureDescription" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="MeasureID" ColumnName="MeasureID" />
@@ -478,6 +510,7 @@
           <EntitySetMapping Name="PlannedRecipe">
             <EntityTypeMapping TypeName="InventoryModel.PlannedRecipe">
               <MappingFragment StoreEntitySet="PlannedRecipe">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

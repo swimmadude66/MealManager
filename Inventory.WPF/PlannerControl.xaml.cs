@@ -32,6 +32,7 @@ namespace Inventory.WPF
         public ObservableCollection<string> DayNames { get; set; }
         public int numWeeks { get; set; }
         private String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        private String[] SunStart = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
         public PlannerControl()
         {
@@ -39,9 +40,14 @@ namespace Inventory.WPF
             RecipeCombo.ItemsSource = getRecipes();
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
-            numWeeks = 1;
-            if (numWeeks > 1)
-                DayNames = new ObservableCollection<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            numWeeks = 6;
+            if (numWeeks > 1){
+                DayNames.Clear();
+                foreach(String day in SunStart)
+                {
+                    DayNames.Add(day);
+                }
+            }
             else
             {
                 DayNames.Clear();
@@ -78,6 +84,7 @@ namespace Inventory.WPF
             {
                 d = DateTime.Today;
             }
+            txtYear.Text = d.Year.ToString();
             DateTime start = d;
             DateTime end = start.AddDays(numWeeks*7);
             if (newStuff)
@@ -91,10 +98,10 @@ namespace Inventory.WPF
                 day.IsTargetMonth = (d.Month == DateTime.Today.Month);
                 day.isToday = (d.Date == DateTime.Today.Date);
                 day.MonthName = months[d.Month - 1];
-                day.Recipes = new ObservableCollection<RecipeModel>();
+                day.PlannedRecipes = new ObservableCollection<PlannerItemModel>();
                 if (PlannedRecipes.Contains(d.Date)){
                     foreach(PlannerItemModel m in PlannedRecipes[d].ToList()){
-                        day.Recipes.Add(m.Recipe);
+                        day.PlannedRecipes.Add(m);
                     }
                 }
                 Days.Add(day);
@@ -104,8 +111,15 @@ namespace Inventory.WPF
 
         private void changeView()
         {
+            bool newstuff;
             if (numWeeks > 1)
-                DayNames = new ObservableCollection<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            {
+                DayNames.Clear();
+                foreach (String day in SunStart)
+                {
+                    DayNames.Add(day);
+                }
+            }
             else
             {
                 DayNames.Clear();
@@ -137,6 +151,14 @@ namespace Inventory.WPF
             else
                 numWeeks = 6;
             changeView();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            PlannerItemModel plannedRecipe = (PlannerItemModel)button.DataContext;
+            cancelPlan(plannedRecipe.ID);
+            BuildCalendar(DateTime.Today, true);
         }
 
         public bool isValidMealDate(DateTime? mealDate)
@@ -181,6 +203,10 @@ namespace Inventory.WPF
             return manager.PlanRecipe(model, isEdit);
         }
 
+        private void cancelPlan(int id){
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            manager.cancelPlan(id);
+        }
     }
 
     public class Day
@@ -189,6 +215,6 @@ namespace Inventory.WPF
         public bool isToday { get; set; }
         public DateTime Date { get; set; }
         public String MonthName { get; set; }
-        public ObservableCollection<RecipeModel> Recipes { get; set; }
+        public ObservableCollection<PlannerItemModel> PlannedRecipes { get; set; }
     }
 }
