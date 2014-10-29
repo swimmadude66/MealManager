@@ -21,7 +21,7 @@ namespace Inventory.WPF
     /// </summary>
     public partial class RecipeCardControl : UserControl
     {
-        public RecipeCardControl(RecipeItemModel recipeItem)
+        public RecipeCardControl()
         {
             InitializeComponent();
             //lblTitle.Content = recipeItem.

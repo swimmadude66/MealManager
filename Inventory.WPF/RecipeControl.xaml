@@ -4,18 +4,32 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+      xmlns:local="clr-namespace:Inventory.WPF"
       x:Class="Inventory.WPF.RecipeControl" 
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1100">
 
     <Grid>
         <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGray">
-            <DataGrid x:Name="recipeGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
+            <ItemsControl x:Name="recipeCardGrid" Canvas.Top="154" VerticalAlignment="Top">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" Width="1100" Height="547" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:RecipeCardControl>
+                        </local:RecipeCardControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--<DataGrid x:Name="recipeGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="600"/>
                 </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
             <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Top="701" Width="1100"/>
             <TextBox x:Name="txtSearchName" Height="23" Canvas.Left="99" TextWrapping="Wrap" Text="" Canvas.Top="39" Width="307"/>
             <TextBox x:Name="txtSearchDescription" Height="23" Canvas.Left="99" TextWrapping="Wrap" Text="" Canvas.Top="84" Width="307"/>
