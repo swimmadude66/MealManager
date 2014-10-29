@@ -7,13 +7,13 @@
 
     <Window.Resources>
         <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="greenButton">
-            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontSize" Value="24" />
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#FF1E5F14">
+                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#FF216A16">
                             <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -50,13 +50,9 @@
             <Grid  Background="#FF216A16" Margin="0,0,1200,0">
                 <StackPanel CanHorizontallyScroll="True">
                     <Button x:Name="HomeBtn" Content="Home" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp"/>
-                    <Separator Height="1"></Separator>
                     <Button x:Name="PantryBtn" Content="Pantry" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp"/>
-                    <Separator Height="1"></Separator>
                     <Button x:Name="RecipesBtn" Content="Recipes" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp"/>
-                    <Separator Height="1"></Separator>
                     <Button x:Name="PlannerBtn" Content="Planner" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp"/>
-                    <Separator Height="1"></Separator>
                     <Button x:Name="RandomBtn" Content="Random" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp"/>
 
                 </StackPanel>
