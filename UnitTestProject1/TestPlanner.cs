@@ -14,7 +14,7 @@ namespace TestHarness
 
         public PlannerControl plannerControl;
 
-        [TestMethod]
+        [Ignore]
         public void TestPastMealDate()
         {
             plannerControl = new PlannerControl();
@@ -23,7 +23,7 @@ namespace TestHarness
             Assert.IsFalse(plannerControl.isValidMealDate(dateTime));
         }
 
-        [TestMethod]
+        [Ignore]
         public void TestNullMealDate()
         {
             plannerControl = new PlannerControl();
