@@ -62,7 +62,7 @@
                 </StackPanel>
             </Grid>
             <Grid Margin="200,0,0,0" >
-                <local:PantryControl x:Name="pantryCtl" Visibility="Visible" Loaded="PantryControl_Loaded"/>
+                <local:PantryControl x:Name="pantryCtl" Visibility="Visible"/>
                 <local:RecipeControl x:Name="recipeCtl" Visibility="Collapsed"/>
                 <local:PlannerControl x:Name="plannerCtl" Visibility="Collapsed"/>
             </Grid>
