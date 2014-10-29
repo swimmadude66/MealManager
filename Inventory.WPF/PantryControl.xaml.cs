@@ -26,6 +26,8 @@ namespace Inventory.WPF
     /// </summary>
     public partial class PantryControl : UserControl
     {
+        PantryItemModel itemToEdit = null;
+        
         public PantryControl()
         {
             InitializeComponent();
@@ -44,15 +46,61 @@ namespace Inventory.WPF
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (SavePantryItem())
+            bool isEdit;
+            if (itemToEdit == null)
             {
+                isEdit = false;
+            } 
+            else
+            {
+                isEdit = true;
+            }
+            if (SavePantryItem(isEdit))
+            {
+                lblAddEditHeader.Content = "Add a new panty item";
                 txtIngredientName.Text = "";
                 txtIngredientDescription.Text = "";
                 txtQuantity.Text = "";
                 dpExpires.SelectedDate = null;
+                ddlMeasure.SelectedIndex = 0;
+                if (itemToEdit != null)
+                {
+                    lblSuccess.Content = "Ingredient Updated Succesfully";
+                } 
+                else
+                {
+                    lblSuccess.Content = "Ingredient Added Succesfully";
+                }
                 lblSuccess.Visibility = Visibility.Visible;
+                itemToEdit = null;
                 initSources();
             }       
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            lblAddEditHeader.Content = "Add a new panty item";
+            txtIngredientName.Text = "";
+            txtIngredientDescription.Text = "";
+            txtQuantity.Text = "";
+            ddlMeasure.SelectedIndex = 0;
+            dpExpires.SelectedDate = null;
+            itemToEdit = null;
+            pantryGrid.SelectedIndex = -1;
+        }
+
+        private void editRow(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid pantryList = sender as DataGrid;
+            itemToEdit = pantryList.SelectedItem as PantryItemModel;
+
+            lblSuccess.Visibility = Visibility.Hidden;
+            lblAddEditHeader.Content = "Edit the selected panty item";
+            txtIngredientName.Text = itemToEdit.Ingredient.toString();
+            txtIngredientDescription.Text = itemToEdit.Description;
+            txtQuantity.Text = itemToEdit.Quantity.ToString();
+            ddlMeasure.SelectedIndex = ddlMeasure.Items.IndexOf(itemToEdit.Measure);
+            dpExpires.SelectedDate = itemToEdit.ExpirationDate;
         }
 
         //Domain Calls
@@ -68,8 +116,8 @@ namespace Inventory.WPF
             return data;
         }
 
-        private bool SavePantryItem()
-        {
+        private bool SavePantryItem(bool isEdit)
+        {   
             string description = "";
             if (!string.IsNullOrEmpty(txtIngredientDescription.Text))
             {
@@ -101,11 +149,26 @@ namespace Inventory.WPF
             string quantstring = txtQuantity.Text.Trim();
             double quant = Tools.ToolBox.FractionToDecimal(quantstring);            
 
-            if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant < (1.0/64.0))
+            if (name.Equals("") || string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || quant <=(1.0/64.0))
                 return false;
+            //Instantiate pantry Item and send
+            PantryItemModel item;
+            if (itemToEdit == null)
+            {
+                item = new PantryItemModel();
+            }
+            else
+            {
+                item = itemToEdit;
+            }
+            item.IngredientId = getIngredientId(name);
+            item.Quantity = quant;
+            item.MeasureId = getMeasureID(measureName);
+            item.Description = description;
+            item.ExpirationDate = expires;
 
             IPantryManager manager = ManagerFactory.GetPantryManager();
-            manager.SavePantryItem(getIngredientId(name), quant, getMeasureID(measureName), description, expires);
+            manager.SavePantryItem(item, isEdit);
             return true;
         }
 

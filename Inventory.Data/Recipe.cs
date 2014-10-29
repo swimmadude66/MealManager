@@ -23,13 +23,21 @@ namespace Inventory.Data
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Serves { get; set; }
         public Nullable<int> Calories { get; set; }
         public Nullable<int> PrepTime { get; set; }
         public Nullable<int> Rating { get; set; }
         public string ImagePath { get; set; }
         public string Directions { get; set; }
         public string TagString { get; set; }
+        public string Yield { get; set; }
+        public Nullable<int> Carbohydrates { get; set; }
+        public Nullable<int> Cholesterol { get; set; }
+        public Nullable<int> Fat { get; set; }
+        public Nullable<int> Fiber { get; set; }
+        public Nullable<int> Protein { get; set; }
+        public Nullable<int> Sodium { get; set; }
+        public Nullable<int> CookTime { get; set; }
+        public string URL { get; set; }
     
         public virtual ICollection<RecipeItem> RecipeItem { get; set; }
         public virtual ICollection<PlannedRecipe> PlannedRecipe { get; set; }
