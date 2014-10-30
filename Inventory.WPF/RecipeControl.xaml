@@ -10,20 +10,26 @@
       d:DesignHeight="800" d:DesignWidth="1100">
 
     <Grid>
-        <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGray">
-            <ItemsControl x:Name="recipeCardGrid" Canvas.Top="154" VerticalAlignment="Top">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" Width="1100" Height="547" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:RecipeCardControl>
-                        </local:RecipeCardControl>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+        <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGreen">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="154" VerticalAlignment="Top" Width="1100" Height="547" Padding="50 0 50 0">
+                <ItemsControl x:Name="recipeCardGrid" >
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Margin" Value="5"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:RecipeCardControl Width="400" Height="400" HorizontalContentAlignment="Stretch" Padding="0 0 0 20"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <!--<DataGrid x:Name="recipeGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
