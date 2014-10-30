@@ -84,7 +84,7 @@
                                                   RowHeight="20"
                                                   RowBackground="{x:Null}"
                                                   IsReadOnly="True"
-                                                  ItemsSource="{Binding Recipes}">
+                                                  ItemsSource="{Binding PlannedRecipes}">
                                             <DataGrid.Style>
                                                 <Style TargetType="{x:Type DataGrid}">
                                                     <Setter Property="BorderThickness" Value="0"></Setter>
@@ -92,11 +92,11 @@
                                                 </Style>
                                             </DataGrid.Style>
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Name}" Width="100"/>
+                                                <DataGridTextColumn x:Name="dbcRecipe" Binding="{Binding Recipe.Name}" Width="100"/>
                                                 <DataGridTemplateColumn>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <Button Height="10" Width="20"/>
+                                                            <Button Height="10" Width="20" Click="CancelButton_Click"/>
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>

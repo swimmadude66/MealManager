@@ -46,9 +46,34 @@ namespace TestHarness
                     results = manager.GetPlannedRecipes(start, end);
                     Assert.IsTrue(results.Count > 0);
                 }
-            }
-            
-            
+            }           
         }
+
+        [TestMethod]
+        public void TestCancel()
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            PlannerItemModel plan = new PlannerItemModel();
+            DateTime testdate = DateTime.Parse("01/01/1970");
+            plan.Date = testdate;
+            RecipeSearchCriteriaModel search = new RecipeSearchCriteriaModel();
+            search.ID = 15;
+            plan.Recipe = manager.SearchRecipes(search)[0];
+            int id = manager.PlanRecipe(plan, false);
+            List<String> results = new List<String>();
+            List<PlannerItemModel> planned = manager.GetPlannedRecipes(testdate, testdate);
+            foreach(PlannerItemModel rec in planned){
+                results.Add(rec.Recipe.Name);
+            }
+            Assert.IsTrue(results.Contains(plan.Recipe.Name));
+            manager.cancelPlan(id);
+            results = new List<String>();
+            foreach (PlannerItemModel rec in manager.GetPlannedRecipes(testdate, testdate))
+            {
+                results.Add(rec.Recipe.Name);
+            }
+            Assert.IsFalse(results.Contains(plan.Recipe.Name));
+        }
+
     }
 }

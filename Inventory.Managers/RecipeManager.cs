@@ -96,6 +96,11 @@ namespace Inventory.Managers
             return _plannerDAO.GetPlannedRecipes(start, end);
         }
 
+        public void cancelPlan(int id)
+        {
+            _plannerDAO.cancelPlan(id);
+        }
+
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
             if (criteria.ToString() == "")
                 return getRecipes();
