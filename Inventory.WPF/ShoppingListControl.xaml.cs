@@ -23,15 +23,15 @@ namespace Inventory.WPF
     /// </summary>
     public partial class ShoppingListControl : UserControl
     {
-        List<PantryItemModel> pantry;
-        List<RecipeModel> planned;
-
-        System.DateTime date1 = new System.DateTime(1996, 6, 3, 22, 15, 0);
-        System.DateTime date2 = new System.DateTime(2016, 12, 6, 13, 2, 0);
+        private List<PantryItemModel> pantry;
+        private List<RecipeModel> planned;
 
         public ShoppingListControl()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            pantry = new List<PantryItemModel>();
+            planned = new List<RecipeModel>();
+            pantry = getPantryItems();
         }
 
         public void DoComparison(object sender, RoutedEventArgs e)
@@ -41,24 +41,28 @@ namespace Inventory.WPF
 
         public List<IngredientModel> Compare()
         {
-            List<PantryItemModel> pantryItems = getPantryItems();
             DateTime? fromDate = fromPicker.SelectedDate;
             DateTime? untilDate = untilPicker.SelectedDate;
-            List<RecipeModel> recipes = getPlannedRecipes(fromDate, untilDate);
-            
+            planned = getPlannedRecipes(fromDate, untilDate);
             List<IngredientModel> shoppingList = new List<IngredientModel>();
-
-            foreach(RecipeModel recipe in recipes)
+            List<int> pantrying = new List<int>();
+            foreach (PantryItemModel item in pantry)
             {
-                foreach(int ingredientID in recipe.IngredientIDs)
+                if (!pantrying.Contains(item.IngredientId))
                 {
-                    int check = 0;
-                    foreach (PantryItemModel pantryItem in pantryItems)
+                    pantrying.Add(item.IngredientId);
+                }
+            }
+            List<int> ShoppingListIDs = new List<int>();
+            foreach(RecipeModel recipe in planned)
+            {
+                foreach (RecipeItemModel recipeitem in recipe.Items)
+                {
+                    if (!pantrying.Contains(recipeitem.Ingredient.ID) && !ShoppingListIDs.Contains(recipeitem.Ingredient.ID))
                     {
-                        if (pantryItem.IngredientId == ingredientID) check = 1;
+                        shoppingList.Add(recipeitem.Ingredient);
+                        ShoppingListIDs.Add(recipeitem.Ingredient.ID);
                     }
-                    if (check != 1) shoppingList.Add(getIngredientByID(ingredientID));
-                    
                 }
             }
             return shoppingList;
