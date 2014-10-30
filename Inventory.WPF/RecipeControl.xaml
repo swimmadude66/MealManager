@@ -11,7 +11,7 @@
 
     <Grid>
         <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGreen">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="154" VerticalAlignment="Top" Width="1100" Height="547" Padding="50 0 50 0">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="154" VerticalAlignment="Top" Width="1085" Height="547" Padding="25 0 25 0">
                 <ItemsControl x:Name="recipeCardGrid" >
                     <ItemsControl.ItemContainerStyle>
                         <Style>
@@ -25,7 +25,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:RecipeCardControl Width="400" Height="400" HorizontalContentAlignment="Stretch" Padding="0 0 0 20"/>
+                            <local:RecipeCardControl HorizontalContentAlignment="Stretch" Padding="0 0 0 10" Height="255" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
