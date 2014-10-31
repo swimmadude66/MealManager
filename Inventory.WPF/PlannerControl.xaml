@@ -9,7 +9,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Grid>
+    <Grid Background="#B1C7B6">
         <Grid x:Name="CalendarGrid" Height="800" ShowGridLines="False" >
             <TextBlock x:Name="txtYear" FontSize="44" VerticalAlignment="Top" FontWeight="SemiBold"/>
             <DockPanel Margin="0,60,0,230" Grid.ColumnSpan="2" x:Name="dpCalendar">

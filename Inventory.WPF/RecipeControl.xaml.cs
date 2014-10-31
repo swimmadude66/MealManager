@@ -42,7 +42,10 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            recipeGrid.ItemsSource = getRecipes();
+            //create cards
+            //item control
+            //uniform grid
+            recipeCardGrid.ItemsSource = getRecipes();
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
             List<IngredientModel> ingredients = getIngredients();
@@ -115,8 +118,8 @@ namespace Inventory.WPF
             {
                 criteria.Ingredients = searchingredients;
             }
-            recipeGrid.ItemsSource = searchRecipes(criteria);
-            recipeGrid.Items.Refresh();
+            recipeCardGrid.ItemsSource = searchRecipes(criteria);
+            recipeCardGrid.Items.Refresh();
         }
 
         private void AddRecipe_Click(object sender, RoutedEventArgs e)

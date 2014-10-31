@@ -37,7 +37,8 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            pantryGrid.ItemsSource = getPantry();
+            //pantryGrid.ItemsSource = getPantry();
+            pantryList.ItemsSource = getPantry();
             ddlMeasure.ItemsSource = getMeasures();
             txtIngredientName.ItemsSource = getIngredients();
             txtIngredientName.SelectedIndex = -1;
@@ -86,7 +87,7 @@ namespace Inventory.WPF
             ddlMeasure.SelectedIndex = 0;
             dpExpires.SelectedDate = null;
             itemToEdit = null;
-            pantryGrid.SelectedIndex = -1;
+            //pantryGrid.SelectedIndex = -1;
         }
 
         private void editRow(object sender, MouseButtonEventArgs e)

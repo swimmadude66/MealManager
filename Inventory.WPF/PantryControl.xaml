@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventory.WPF" x:Class="Inventory.WPF.PantryControl" 
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1100">
+             d:DesignHeight="800" d:DesignWidth="1200">
     <Grid>
-        <DataGrid x:Name="pantryGrid" MouseDoubleClick="editRow" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="580" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True">
+        <!--<DataGrid x:Name="pantryGrid" MouseDoubleClick="editRow" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="580" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient.Name}" IsReadOnly="True" Width="185"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding StringQuantity}" IsReadOnly="True" Width="83"/>
@@ -15,7 +15,25 @@
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="645"/>
                 <DataGridTextColumn Header="Expires" Binding="{Binding ExpirationDateString}" IsReadOnly="True" Width="84"/>
             </DataGrid.Columns>
-        </DataGrid>
+        </DataGrid>-->
+        <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,10,0,240">
+            <ItemsControl Name="pantryList" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,0,0,0" Background="#FF216A16" Height="50" >
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                                <TextBlock Text="{Binding StringQuantity}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="{Binding Measure.Name}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0"/>
+                            </StackPanel>
+
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
         <Label x:Name="lblAddEditHeader" HorizontalAlignment="Left" Height="30" Margin="20,580,0,0" VerticalAlignment="Top" Content="Add a new panty item"/>
         <ComboBox x:Name="txtIngredientName" HorizontalAlignment="Left" Height="25" Margin="120,614,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name"/>
         <Label x:Name="lblIngredientName" Content="Ingredient" HorizontalAlignment="Left" Margin="31,614,0,0" VerticalAlignment="Top" Height="32"/>

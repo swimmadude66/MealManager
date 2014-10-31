@@ -24,5 +24,45 @@ namespace Inventory.WPF
         {
             InitializeComponent();
         }
+
+        private void PantryControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HomeBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pantryCtl.Visibility = Visibility.Collapsed;
+            recipeCtl.Visibility = Visibility.Collapsed;
+            plannerCtl.Visibility = Visibility.Collapsed;
+        }
+
+        private void PantryBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pantryCtl.Visibility = Visibility.Visible;
+            recipeCtl.Visibility = Visibility.Collapsed;
+            plannerCtl.Visibility = Visibility.Collapsed;
+        }
+
+        private void RecipesBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pantryCtl.Visibility = Visibility.Collapsed;
+            recipeCtl.Visibility = Visibility.Visible;
+            plannerCtl.Visibility = Visibility.Collapsed;
+        }
+
+        private void PlannerBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pantryCtl.Visibility = Visibility.Collapsed;
+            recipeCtl.Visibility = Visibility.Collapsed;
+            plannerCtl.Visibility = Visibility.Visible;
+        }
+
+        private void RandomBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pantryCtl.Visibility = Visibility.Collapsed;
+            recipeCtl.Visibility = Visibility.Collapsed;
+            plannerCtl.Visibility = Visibility.Collapsed;
+        }
     }
 }
