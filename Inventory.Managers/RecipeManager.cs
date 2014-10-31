@@ -102,27 +102,6 @@ namespace Inventory.Managers
             return _recipeDAO.SearchRecipes(criteria);
             
         }
-
-        public List<RecipeModel> FilterRecipes(List<RecipeModel> recipes, RecipeSearchCriteriaModel criteria)
-        {
-            List<RecipeModel> filteredList = new List<RecipeModel>();
-            foreach (RecipeModel rec in recipes)
-            {
-                bool contains = true;
-                foreach(IngredientModel ing in criteria.Ingredients){
-                    if (!rec.IngredientIDs.Contains(ing.ID))
-                    {
-                        contains = false;
-                        break;
-                    }
-                }
-                if (contains)
-                {
-                    filteredList.Add(rec);
-                }
-            }
-            return filteredList;
-        }
        
     }
 }

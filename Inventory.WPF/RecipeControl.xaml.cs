@@ -240,6 +240,42 @@ namespace Inventory.WPF
             return true;
         }
 
+        private List<RecipeModel> filterRecipes(List<RecipeModel> raw)
+        {
+            if ((bool)rbViewAll.IsChecked)
+            {
+                return raw;
+            }
+            else
+            {
+                List<RecipeModel> filtered = new List<RecipeModel>();
+                ILookup<int, PantryItemModel> pantry = getPantry().ToLookup(p => p.Ingredient.ID);
+                foreach (RecipeModel rec in raw)
+                {
+                    bool valid = true;
+                    foreach (RecipeItemModel item in rec.Items)
+                    {
+                        if (pantry[item.Ingredient.ID] != null)
+                        {
+                            //compare quantities
+                        }
+                        else
+                        {
+                            valid = false;
+                            break;
+                        }
+                    }
+                    if (valid)
+                    {
+                        filtered.Add(rec);
+                    }
+                }
+                return filtered;
+            }
+        }
+
+//Domain Calls
+
         private void SaveRecipe()
         {
             string name = txtName.Text.Trim();
@@ -284,11 +320,10 @@ namespace Inventory.WPF
             else return id;
         }
 
-        //Domain Calls
         private List<RecipeModel> getRecipes()
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes();
+            return filterRecipes(manager.getRecipes());
         }
 
         private List<IngredientModel> getIngredients()
@@ -303,6 +338,12 @@ namespace Inventory.WPF
             return manager.getMeasures();
         }
 
+        private List<PantryItemModel> getPantry()
+        {
+            IPantryManager manager = ManagerFactory.GetPantryManager();
+            return manager.GetPantryContents();
+        }
+
         private List<String> getAllTags()
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
@@ -312,7 +353,7 @@ namespace Inventory.WPF
         private List<RecipeModel> searchRecipes(RecipeSearchCriteriaModel criteria)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.SearchRecipes(criteria);
+            return filterRecipes(manager.SearchRecipes(criteria));
         }
 
         
