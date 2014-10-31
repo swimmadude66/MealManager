@@ -7,11 +7,11 @@
       xmlns:local="clr-namespace:Inventory.WPF"
       x:Class="Inventory.WPF.RecipeControl" 
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1100">
+      d:DesignHeight="800" d:DesignWidth="1200">
 
     <Grid>
-        <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGreen">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="154" VerticalAlignment="Top" Width="1085" Height="547" Padding="25 0 25 0">
+        <Canvas x:Name="listPanel" Visibility="Visible" Background="#B1C7B6">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="154" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
                 <ItemsControl x:Name="recipeCardGrid" >
                     <ItemsControl.ItemContainerStyle>
                         <Style>
@@ -36,7 +36,7 @@
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" IsReadOnly="True" Width="600"/>
                 </DataGrid.Columns>
             </DataGrid>-->
-            <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Top="701" Width="1100"/>
+            <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Top="701" Width="1200"/>
             <TextBox x:Name="txtSearchName" Height="23" Canvas.Left="99" TextWrapping="Wrap" Text="" Canvas.Top="39" Width="307"/>
             <TextBox x:Name="txtSearchDescription" Height="23" Canvas.Left="99" TextWrapping="Wrap" Text="" Canvas.Top="84" Width="307"/>
             <ComboBox x:Name="cbSearchIngredients" Height="23" Canvas.Left="698" IsEditable="True" DisplayMemberPath="Name" Text="" Canvas.Top="39" Width="226"/>
