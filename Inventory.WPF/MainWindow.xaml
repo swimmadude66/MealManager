@@ -6,8 +6,7 @@
 
 
     <Window.Resources>
-        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="greenButton">
-            <Setter Property="FontSize" Value="24" />
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="Template">
@@ -49,11 +48,11 @@
         <Grid  Height="800" Width="1400">
             <Grid  Background="#FF216A16" Margin="0,0,1200,0">
                 <StackPanel CanHorizontallyScroll="True">
-                    <Button x:Name="HomeBtn" Content="Home" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="PantryBtn" Content="Pantry" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="RecipesBtn" Content="Recipes" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="PlannerBtn" Content="Planner" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="RandomBtn" Content="Random" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp"/>
+                    <Button x:Name="HomeBtn" Content="Home" Height="75" FontSize="24" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp"/>
+                    <Button x:Name="PantryBtn" Content="Pantry" Height="75" FontSize="24" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp"/>
+                    <Button x:Name="RecipesBtn" Content="Recipes" Height="75" FontSize="24" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp"/>
+                    <Button x:Name="PlannerBtn" Content="Planner" Height="75" FontSize="24" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp"/>
+                    <Button x:Name="RandomBtn" Content="Random" Height="75" FontSize="24" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp"/>
 
                 </StackPanel>
             </Grid>
