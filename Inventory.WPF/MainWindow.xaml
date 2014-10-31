@@ -6,13 +6,15 @@
 
 
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="greenButton">
+            <Setter Property="FontSize" Value="24" />
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#FF216A16">
+                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">
                             <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -45,14 +47,64 @@
 
     </Window.Resources>
     <Viewbox HorizontalAlignment="Left" Stretch="Fill">
-        <Grid  Height="800" Width="1400">
-            <Grid  Background="#FF216A16" Margin="0,0,1200,0">
+        <Grid  Height="800" Width="1400" Background="#B1C7B6">
+            <Grid  Background="#056C1C" Margin="0,0,1200,0">
                 <StackPanel CanHorizontallyScroll="True">
-                    <Button x:Name="HomeBtn" Content="Home" Height="75" FontSize="24" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="PantryBtn" Content="Pantry" Height="75" FontSize="24" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="RecipesBtn" Content="Recipes" Height="75" FontSize="24" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="PlannerBtn" Content="Planner" Height="75" FontSize="24" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp"/>
-                    <Button x:Name="RandomBtn" Content="Random" Height="75" FontSize="24" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp"/>
+
+                    <Button x:Name="HomeBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Home" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="PantryBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Pantry" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="RecipesBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Recipes" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="PlannerBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Planner" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="RandomBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Random" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
 
                 </StackPanel>
             </Grid>
