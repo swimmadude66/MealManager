@@ -140,6 +140,20 @@ sub db_disconnect
 	}
 }
 
+# ----------------------------------------------------------
+# escape		Escape quotes from strings
+# 
+# params		String
+# return		Escaped String
+# ----------------------------------------------------------
+sub escape
+{
+	return '' if( is_missing_or_empty( $_[0] ) );
+	my $string = $_[0];
+	$string = trim( $string );
+
+	return quotemeta $string;
+}
 
 sub fraction_to_double
 {
@@ -170,9 +184,44 @@ sub is_missing_or_empty
 	return 0;
 }
 
+sub trim 
+{ 
+	my $s = shift; 
+	$s =~ s/^\s+|\s+$//g; 
+	return $s;
+}
 
+# for spliting the ingredient_amounts entries into quantity and measure
+sub split_amount
+{
+        my $amount_str = shift;
 
+        my %amount = (
+                'quantity'     => '',
+                'measure'      => ''
+        );
 
+        if( $amount_str =~ /^([0-9\/]*)\s?([0-9\/]*)\s?([(](\d+)\s(\w+)[)])?\s?(\w+)?$/ )
+        {
+                my $quantity = 0;
+
+                $quantity  = fraction_to_double( $1 );
+
+                $quantity_fraction  = fraction_to_double( $2 );
+
+                $amount{ 'quantity' } = $quantity + $quantity_fraction;
+
+                if( defined $3 )
+                {
+                       $amount{ 'alternate_quantity' }  = fraction_to_double( $4 ) if( !is_missing_or_empty( $4 ) );
+                       $amount{ 'alternate_measure' } = $5 if( !is_missing_or_empty( $5 ) );
+                }
+
+                $amount{ 'measure' } = $6 if( !is_missing_or_empty( $6 ) );
+        }
+
+        return %amount;
+}
 
 
 
