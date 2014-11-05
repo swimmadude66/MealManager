@@ -158,7 +158,6 @@ INSERT INTO Ingredient ( ID, Name, Description ) VALUES
 ( NULL, "Beets", NULL ) ,
 ( NULL, "Bell Pepper", NULL ) ,
 ( NULL, "Bengal Gram", NULL ) ,
-( NULL, "Bengal Gram (Split)", NULL ) ,
 ( NULL, "Berries", NULL ) ,
 ( NULL, "Beverage Mix", NULL ) ,
 ( NULL, "Birds Eye", NULL ) ,
@@ -2289,4 +2288,14 @@ INSERT INTO Ingredient ( ID, Name, Description ) VALUES
 ( NULL, "Zinfandel", NULL ) ,
 ( NULL, "Ziti", NULL ) ,
 ( NULL, "Zucchini", NULL ) ,
-( NULL, "Zwieback Toast", NULL );
+( NULL, "Zwieback Toast", NULL )
+( NULL, "Muffin Liner", NULL ) ,
+( NULL, "Paper Bag", NULL ) ,
+( NULL, "Cocktail Umbrellas", NULL ) ,
+( NULL, "Construction Paper", NULL ) ,
+( NULL, "Editble Carnations", NULL ) ,
+( NULL, "Garnish", NULL ) ,
+( NULL, "Kitchen String", NULL ) ,
+( NULL, "Naan", NULL ) ,
+( NULL, "Tabasco", NULL ) ,
+( NULL, "Plastic Bags", NULL );
