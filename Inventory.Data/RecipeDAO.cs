@@ -226,7 +226,7 @@ namespace Inventory.Data
                         ingredSearch += "as result on result.RecipeID=init.ID";
                         searchquery += " Join " + ingredSearch;
                     }
-
+                    searchquery += " Limit 25 ";
                     List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
                     return RecipeMapper.BindItems(result);
                 }

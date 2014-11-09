@@ -98,7 +98,7 @@ namespace Inventory.Managers
 
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
             if (criteria.ToString() == "")
-                return getRecipes(50);
+                return getRecipes(25);
             return _recipeDAO.SearchRecipes(criteria);
             
         }
