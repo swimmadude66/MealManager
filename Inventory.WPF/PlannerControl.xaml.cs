@@ -37,7 +37,7 @@ namespace Inventory.WPF
         public PlannerControl()
         {
             InitializeComponent();
-            RecipeCombo.ItemsSource = getRecipes();
+            RecipeCombo.ItemsSource = getRecipes(-1);
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
             numWeeks = 6;
@@ -185,10 +185,10 @@ namespace Inventory.WPF
 
         //Domain Calls
 
-        private List<RecipeModel> getRecipes()
+        private List<RecipeModel> getRecipes(int Limit)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes();
+            return manager.getRecipes(Limit);
         }
 
         private List<PlannerItemModel> getPlannerItems(DateTime? start, DateTime? end)

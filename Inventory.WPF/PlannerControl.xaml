@@ -125,7 +125,11 @@
 
             <Button x:Name="btnSubmit" Click="btnSubmit_Click"  Content="Submit" HorizontalAlignment="Left" Margin="510,135,0,0" VerticalAlignment="Top" Width="80"/>
             <Label Content="Recipe" HorizontalAlignment="Left" Margin="86,65,0,0" Width="70" RenderTransformOrigin="0.336,25.192" Height="26" VerticalAlignment="Top" Grid.Column="1"/>
-            <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="175,66,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False" Grid.Column="1"/>
+            <ComboBox x:Name="RecipeCombo" HorizontalAlignment="Left" Height="25" Margin="175,66,0,0" VerticalAlignment="Top" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False" Grid.Column="1">
+                <ComboBox.Resources>
+                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
+                </ComboBox.Resources>
+            </ComboBox>
             <DatePicker x:Name="PlannerDatePicker" HorizontalAlignment="Left" Margin="451,68,0,0" VerticalAlignment="Top" Width="208"/>
             <Label Content="Meal Date" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="362,67,0,0"/>
             <Button x:Name="btnChangeView" Content="Change View Mode" HorizontalAlignment="Left" Margin="24,69,0,0" VerticalAlignment="Top" Width="157" Click="BtnChangeView_Click"/>

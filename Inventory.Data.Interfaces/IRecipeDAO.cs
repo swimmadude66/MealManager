@@ -9,7 +9,7 @@ namespace Inventory.Data.Interfaces
 {
     public interface IRecipeDAO
     {
-        List<RecipeModel> getRecipes();
+        List<RecipeModel> getRecipes(int Limit);
         List<String> getAllTags();
         void SaveTag(String tag);
         int SaveRecipe(string name, string description, string directions, string tagstring);

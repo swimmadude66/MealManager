@@ -45,7 +45,7 @@ namespace Inventory.WPF
             //create cards
             //item control
             //uniform grid
-            recipeCardGrid.ItemsSource = getRecipes();
+            recipeCardGrid.ItemsSource = getRecipes(50);
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
             List<IngredientModel> ingredients = getIngredients();
@@ -288,10 +288,10 @@ namespace Inventory.WPF
         }
 
         //Domain Calls
-        private List<RecipeModel> getRecipes()
+        private List<RecipeModel> getRecipes(int Limit)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes();
+            return manager.getRecipes(Limit);
         }
 
         private List<IngredientModel> getIngredients()

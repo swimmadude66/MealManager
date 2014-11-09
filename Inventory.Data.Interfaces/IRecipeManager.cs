@@ -9,7 +9,7 @@ namespace Inventory.Data.Interfaces
 {
     public interface IRecipeManager
     {
-        List<RecipeModel> getRecipes();
+        List<RecipeModel> getRecipes(int Limit);
         int SaveIngredient(string name, string description);
         int SaveMeasure(string name);
         int getMeasureID(string name);
