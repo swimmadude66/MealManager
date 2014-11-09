@@ -17,7 +17,8 @@ namespace Inventory.Data
             {
                 using(var context = new InventoryEntities()){
                     List<Recipe> recipes = (from r in context.Recipe
-                                            select r).OrderBy(v=>v.Name).ToList();
+                                            where r.Name != ""
+                                            select r).OrderBy(v => v.Name).Take(25).ToList();
                     return RecipeMapper.BindItems(recipes);
                 }
             }
