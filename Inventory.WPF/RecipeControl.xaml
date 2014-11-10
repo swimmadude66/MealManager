@@ -11,7 +11,7 @@
 
     <Grid>
         <Canvas x:Name="listPanel" Visibility="Visible" Background="#B1C7B6">
-            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="154" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="125" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
                 <ItemsControl x:Name="recipeCardGrid" >
                     <ItemsControl.ItemContainerStyle>
                         <Style>
@@ -37,16 +37,17 @@
                 </DataGrid.Columns>
             </DataGrid>-->
             <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Top="701" Width="1200"/>
-            <TextBox x:Name="txtSearchName" Height="23" Canvas.Left="99" TextWrapping="Wrap" Text="" Canvas.Top="39" Width="307"/>
-            <TextBox x:Name="txtSearchDescription" Height="23" Canvas.Left="99" TextWrapping="Wrap" Text="" Canvas.Top="84" Width="307"/>
-            <ComboBox x:Name="cbSearchIngredients" Height="23" Canvas.Left="698" IsEditable="True" DisplayMemberPath="Name" Text="" Canvas.Top="39" Width="226"/>
-            <TextBlock x:Name="txtSearchIngredientsList" Canvas.Left="698" TextWrapping="Wrap" Text="" Canvas.Top="84" Height="43" Width="226"/>
-            <Button x:Name="btnSearchAddIngredient" Content="Add" Canvas.Left="957" Canvas.Top="40" Width="75" Click="btnSearchAddIngredient_Click"/>
-            <Button x:Name="btnSearch" Content="Search" Canvas.Left="483" Canvas.Top="111" Width="75" Click="btnSearch_Click"/>
-            <Label Content="Name" Canvas.Left="38" Canvas.Top="36"/>
-            <Label Content="Description" Canvas.Left="10" Canvas.Top="81"/>
-            <Label Content="Ingredients" Canvas.Left="611" Canvas.Top="36"/>
-            <Button x:Name="btnClearSearch" Content="Clear" Canvas.Left="483" Canvas.Top="36" Width="75" Click="btnClearSearch_Click"/>
+            <TextBox x:Name="txtSearchName" Height="23" Canvas.Left="520" TextWrapping="Wrap" Text="" Canvas.Top="25" Width="219"/>
+            <TextBox x:Name="txtSearchDescription" Height="23" Canvas.Left="843" TextWrapping="Wrap" Text="" Canvas.Top="25" Width="217"/>
+            <TextBlock x:Name="txtPageTitle" Text="Recipes" FontSize="70" Canvas.Left="25"/>
+            <ComboBox x:Name="cbSearchIngredients" Height="23" Canvas.Left="726" IsEditable="True" DisplayMemberPath="Name" Text="" Canvas.Top="75" Width="226"/>
+            <TextBlock x:Name="txtSearchIngredientsList" Canvas.Left="612" TextWrapping="Wrap" Text="" Canvas.Top="106" Height="43" Width="226"/>
+            <Button x:Name="btnSearchAddIngredient" Content="Add" Canvas.Left="985" Canvas.Top="75" Width="75" Click="btnSearchAddIngredient_Click"/>
+            <Button x:Name="btnSearch" Content="Search" Canvas.Left="1089" Canvas.Top="25" Width="75" Click="btnSearch_Click"/>
+            <Label Content="Name" Canvas.Left="478" Canvas.Top="25"/>
+            <Label Content="Description" Canvas.Left="768" Canvas.Top="25"/>
+            <Label Content="Ingredients" Canvas.Left="651" Canvas.Top="75"/>
+            <Button x:Name="btnClearSearch" Content="Clear" Canvas.Left="1089" Canvas.Top="75" Width="75" Click="btnClearSearch_Click"/>
         </Canvas>
         <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">
             <Image  HorizontalAlignment="Left" Height="224" VerticalAlignment="Top" Width="500" Canvas.Left="50" Canvas.Top="50"/>

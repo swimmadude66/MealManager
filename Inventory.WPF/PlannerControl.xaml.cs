@@ -37,7 +37,7 @@ namespace Inventory.WPF
         public PlannerControl()
         {
             InitializeComponent();
-            RecipeCombo.ItemsSource = getRecipes();
+            //RecipeCombo.ItemsSource = getRecipes();
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
             numWeeks = 6;
@@ -64,8 +64,8 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            PlannerDatePicker.SelectedDate = DateTime.Today;
-            RecipeCombo.SelectedIndex = -1;
+            //PlannerDatePicker.SelectedDate = DateTime.Today;
+            //RecipeCombo.SelectedIndex = -1;
             BuildCalendar(DateTime.Today, true);
         }
 
@@ -84,7 +84,6 @@ namespace Inventory.WPF
             {
                 d = DateTime.Today;
             }
-            txtYear.Text = d.Year.ToString();
             DateTime start = d;
             DateTime end = start.AddDays(numWeeks*7);
             if (newStuff)
@@ -138,11 +137,11 @@ namespace Inventory.WPF
             return Convert.ToInt32(dow.ToString("D"));
         }
 
-        public void btnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
-                planRecipe();
-        }
+        //public void btnSubmit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
+        //        planRecipe();
+        //}
 
         private void BtnChangeView_Click(object sender, RoutedEventArgs e)
         {
@@ -172,16 +171,16 @@ namespace Inventory.WPF
             return false;
         }
 
-        private void planRecipe()
-        {
-            DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
-            RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
-            PlannerItemModel model = new PlannerItemModel();
-            model.Date = plannerItemDate;
-            model.Recipe = plannerItemRecipe;
-            savePlan(model, false);
-            initSources();
-        }
+        //private void planRecipe()
+        //{
+        //    DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
+        //    RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
+        //    PlannerItemModel model = new PlannerItemModel();
+        //    model.Date = plannerItemDate;
+        //    model.Recipe = plannerItemRecipe;
+        //    savePlan(model, false);
+        //    initSources();
+        //}
 
         //Domain Calls
 

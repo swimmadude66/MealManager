@@ -22,6 +22,16 @@ namespace Inventory.WPF
     {
         public MainWindow()
         {
+            TextElement.FontFamilyProperty.OverrideMetadata(
+                typeof(TextElement),
+                new FrameworkPropertyMetadata(
+                    new FontFamily("Segoe UI Light")));
+
+            TextBlock.FontFamilyProperty.OverrideMetadata(
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    new FontFamily("Segoe UI Light")));
+            
             InitializeComponent();
         }
 

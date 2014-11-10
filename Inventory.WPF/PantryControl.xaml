@@ -16,7 +16,8 @@
                 <DataGridTextColumn Header="Expires" Binding="{Binding ExpirationDateString}" IsReadOnly="True" Width="84"/>
             </DataGrid.Columns>
         </DataGrid>-->
-        <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,10,0,240">
+        <TextBlock x:Name="txtPageTitle" Text="Pantry" FontSize="70" Margin="25 0 775 650"/>
+        <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,125,0,240">
             <ItemsControl Name="pantryList" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
