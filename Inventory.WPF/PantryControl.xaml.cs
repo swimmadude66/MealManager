@@ -223,7 +223,7 @@ namespace Inventory.WPF
             measureComboBox.SelectedItem = pantryItemModel.Measure;
             ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
             ingredientComboBox.ItemsSource = txtIngredientName.ItemsSource;
-            ingredientComboBox.SelectedIndex = pantryItemModel.Ingredient;
+            ingredientComboBox.SelectedItem = pantryItemModel.Ingredient;
             TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
             descriptionTextBox.Text = pantryItemModel.Description;
             //Console.Write(quantityTextBlock.Text);
