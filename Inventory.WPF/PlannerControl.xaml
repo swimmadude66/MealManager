@@ -32,10 +32,12 @@
                                 <Border BorderBrush="Black" Name="InnerBorder" BorderThickness="1">
                                     <Border.Style>
                                         <Style TargetType="{x:Type Border}">
+                                            <Setter Property="Border.Background" Value="#FFFFFFFF"/>
                                             <Style.Triggers>
                                                 <!--Current Day-->
+                                                
                                                 <DataTrigger Binding="{Binding isToday}" Value="true">
-                                                    <Setter Property="Border.Background" Value="#FFE1EAFB"/>
+                                                    <Setter Property="Border.Background" Value="#FFFFA965"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
