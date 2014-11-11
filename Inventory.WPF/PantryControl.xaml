@@ -21,13 +21,25 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,0,0,0" Background="#FF216A16" Height="50" >
+                            <Button Margin="0,0,0,0" Style="{StaticResource greenButton}" Background="{x:Null}" HorizontalAlignment="Stretch" Click="Button_Click"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                                 <TextBlock Text="{Binding StringQuantity}" Foreground="White" Padding="5,0,5,0"/>
                                 <TextBlock Text="{Binding Measure.Name}" Foreground="White" Padding="5,0,5,0"/>
                                 <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
                                 <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="{Binding Ingredient.Description}" Foreground="White" Padding="5,0,5,0"/>
                             </StackPanel>
-
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Visibility="Collapsed">
+                                <TextBox Name="QuantityTextBox" Padding="5,0,5,0"/>
+                                <ComboBox Name="MeasureComboBox" DisplayMemberPath="Name" Padding="5,0,5,0"/>
+                                <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
+                                <ComboBox Name="IngredientComboBox" DisplayMemberPath="Name" Padding="5,0,5,0"/>
+                                <TextBox Name="DescriptionTextBox" Padding="5,0,5,0"/>
+                                <Button Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0"/>
+                                <!--<TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="{Binding Ingredient.Description}" Foreground="White" Padding="5,0,5,0"/>-->
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

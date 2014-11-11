@@ -206,5 +206,27 @@ namespace Inventory.WPF
             }
             else return id;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button pantryItemBtn = (Button)sender;
+            PantryItemModel pantryItemModel = (PantryItemModel)pantryItemBtn.DataContext;
+            Grid pantryItemGrid = (Grid)pantryItemBtn.Parent;
+            StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
+            pantryItemPanel.Visibility = Visibility.Collapsed;
+            StackPanel pantryEditItemPanel = (StackPanel)pantryItemGrid.Children[2];
+            pantryEditItemPanel.Visibility = Visibility.Visible;
+            TextBox quantityTextBox = (TextBox)pantryEditItemPanel.FindName("QuantityTextBox");
+            quantityTextBox.Text = pantryItemModel.StringQuantity;
+            ComboBox measureComboBox = (ComboBox)pantryEditItemPanel.FindName("MeasureComboBox");
+            measureComboBox.ItemsSource = ddlMeasure.ItemsSource;
+            measureComboBox.SelectedItem = pantryItemModel.Measure;
+            ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
+            ingredientComboBox.ItemsSource = txtIngredientName.ItemsSource;
+            ingredientComboBox.SelectedIndex = pantryItemModel.Ingredient;
+            TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
+            descriptionTextBox.Text = pantryItemModel.Description;
+            //Console.Write(quantityTextBlock.Text);
+        }
     }
 }

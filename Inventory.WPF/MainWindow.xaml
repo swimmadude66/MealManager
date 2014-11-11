@@ -6,30 +6,6 @@
 
 
     <Window.Resources>
-        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button" x:Key="greenButton">
-            <Setter Property="FontSize" Value="24" />
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">
-                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF3EC92A" />
-                                <Setter Property="Cursor" Value="Hand" />
-                            </Trigger>
-                            <Trigger Property="IsPressed"  Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF173A12" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style TargetType="TabItem">
             <Setter Property="Height" Value="130" />
             <Setter Property="Width" Value="300"/>
@@ -49,18 +25,9 @@
     <Viewbox HorizontalAlignment="Left" Stretch="Fill">
         <Grid  Height="800" Width="1400" Background="#B1C7B6">
             <Grid  Background="#056C1C" Margin="0,0,1200,0">
-                <StackPanel CanHorizontallyScroll="True">
+                <StackPanel CanHorizontallyScroll="True" Margin="0,80,0,0">
 
-                    <Button x:Name="HomeBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="HomeBtn_PreviewMouseLeftButtonUp">
-                        <Grid VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="120" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
-                            <TextBlock Text="Home" Grid.Column="1"  VerticalAlignment="Center"/>
-                        </Grid>
-                    </Button>
+                  
                     <!--<Separator Height="1"></Separator>-->
                     <Button x:Name="PantryBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp">
                         <Grid VerticalAlignment="Top">
@@ -68,7 +35,7 @@
                                 <ColumnDefinition Width="80" />
                                 <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <Image Source="apple.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
                             <TextBlock Text="Pantry" Grid.Column="1"  VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
@@ -79,7 +46,7 @@
                                 <ColumnDefinition Width="80" />
                                 <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <Image Source="cookBook.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
                             <TextBlock Text="Recipes" Grid.Column="1"  VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
@@ -90,22 +57,11 @@
                                 <ColumnDefinition Width="80" />
                                 <ColumnDefinition Width="120" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <Image Source="calendar.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
                             <TextBlock Text="Planner" Grid.Column="1"  VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <!--<Separator Height="1"></Separator>-->
-                    <Button x:Name="RandomBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RandomBtn_PreviewMouseLeftButtonUp">
-                        <Grid VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="120" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="icon.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
-                            <TextBlock Text="Random" Grid.Column="1"  VerticalAlignment="Center"/>
-                        </Grid>
-                    </Button>
-
                 </StackPanel>
             </Grid>
             <Grid Margin="200,0,0,0" >
