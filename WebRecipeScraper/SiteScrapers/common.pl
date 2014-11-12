@@ -5,17 +5,18 @@ use utf8;
 binmode( STDOUT, ': utf8' );
 
 use File::Spec;
-use Web::Scraper::LibXML;
-use WWW::Curl::Easy;
+#use Web::Scraper::LibXML;
+#use WWW::Curl::Easy;
 use Data::Dumper;
-use Log::Log4perl qw(get_logger);
+#use Log::Log4perl qw(get_logger);
 use DBI;
-use String::Util qw(trim);
 use POSIX qw(ceil strftime);
+
+require '../../SiteScrapers/constants.pl';
 
 my $database_handle;
 my $i;
-my $logger;
+#my $logger;
 #our @recipes;
 
 # ----------------------------------------------------------
@@ -23,35 +24,35 @@ my $logger;
 #
 # params 		Path to store log file (Optional)
 # ----------------------------------------------------------
-sub log_init
-{
-	my $stamp = strftime( "%Y%m%d", localtime );
-	my $logfile_path = shift;
-	if( !defined( $logfile_path ) )
-	{
-		$logfile_path = "recipe_scrape";
-	}
+# sub log_init
+# {
+# 	my $stamp = strftime( "%Y%m%d", localtime );
+# 	my $logfile_path = shift;
+# 	if( !defined( $logfile_path ) )
+# 	{
+# 		$logfile_path = "recipe_scrape";
+# 	}
 
-	#Creates Log settings and Logger for use during runtime
-	Log::Log4perl::Logger::create_custom_level( "ERROR", "FATAL" );
-	my $conf = "
-	    log4perl.logger = INFO, screen, file
+# 	#Creates Log settings and Logger for use during runtime
+# 	Log::Log4perl::Logger::create_custom_level( "ERROR", "FATAL" );
+# 	my $conf = "
+# 	    log4perl.logger = INFO, screen, file
 	    
-	    log4perl.appender.file = Log::Log4perl::Appender::File
-		log4perl.appender.file.Threshold = DEBUG
-		log4perl.appender.file.filename = logs/".$logfile_path."_".$stamp.".log
-		log4perl.appender.file.layout = PatternLayout
-		log4perl.appender.file.layout.ConversionPattern=[%d] %-5p 	%m%n
+# 	    log4perl.appender.file = Log::Log4perl::Appender::File
+# 		log4perl.appender.file.Threshold = DEBUG
+# 		log4perl.appender.file.filename = logs/".$logfile_path."_".$stamp.".log
+# 		log4perl.appender.file.layout = PatternLayout
+# 		log4perl.appender.file.layout.ConversionPattern=[%d] %-5p 	%m%n
 
-		log4perl.appender.screen = Log::Log4perl::Appender::Screen
-		log4perl.appender.screen.Threshold = ERROR
-		log4perl.appender.screen.layout = PatternLayout
-		log4perl.appender.screen.layout.ConversionPattern=%p - %m%n
-		";
-	Log::Log4perl::init( \$conf );
+# 		log4perl.appender.screen = Log::Log4perl::Appender::Screen
+# 		log4perl.appender.screen.Threshold = ERROR
+# 		log4perl.appender.screen.layout = PatternLayout
+# 		log4perl.appender.screen.layout.ConversionPattern=%p - %m%n
+# 		";
+# 	Log::Log4perl::init( \$conf );
 
-	$logger = get_logger();
-}
+# 	$logger = get_logger();
+# }
 
 # ----------------------------------------------------------
 # scrape_url	Scrapes the configured part(s) from the URL
@@ -60,39 +61,39 @@ sub log_init
 #				Scrapper Object that outlines info to be collected
 # return		Results from scrape (Hash Pointer)
 # ----------------------------------------------------------
-sub scrape_url 
-{
-	my $url	    = shift;
-	my $scraper = shift;
+# sub scrape_url 
+# {
+# 	my $url	    = shift;
+# 	my $scraper = shift;
 
-	if( !defined( $url ) || !defined( $scraper ) )
-	{
-		$logger->error( 'Invalid scrape_url call ( No Parameters Supplied )' );
-		return 0;
-	}
+# 	if( !defined( $url ) || !defined( $scraper ) )
+# 	{
+# 		$logger->error( 'Invalid scrape_url call ( No Parameters Supplied )' );
+# 		return 0;
+# 	}
 	
-	my $curl_handle  = WWW::Curl::Easy->new();
-	my $page_content = '';
-	my $scraped_data = '';
+# 	my $curl_handle  = WWW::Curl::Easy->new();
+# 	my $page_content = '';
+# 	my $scraped_data = '';
 	
-	$curl_handle->setopt( CURLOPT_HEADER, 0 );
-	$curl_handle->setopt( CURLOPT_URL, $url );
-	$curl_handle->setopt( CURLOPT_WRITEDATA, \$page_content );
+# 	$curl_handle->setopt( CURLOPT_HEADER, 0 );
+# 	$curl_handle->setopt( CURLOPT_URL, $url );
+# 	$curl_handle->setopt( CURLOPT_WRITEDATA, \$page_content );
 	
-	my $curl_status = $curl_handle->perform;
-	if( $curl_status != CURLE_OK )
-	{
-		$logger->error( "Error Scraping $url - " . $curl_handle->errbuf );
-		return 0;	
-	}
+# 	my $curl_status = $curl_handle->perform;
+# 	if( $curl_status != CURLE_OK )
+# 	{
+# 		$logger->error( "Error Scraping $url - " . $curl_handle->errbuf );
+# 		return 0;	
+# 	}
 
-	$scraped_data = $scraper->scrape( $page_content );
+# 	$scraped_data = $scraper->scrape( $page_content );
 
-	undef $curl_handle;
-	undef $page_content;
+# 	undef $curl_handle;
+# 	undef $page_content;
 
-	return $scraped_data;
-}
+# 	return $scraped_data;
+# }
 
 # ----------------------------------------------------------
 # db_connect 	Connect to the database 
@@ -109,20 +110,20 @@ sub db_connect
 {
 	if( !defined( $database_handle ) )
 	{
-		my $db_name 	 = shift;
-		my $host 	 = shift;
-		my $port 	 = shift;
-		my $db_user 	 = shift;
-		my $db_user_pass = shift;
+		my $db_name 	 = $_[0];
+		my $host 	 	 = $_[1];
+		my $port 	 	 = $_[2];
+		my $db_user 	 = $_[3];
+		my $db_user_pass = $_[4];
 
 		if( !defined( $db_name ) || !defined( $host ) || !defined( $port ) || !defined( $db_user ) || !defined( $db_user_pass ) )
 		{
-			$logger->error( 'Cannot connect to DB (error in stdout)');
+			print 'Cannot connect to DB (error in stdout)';
 			exit();
 		}
 
-		my $db_connection_string = "DBI:mysql:database=$database;host=$host;port=$port";
-		$database_handle = DBI->connect( $db_connection_string, "root", "" ) or die $DBI::errstr;
+		my $db_connection_string = "DBI:mysql:database=$db_name;host=$host;port=$port";
+		$database_handle = DBI->connect( $db_connection_string, $db_user, $db_user_pass ) or die $DBI::errstr;
 	}
 
 	return $database_handle;
@@ -140,6 +141,23 @@ sub db_disconnect
 	}
 }
 
+# ----------------------------------------------------------
+# escape		Escape quotes from strings
+# 
+# params		String
+# return		Escaped String
+# ----------------------------------------------------------
+sub escape
+{
+	return '' if( is_missing_or_empty( $_[0] ) );
+	my $string = $_[0];
+	$string = trim( $string );
+
+	#$string =~ s/"/'/g;
+	#$string =~ s/'/\\'/g;
+
+	return $string;
+}
 
 sub fraction_to_double
 {
@@ -170,11 +188,96 @@ sub is_missing_or_empty
 	return 0;
 }
 
+sub trim 
+{ 
+	my $s = shift; 
+	$s =~ s/^\s+|\s+$//g; 
+	return $s;
+}
 
+# for spliting the ingredient_amounts entries into quantity and measure
+sub split_amount
+{
+    my $amount_str = shift;
 
+    my %amount = (
+        'quantity'     => '',
+        'measure'      => ''
+    );
 
+    if( $amount_str =~ /^([0-9.\/]*)\s?([0-9.\/]*)\s?([(](\d+)\s(\w+)[)])?\s?(\w+)?$/ )
+    {
+        my $quantity = 0;
 
+        $quantity  = fraction_to_double( $1 );
 
+        $quantity_fraction  = fraction_to_double( $2 );
+
+        $amount{ 'quantity' } = $quantity + $quantity_fraction;
+
+        if( defined $3 )
+        {
+               $amount{ 'alternate_quantity' }  = fraction_to_double( $4 ) if( !is_missing_or_empty( $4 ) );
+               $amount{ 'alternate_measure' } = $5 if( !is_missing_or_empty( $5 ) );
+        }
+
+        $amount{ 'measure' } = $6 if( !is_missing_or_empty( $6 ) );
+    }
+
+    return %amount;
+}
+
+sub get_measure_id
+{
+	my $measure_str = $_[0];
+	my $str_len = length( $measure_str );
+
+	my $no_match_id = 83;
+
+	if( $str_len == 0 ){
+		return $no_match_id;
+	}
+
+	my %curr_measure;
+
+	for( $i = 0; $i < scalar( @measures ); $i++ )
+	{
+		%curr_measure = %{ $measures[$i] };
+
+		if( index( lc( $measure_str ), lc( $curr_measure{'singular'} ) ) != -1 )
+		{
+			return $curr_measure{'id'};
+		}
+
+		if( index( lc( $measure_str ), lc( $curr_measure{'plural'} ) ) != -1 )
+		{
+			return $curr_measure{'id'};
+		}
+	}
+
+	return $no_match_id;
+}
+
+sub get_ingredient_id
+{
+	my $ingredient_str = $_[0];
+	my $str_len = length( $ingredient_str );
+
+	my $no_match_id = 105;
+	my %curr_ingredient;
+
+	for( $i = 0; $i < scalar( @ingredients ); $i++ )
+	{
+		%curr_ingredient = %{ $ingredients[$i] };
+
+		if( index( lc( $ingredient_str ), lc( $curr_ingredient{'ingredient'} ) ) != -1 )
+		{
+			return $curr_ingredient{'id'};
+		}
+	}
+
+	return $no_match_id;
+}
 
 
 

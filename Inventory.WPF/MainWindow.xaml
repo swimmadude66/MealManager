@@ -4,15 +4,26 @@
         xmlns:local="clr-namespace:Inventory.WPF"
         Title="Inventory" Height="800" Width="1400">
 
+
     <Window.Resources>
         <Style TargetType="TabItem">
             <Setter Property="Height" Value="130" />
             <Setter Property="Width" Value="300"/>
         </Style>
+        <Style TargetType="Separator">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Separator}">
+                        <Rectangle Height="{TemplateBinding Height}"  
+                           Fill="#FF267A1E" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Window.Resources>
-
     <Viewbox HorizontalAlignment="Left" Stretch="Fill">
+<<<<<<< HEAD
         <TabControl TabStripPlacement="Left" Height="770" Width="1392">
             <TabItem Header="Home" Content="Testing"/>
             <TabItem Header="Pantry">
@@ -31,6 +42,55 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
+=======
+        <Grid  Height="800" Width="1400" Background="#B1C7B6">
+            <Grid  Background="#056C1C" Margin="0,0,1200,0">
+                <StackPanel CanHorizontallyScroll="True" Margin="0,0,0,0">
+                    <TextBlock x:Name="txtApplicationName" FontSize="45" Foreground="White" Text="Meal" Padding="10 0" />
+                    <TextBlock x:Name="txtApplicationName2" FontSize="45" Foreground="White" Text="Manager" Padding="10 0" Margin="0 -20 0 0"/>
+>>>>>>> 3fd07364f41f36b1e75645ae21ea726a7e53ac18
 
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="PantryBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="apple.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Pantry" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="RecipesBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="RecipesBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="cookBook.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Recipes" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="PlannerBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PlannerBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="calendar.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Planner" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
+                </StackPanel>
+            </Grid>
+            <Grid Margin="200,0,0,0" >
+                <local:PantryControl x:Name="pantryCtl" Visibility="Visible"/>
+                <local:RecipeControl x:Name="recipeCtl" Visibility="Collapsed"/>
+                <local:PlannerControl x:Name="plannerCtl" Visibility="Collapsed"/>
+            </Grid>
+        </Grid>
     </Viewbox>
 </Window>

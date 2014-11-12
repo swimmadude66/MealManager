@@ -37,7 +37,8 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            pantryGrid.ItemsSource = getPantry();
+            //pantryGrid.ItemsSource = getPantry();
+            pantryList.ItemsSource = getPantry();
             ddlMeasure.ItemsSource = getMeasures();
             txtIngredientName.ItemsSource = getIngredients();
             txtIngredientName.SelectedIndex = -1;
@@ -86,7 +87,7 @@ namespace Inventory.WPF
             ddlMeasure.SelectedIndex = 0;
             dpExpires.SelectedDate = null;
             itemToEdit = null;
-            pantryGrid.SelectedIndex = -1;
+            //pantryGrid.SelectedIndex = -1;
         }
 
         private void editRow(object sender, MouseButtonEventArgs e)
@@ -204,6 +205,28 @@ namespace Inventory.WPF
                 return manager.SaveMeasure(name);
             }
             else return id;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button pantryItemBtn = (Button)sender;
+            PantryItemModel pantryItemModel = (PantryItemModel)pantryItemBtn.DataContext;
+            Grid pantryItemGrid = (Grid)pantryItemBtn.Parent;
+            StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
+            pantryItemPanel.Visibility = Visibility.Collapsed;
+            StackPanel pantryEditItemPanel = (StackPanel)pantryItemGrid.Children[2];
+            pantryEditItemPanel.Visibility = Visibility.Visible;
+            TextBox quantityTextBox = (TextBox)pantryEditItemPanel.FindName("QuantityTextBox");
+            quantityTextBox.Text = pantryItemModel.StringQuantity;
+            ComboBox measureComboBox = (ComboBox)pantryEditItemPanel.FindName("MeasureComboBox");
+            measureComboBox.ItemsSource = ddlMeasure.ItemsSource;
+            measureComboBox.SelectedItem = pantryItemModel.Measure;
+            ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
+            ingredientComboBox.ItemsSource = txtIngredientName.ItemsSource;
+            ingredientComboBox.SelectedItem = pantryItemModel.Ingredient;
+            TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
+            descriptionTextBox.Text = pantryItemModel.Description;
+            //Console.Write(quantityTextBlock.Text);
         }
     }
 }

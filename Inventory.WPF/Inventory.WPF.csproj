@@ -117,8 +117,13 @@
     <Compile Include="RecipeControl.xaml.cs">
       <DependentUpon>RecipeControl.xaml</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="ShoppingListControl.xaml.cs">
       <DependentUpon>ShoppingListControl.xaml</DependentUpon>
+=======
+    <Compile Include="RecipeCardControl.xaml.cs">
+      <DependentUpon>RecipeCardControl.xaml</DependentUpon>
+>>>>>>> 3fd07364f41f36b1e75645ae21ea726a7e53ac18
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -144,7 +149,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+<<<<<<< HEAD
     <Page Include="ShoppingListControl.xaml">
+=======
+    <Page Include="RecipeCardControl.xaml">
+>>>>>>> 3fd07364f41f36b1e75645ae21ea726a7e53ac18
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,7 +231,20 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="card.png" />
+    <Resource Include="cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="apple.png" />
+    <Resource Include="calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cookBook.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
