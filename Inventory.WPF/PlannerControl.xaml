@@ -10,9 +10,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
     <!--<Grid >-->
-    <Grid x:Name="CalendarGrid" Height="800" ShowGridLines="False" Background="#B1C7B6">
-            <TextBlock x:Name="txtPageTitle" FontSize="70" VerticalAlignment="Top" Text="Planner" Margin="25 0"/>
-            <DockPanel Margin="0,125,0,0" Grid.ColumnSpan="2" x:Name="dpCalendar">
+    <Canvas x:Name="CalendarGrid" Height="800" Background="#B1C7B6">
+            <TextBlock x:Name="txtPageTitle" FontSize="70" VerticalAlignment="Top" Text="Planner" Canvas.Left="25"/>
+            <DockPanel Canvas.Top="125" Canvas.Left="25" Grid.ColumnSpan="2" x:Name="dpCalendar" Width="1150" Height="575">
                 <ItemsControl x:Name="icDayNames" ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -117,7 +117,7 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </DockPanel>
-        </Grid>
+        </Canvas>
 
         <!--<Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="220" Margin="10,630,0,10" Width="1090">
             <Grid.ColumnDefinitions>
