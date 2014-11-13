@@ -211,6 +211,7 @@ namespace Inventory.WPF
         {
             Button pantryItemBtn = (Button)sender;
             PantryItemModel pantryItemModel = (PantryItemModel)pantryItemBtn.DataContext;
+            List<IngredientModel> ingredients = txtIngredientName.ItemsSource.Cast<IngredientModel>().ToList();
             Grid pantryItemGrid = (Grid)pantryItemBtn.Parent;
             StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
             pantryItemPanel.Visibility = Visibility.Collapsed;
@@ -223,10 +224,38 @@ namespace Inventory.WPF
             measureComboBox.SelectedItem = pantryItemModel.Measure;
             ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
             ingredientComboBox.ItemsSource = txtIngredientName.ItemsSource;
-            ingredientComboBox.SelectedItem = pantryItemModel.Ingredient;
+            ingredientComboBox.SelectedIndex = ingredients.FindIndex(x => x.ID == pantryItemModel.Ingredient.ID);
             TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
             descriptionTextBox.Text = pantryItemModel.Description;
             //Console.Write(quantityTextBlock.Text);
+        }
+
+        private void FinishBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button finishEditBtn = (Button)sender;
+            PantryItemModel pantryItemModel = (PantryItemModel)finishEditBtn.DataContext;
+            StackPanel pantryEditItemPanel = (StackPanel)finishEditBtn.Parent;
+            Grid pantryItemGrid = (Grid)pantryEditItemPanel.Parent;
+            StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
+
+            TextBox quantityTextBox = (TextBox)pantryEditItemPanel.FindName("QuantityTextBox");
+            pantryItemModel.StringQuantity = quantityTextBox.Text;
+            ComboBox measureComboBox = (ComboBox)pantryEditItemPanel.FindName("MeasureComboBox");
+            String measureName = ((MeasureModel)measureComboBox.SelectedItem).Name;
+            pantryItemModel.MeasureId = getMeasureID(measureName);
+            ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
+            String ingredientName = ((IngredientModel)ingredientComboBox.SelectedItem).Name;
+            pantryItemModel.IngredientId = getIngredientId(ingredientName);
+            TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
+            pantryItemModel.Description = descriptionTextBox.Text;
+            
+            IPantryManager manager = ManagerFactory.GetPantryManager();
+            manager.SavePantryItem(pantryItemModel, true);
+
+            initSources();
+
+            pantryItemPanel.Visibility = Visibility.Visible;
+            pantryEditItemPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
