@@ -227,6 +227,8 @@ namespace Inventory.WPF
             ingredientComboBox.SelectedIndex = ingredients.FindIndex(x => x.ID == pantryItemModel.Ingredient.ID);
             TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
             descriptionTextBox.Text = pantryItemModel.Description;
+            DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
+            expirationDatePicker.SelectedDate = pantryItemModel.ExpirationDate;
             //Console.Write(quantityTextBlock.Text);
         }
 
@@ -248,7 +250,8 @@ namespace Inventory.WPF
             pantryItemModel.IngredientId = getIngredientId(ingredientName);
             TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
             pantryItemModel.Description = descriptionTextBox.Text;
-            
+            DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
+            pantryItemModel.ExpirationDate = expirationDatePicker.SelectedDate;
             IPantryManager manager = ManagerFactory.GetPantryManager();
             manager.SavePantryItem(pantryItemModel, true);
 
