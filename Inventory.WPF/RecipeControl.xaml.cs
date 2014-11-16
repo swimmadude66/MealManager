@@ -291,6 +291,10 @@ namespace Inventory.WPF
             //TagsTxt.Visibility = Visibility.Visible;
         }
 
+        private void Plan_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
         private bool AddIngredient()
         {
             string ingredient = "";

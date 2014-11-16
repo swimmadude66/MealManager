@@ -95,7 +95,7 @@
                     
                     <Button x:Name="EditBtn" Style="{StaticResource greenButton}" Width="160" Content="Edit" Click="Edit_Click" Margin="880,0,0,0"/>
                     <Button x:Name="DoneBtn" Style="{StaticResource greenButton}" Width="160" Content="Apply Changes" Click="Apply_Click" Margin="880,0,0,0" Visibility="Collapsed"/>
-                    <Button x:Name="PlanRecipeBtn" Style="{StaticResource greenButton}" Width="160" Content="Plan Recipe" Click="GoBack_Click" Margin="1040,0,0,0"/>
+                    <Button x:Name="PlanRecipeBtn" Style="{StaticResource greenButton}" Width="160" Content="Plan Recipe" Click="Plan_Click" Margin="1040,0,0,0"/>
                 </Grid>
             </Grid>
             <ScrollViewer Margin="35,120,40,40">
