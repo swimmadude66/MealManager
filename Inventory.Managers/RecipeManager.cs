@@ -51,6 +51,11 @@ namespace Inventory.Managers
             return _measureDAO.getMeasures();
         }
 
+        public IngredientModel getIngredient(int ID)
+        {
+            return _ingredientDAO.GetIngredient(ID);
+        }
+
         public int getIngredientID(string name)
         {
             return _ingredientDAO.getIngredientID(name);
