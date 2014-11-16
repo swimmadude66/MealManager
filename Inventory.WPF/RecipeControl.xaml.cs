@@ -194,12 +194,16 @@ namespace Inventory.WPF
             DescriptionTxt.Text = recipeModel.Description;
             DirectionsTxt.Text = recipeModel.Directions;
 
-            //IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
-            //recipeManager.getIngredients();
-            //foreach(int id in recipeModel.IngredientIDs){
+            List<IngredientModel> ingredients = new List<IngredientModel>();
+            IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
+            IngredientModel ingredientModel;
+            foreach (int ingredientId in recipeModel.IngredientIDs)
+            {
+                ingredientModel = recipeManager.getIngredient(ingredientId);
+                ingredients.Add(ingredientModel);
+                IngredientsTxt.Text += "-" + ingredientModel.Name + "\n";
+            }
 
-            //}
-            //recipeModel.
             TagsTxt.Text = recipeModel.Tags;
 
             MainRecipesMenu.Visibility = Visibility.Collapsed;
@@ -231,6 +235,8 @@ namespace Inventory.WPF
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            RecipeModel recipeModel = (RecipeModel)RecipeDetailMenu.DataContext;
+
             RecipeDetailName.Visibility = Visibility.Collapsed;
             RecipeDetailNameBox.Visibility = Visibility.Visible;
             RecipeDetailNameBox.Text = RecipeDetailName.Text;
@@ -246,6 +252,16 @@ namespace Inventory.WPF
             DirectionsTxt.Visibility = Visibility.Collapsed;
             DirectionsBox.Visibility = Visibility.Visible;
             DirectionsBox.Text = DirectionsTxt.Text;
+
+            //List<IngredientModel> ingredients = new List<IngredientModel>();
+            //IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
+            //IngredientModel ingredientModel;
+            //foreach (int ingredientId in recipeModel.IngredientIDs)
+            //{
+            //    ingredientModel = recipeManager.getIngredient(ingredientId);
+            //    ingredients.Add(ingredientModel);
+            //    IngredientsTxt.Text += ingredientModel + "\n";
+            //}
 
             //IngredientsTxt.Visibility = Visibility.Collapsed;
             //IngredientsBox.Visibility = Visibility.Visible;
