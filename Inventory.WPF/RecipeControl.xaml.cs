@@ -185,6 +185,112 @@ namespace Inventory.WPF
             }
         }
 
+        private void RecipeCardViewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeCardControl recipeViewBtn = (RecipeCardControl)sender;
+            RecipeModel recipeModel = (RecipeModel)recipeViewBtn.DataContext;
+            RecipeDetailMenu.DataContext = recipeModel;
+            RecipeDetailName.Text = recipeModel.Name;
+            DescriptionTxt.Text = recipeModel.Description;
+            DirectionsTxt.Text = recipeModel.Directions;
+
+            //IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
+            //recipeManager.getIngredients();
+            //foreach(int id in recipeModel.IngredientIDs){
+
+            //}
+            //recipeModel.
+            TagsTxt.Text = recipeModel.Tags;
+
+            MainRecipesMenu.Visibility = Visibility.Collapsed;
+            RecipeDetailMenu.Visibility = Visibility.Visible;
+        }
+
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainRecipesMenu.Visibility = Visibility.Visible;
+            RecipeDetailMenu.Visibility = Visibility.Collapsed;
+
+            RecipeDetailNameBox.Visibility = Visibility.Collapsed;
+            RecipeDetailName.Visibility = Visibility.Visible;
+            //RecipeDetailNameBox.Text = RecipeDetailName.Text;
+
+            EditBtn.Visibility = Visibility.Visible;
+            PlanRecipeBtn.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Collapsed;
+
+            DescriptionBox.Visibility = Visibility.Collapsed;
+            DescriptionTxt.Visibility = Visibility.Visible;
+
+            DirectionsBox.Visibility = Visibility.Collapsed;
+            DirectionsTxt.Visibility = Visibility.Visible;
+
+            IngredientsBox.Visibility = Visibility.Collapsed;
+            IngredientsTxt.Visibility = Visibility.Visible;
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeDetailName.Visibility = Visibility.Collapsed;
+            RecipeDetailNameBox.Visibility = Visibility.Visible;
+            RecipeDetailNameBox.Text = RecipeDetailName.Text;
+
+            EditBtn.Visibility = Visibility.Collapsed;
+            PlanRecipeBtn.Visibility = Visibility.Collapsed;
+            DoneBtn.Visibility = Visibility.Visible;
+
+            DescriptionTxt.Visibility = Visibility.Collapsed;
+            DescriptionBox.Visibility = Visibility.Visible;
+            DescriptionBox.Text = DescriptionTxt.Text;
+
+            DirectionsTxt.Visibility = Visibility.Collapsed;
+            DirectionsBox.Visibility = Visibility.Visible;
+            DirectionsBox.Text = DirectionsTxt.Text;
+
+            //IngredientsTxt.Visibility = Visibility.Collapsed;
+            //IngredientsBox.Visibility = Visibility.Visible;
+            //IngredientsBox.Text = IngredientsTxt.Text;
+
+            //TagsTxt.Visibility = Visibility.Collapsed;
+            //TagsBox.Visibility = Visibility.Visible;
+            //TagsBox.Text = TagsTxt.Text;
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            Button applyBtn = (Button)sender;
+            RecipeModel recipeModel = (RecipeModel)RecipeDetailMenu.DataContext;
+            TempRecipeItemModel tempRecipeModel = new TempRecipeItemModel("", 0, "");
+
+
+            RecipeDetailNameBox.Visibility = Visibility.Collapsed;
+            RecipeDetailName.Visibility = Visibility.Visible;
+            //tempRecipeModel.Name = RecipeDetailNameBox.Text;
+
+            EditBtn.Visibility = Visibility.Visible;
+            PlanRecipeBtn.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Collapsed;
+
+            DescriptionBox.Visibility = Visibility.Collapsed;
+            DescriptionTxt.Visibility = Visibility.Visible;
+            tempRecipeModel.Description = RecipeDetailNameBox.Text;
+
+            DirectionsBox.Visibility = Visibility.Collapsed;
+            DirectionsTxt.Visibility = Visibility.Visible;
+
+            IngredientsBox.Visibility = Visibility.Collapsed;
+            IngredientsTxt.Visibility = Visibility.Visible;
+
+            IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
+            //recipeManager.
+            //recipeManager.
+
+            //initSources;
+
+            //TagsBox.Visibility = Visibility.Collapsed;
+            //TagsTxt.Visibility = Visibility.Visible;
+        }
+
         private bool AddIngredient()
         {
             string ingredient = "";
@@ -322,9 +428,5 @@ namespace Inventory.WPF
 
         
 
-       
-
-       
-       
     }
 }
