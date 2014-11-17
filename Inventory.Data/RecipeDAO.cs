@@ -11,15 +11,35 @@ namespace Inventory.Data
 {
     public class RecipeDAO : IRecipeDAO
     {
-        public List<RecipeModel> getRecipes()
+        public List<RecipeModel> getRecipes(int Limit)
         {
             try
             {
+                List<RecipeModel> recipeInfo = new List<RecipeModel>();
                 using(var context = new InventoryEntities()){
-                    List<Recipe> recipes = (from r in context.Recipe
-                                            where r.Name != ""
-                                            select r).OrderBy(v => v.Name).Take(25).ToList();
-                    return RecipeMapper.BindItems(recipes);
+                    List<Recipe> recipes;
+                    if (Limit >= 0)
+                    {
+                        recipes = (from r in context.Recipe
+                                   where r.Name != ""
+                                   select r).OrderBy(v => v.Name).Take(Limit).ToList();
+                    }
+                    else
+                    {
+                        recipes = (from r in context.Recipe
+                                   where r.Name != ""
+                                   select r).OrderBy(v => v.Name).ToList();
+                    }
+                    foreach (Recipe recipe in recipes)
+                    {
+                        RecipeModel model = new RecipeModel();
+                        model.ID = recipe.ID;
+                        model.Name = recipe.Name;
+                        model.Description = recipe.Description;
+                        //any other Recipe specific (not items) info here
+                        recipeInfo.Add(model);
+                    }
+                    return recipeInfo;
                 }
             }
             catch{throw;}
@@ -206,7 +226,7 @@ namespace Inventory.Data
                         ingredSearch += "as result on result.RecipeID=init.ID";
                         searchquery += " Join " + ingredSearch;
                     }
-
+                    searchquery += " Limit 25 ";
                     List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
                     return RecipeMapper.BindItems(result);
                 }

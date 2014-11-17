@@ -27,8 +27,8 @@ namespace Inventory.Managers
             _plannerDAO = plannerDAO;
         }
 
-        public List<RecipeModel> getRecipes(){
-            return _recipeDAO.getRecipes();
+        public List<RecipeModel> getRecipes(int Limit){
+            return _recipeDAO.getRecipes(Limit);
         }
         
         public int SaveIngredient(string name, string description)
@@ -98,7 +98,7 @@ namespace Inventory.Managers
 
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
             if (criteria.ToString() == "")
-                return getRecipes();
+                return getRecipes(25);
             return _recipeDAO.SearchRecipes(criteria);
             
         }
