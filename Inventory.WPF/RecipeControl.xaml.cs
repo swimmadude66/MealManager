@@ -190,9 +190,9 @@ namespace Inventory.WPF
             RecipeCardControl recipeViewBtn = (RecipeCardControl)sender;
             RecipeModel recipeModel = (RecipeModel)recipeViewBtn.DataContext;
             RecipeDetailMenu.DataContext = recipeModel;
-            RecipeDetailName.Text = recipeModel.Name;
-            DescriptionTxt.Text = recipeModel.Description;
-            DirectionsTxt.Text = recipeModel.Directions;
+            RecipeDetailName.Text = recipeModel.Name.Trim();
+            DescriptionTxt.Text = recipeModel.Description.Trim();
+            DirectionsTxt.Text = recipeModel.Directions.Trim();
 
             List<IngredientModel> ingredients = new List<IngredientModel>();
             IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
