@@ -213,20 +213,59 @@ namespace Inventory.WPF
             PantryItemModel pantryItemModel = (PantryItemModel)pantryItemBtn.DataContext;
             Grid pantryItemGrid = (Grid)pantryItemBtn.Parent;
             StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
-            pantryItemPanel.Visibility = Visibility.Collapsed;
-            StackPanel pantryEditItemPanel = (StackPanel)pantryItemGrid.Children[2];
-            pantryEditItemPanel.Visibility = Visibility.Visible;
+            if (pantryItemPanel.Visibility != Visibility.Collapsed) {
+                pantryItemPanel.Visibility = Visibility.Collapsed;
+                List<IngredientModel> ingredients = txtIngredientName.ItemsSource.Cast<IngredientModel>().ToList();
+                StackPanel pantryEditItemPanel = (StackPanel)pantryItemGrid.Children[2];
+                pantryEditItemPanel.Visibility = Visibility.Visible;
+                TextBox quantityTextBox = (TextBox)pantryEditItemPanel.FindName("QuantityTextBox");
+                quantityTextBox.Text = pantryItemModel.StringQuantity; 
+                ComboBox measureComboBox = (ComboBox)pantryEditItemPanel.FindName("MeasureComboBox");
+                measureComboBox.ItemsSource = ddlMeasure.ItemsSource;
+                measureComboBox.SelectedItem = pantryItemModel.Measure;
+                ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
+                ingredientComboBox.ItemsSource = txtIngredientName.ItemsSource;
+                ingredientComboBox.SelectedIndex = ingredients.FindIndex(x => x.ID == pantryItemModel.Ingredient.ID);
+                TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
+                descriptionTextBox.Text = pantryItemModel.Description;
+                DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
+                expirationDatePicker.SelectedDate = pantryItemModel.ExpirationDate;
+                //Console.Write(quantityTextBlock.Text);
+            }
+        }
+
+        private void FinishBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button finishEditBtn = (Button)sender;
+            PantryItemModel pantryItemModel = (PantryItemModel)finishEditBtn.DataContext;
+            StackPanel pantryEditItemPanel = (StackPanel)finishEditBtn.Parent;
+            Grid pantryItemGrid = (Grid)pantryEditItemPanel.Parent;
+            StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
             TextBox quantityTextBox = (TextBox)pantryEditItemPanel.FindName("QuantityTextBox");
-            quantityTextBox.Text = pantryItemModel.StringQuantity;
+            pantryItemModel.StringQuantity = quantityTextBox.Text.Trim();
+            double quant = Tools.ToolBox.FractionToDecimal(pantryItemModel.StringQuantity); 
             ComboBox measureComboBox = (ComboBox)pantryEditItemPanel.FindName("MeasureComboBox");
-            measureComboBox.ItemsSource = ddlMeasure.ItemsSource;
-            measureComboBox.SelectedItem = pantryItemModel.Measure;
+            String measureName = ((MeasureModel)measureComboBox.SelectedItem).Name.Trim();
+            pantryItemModel.MeasureId = getMeasureID(measureName);
             ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
-            ingredientComboBox.ItemsSource = txtIngredientName.ItemsSource;
-            ingredientComboBox.SelectedItem = pantryItemModel.Ingredient;
+            String ingredientName = ((IngredientModel)ingredientComboBox.SelectedItem).Name.Trim();
+            pantryItemModel.IngredientId = getIngredientId(ingredientName);
             TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
-            descriptionTextBox.Text = pantryItemModel.Description;
-            //Console.Write(quantityTextBlock.Text);
+            pantryItemModel.Description = descriptionTextBox.Text.Trim();
+            DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
+            pantryItemModel.ExpirationDate = expirationDatePicker.SelectedDate;
+
+            if (string.IsNullOrWhiteSpace(descriptionTextBox.Text.Trim()) || string.IsNullOrWhiteSpace(measureName) || quant <= (1.0 / 64.0))
+                return;
+
+
+            IPantryManager manager = ManagerFactory.GetPantryManager();
+            manager.SavePantryItem(pantryItemModel, true);
+
+            initSources();
+
+            pantryItemPanel.Visibility = Visibility.Visible;
+            pantryEditItemPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
