@@ -10,7 +10,7 @@
       d:DesignHeight="800" d:DesignWidth="1200">
 
     <Grid>
-        <Grid x:Name="MainRecipesMenu" Visibility="Collapsed">
+        <Grid x:Name="MainRecipesMenu">
             <Canvas x:Name="listPanel" Visibility="Visible" Background="#B1C7B6">
                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="125" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
                     <ItemsControl x:Name="recipeCardGrid" >
@@ -81,7 +81,7 @@
                 <Button x:Name="btnCancel" Content="Cancel" Canvas.Left="973" Canvas.Top="730" Width="75" Click="btnCancel_Click"/>
             </Canvas>
         </Grid>
-        <Grid x:Name="RecipeDetailMenu">
+        <Grid x:Name="RecipeDetailMenu" Visibility="Collapsed">
             <Grid Margin="0,0,0,715">
                 <Grid Background="#003D0D">
                     <Button Style="{StaticResource greenButton}" Width="160" Content="Go Back" Click="GoBack_Click"/>
@@ -98,9 +98,9 @@
                     <Button x:Name="PlanRecipeBtn" Style="{StaticResource greenButton}" Width="160" Content="Plan Recipe" Click="Plan_Click" Margin="1040,0,0,0"/>
                 </Grid>
             </Grid>
-            <ScrollViewer Margin="35,120,40,40">
-                <StackPanel>
-                    <UniformGrid>
+            <ScrollViewer Margin="0,85,0,40">
+                <StackPanel Margin="25,25,25,0">
+                    <UniformGrid >
                         <TextBlock FontSize="44" Text="Description"></TextBlock>
                         <TextBox Name="DescriptionBox" FontSize="32" TextWrapping="Wrap" Visibility="Collapsed"></TextBox>
                         <TextBlock x:Name="DescriptionTxt" FontSize="32" TextWrapping="Wrap"></TextBlock>

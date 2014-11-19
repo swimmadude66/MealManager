@@ -16,8 +16,7 @@
                 <DataGridTextColumn Header="Expires" Binding="{Binding ExpirationDateString}" IsReadOnly="True" Width="84"/>
             </DataGrid.Columns>
         </DataGrid>-->
-        <TextBlock x:Name="txtPageTitle" Text="Pantry" FontSize="70" Margin="25 0 775 650"/>
-        <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,125,0,240">
+        <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,10,0,240" VerticalScrollBarVisibility="Auto">
             <ItemsControl Name="pantryList" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -28,18 +27,21 @@
                                 <TextBlock Text="{Binding Measure.Name}" Foreground="White" Padding="5,0,5,0"/>
                                 <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
                                 <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="{Binding Ingredient.Description}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="Notes: " Foreground="White" Padding="25,0,5,0"/>
+                                <TextBlock Text="{Binding Description}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="Expires: " Foreground="White" Padding="25,0,5,0"/>
+                                <TextBlock Text="{Binding ExpirationDateString}" Foreground="White" Padding="5,0,5,0"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Visibility="Collapsed">
                                 <TextBox Name="QuantityTextBox" Padding="5,0,5,0"/>
-                                <ComboBox Name="MeasureComboBox" DisplayMemberPath="Name" Padding="5,0,5,0"/>
+                                <ComboBox Name="MeasureComboBox" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
                                 <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
-                                <ComboBox Name="IngredientComboBox" DisplayMemberPath="Name" Padding="5,0,5,0"/>
-                                <TextBox Name="DescriptionTextBox" Padding="5,0,5,0"/>
-                                <Button Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0"/>
-                                <!--<TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="{Binding Ingredient.Description}" Foreground="White" Padding="5,0,5,0"/>-->
+                                <ComboBox Name="IngredientComboBox" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
+                                <TextBlock Text="Notes: " Foreground="White" Padding="5,0,5,0"/>
+                                <TextBox Name="DescriptionTextBox" MinWidth="400" Padding="5,0,5,0"/>
+                                <TextBlock Text="Expires: " Foreground="White" Padding="5,0,5,0"/>
+                                <DatePicker Name="ExpirationDatePicker" DisplayDate="{Binding ExpirationDate}"/>
+                                <Button Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0" Click="FinishBtn_Click"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
