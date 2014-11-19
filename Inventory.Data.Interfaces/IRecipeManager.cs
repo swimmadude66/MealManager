@@ -18,7 +18,7 @@ namespace Inventory.Data.Interfaces
         List<IngredientModel> getIngredients();
         List<String> getAllTags();
         void SaveTag(String tag);
-        int SaveRecipe(string name, string description, string directions, string tagstring);
+        int SaveRecipe(RecipeModel recipeItem, bool isEdit);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
         List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria);
         int PlanRecipe(PlannerItemModel model, bool isEdit);
