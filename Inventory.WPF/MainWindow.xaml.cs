@@ -25,11 +25,6 @@ namespace Inventory.WPF
             InitializeComponent();
         }
 
-        private void PantryControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void HomeBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             pantryCtl.Visibility = Visibility.Collapsed;

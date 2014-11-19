@@ -27,8 +27,9 @@ namespace Inventory.Managers
             _plannerDAO = plannerDAO;
         }
 
-        public List<RecipeModel> getRecipes(){
-            return _recipeDAO.getRecipes();
+        public List<RecipeModel> getRecipes(int Limit, bool have)
+        {
+            return _recipeDAO.getRecipes(Limit, have);
         }
         
         public int SaveIngredient(string name, string description)
@@ -97,31 +98,16 @@ namespace Inventory.Managers
         }
 
         public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria){
+            String critstring = criteria.ToString();
             if (criteria.ToString() == "")
-                return getRecipes();
+                return getRecipes(50, criteria.have);
             return _recipeDAO.SearchRecipes(criteria);
             
         }
 
-        public List<RecipeModel> FilterRecipes(List<RecipeModel> recipes, RecipeSearchCriteriaModel criteria)
+        public RecipeModel getRecipeItems(int rid)
         {
-            List<RecipeModel> filteredList = new List<RecipeModel>();
-            foreach (RecipeModel rec in recipes)
-            {
-                bool contains = true;
-                foreach(IngredientModel ing in criteria.Ingredients){
-                    if (!rec.IngredientIDs.Contains(ing.ID))
-                    {
-                        contains = false;
-                        break;
-                    }
-                }
-                if (contains)
-                {
-                    filteredList.Add(rec);
-                }
-            }
-            return filteredList;
+            return _recipeDAO.getRecipeItems(rid);
         }
        
     }

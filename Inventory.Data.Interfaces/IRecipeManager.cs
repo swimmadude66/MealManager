@@ -9,7 +9,7 @@ namespace Inventory.Data.Interfaces
 {
     public interface IRecipeManager
     {
-        List<RecipeModel> getRecipes();
+        List<RecipeModel> getRecipes(int Limit, bool have);
         int SaveIngredient(string name, string description);
         int SaveMeasure(string name);
         int getMeasureID(string name);
@@ -24,5 +24,6 @@ namespace Inventory.Data.Interfaces
         int PlanRecipe(PlannerItemModel model, bool isEdit);
         void cancelPlan(int id);
         List<PlannerItemModel> GetPlannedRecipes(DateTime? start, DateTime? end);
+        RecipeModel getRecipeItems(int rid);
     }
 }
