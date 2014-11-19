@@ -45,7 +45,7 @@ namespace Inventory.WPF
             //create cards
             //item control
             //uniform grid
-            recipeCardGrid.ItemsSource = getRecipes(50);
+            recipeCardGrid.ItemsSource = getRecipes(50, (bool)rbViewHave.IsChecked);
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
             List<IngredientModel> ingredients = getIngredients();
@@ -118,6 +118,7 @@ namespace Inventory.WPF
             {
                 criteria.Ingredients = searchingredients;
             }
+            criteria.have = (bool)rbViewHave.IsChecked;
             recipeCardGrid.ItemsSource = searchRecipes(criteria);
             recipeCardGrid.Items.Refresh();
         }
@@ -264,40 +265,6 @@ namespace Inventory.WPF
 
         }
 
-        private List<RecipeModel> filterRecipes(List<RecipeModel> raw)
-        {
-            if ((bool)rbViewAll.IsChecked)
-            {
-                return raw;
-            }
-            else
-            {
-                List<RecipeModel> filtered = new List<RecipeModel>();
-                ILookup<int, PantryItemModel> pantry = getPantry().ToLookup(p => p.Ingredient.ID, p=> p);
-                foreach (RecipeModel rec in raw)
-                {
-                    bool valid = true;
-                    foreach (RecipeItemModel item in rec.Items)
-                    {
-                        if(pantry.Contains(item.Ingredient.ID))
-                        {
-                            //compare quantities
-                        }
-                        else
-                        {
-                            valid = false;
-                            break;
-                        }
-                    }
-                    if (valid)
-                    {
-                        filtered.Add(rec);
-                    }
-                }
-                return filtered;
-            }
-        }
-
         private int getIngredientId(String name)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
@@ -321,10 +288,10 @@ namespace Inventory.WPF
         }
 
         //Domain Calls
-        private List<RecipeModel> getRecipes(int Limit)
+        private List<RecipeModel> getRecipes(int Limit, bool have)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return filterRecipes(manager.getRecipes(Limit));
+            return manager.getRecipes(Limit, have);
         }
 
         private List<IngredientModel> getIngredients()
@@ -354,7 +321,7 @@ namespace Inventory.WPF
         private List<RecipeModel> searchRecipes(RecipeSearchCriteriaModel criteria)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return filterRecipes(manager.SearchRecipes(criteria));
+            return manager.SearchRecipes(criteria);
         }
 
         
