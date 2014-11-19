@@ -90,37 +90,50 @@
                             <TextBlock x:Name="RecipeDetailName" FontSize="72" Text="Sample recipe Name" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
                             <TextBox x:Name="RecipeDetailNameBox" FontSize="72" Text="Sample recipe Name" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" />
                         </Grid>
-                        
                     </Viewbox>
-                    
                     <Button x:Name="EditBtn" Style="{StaticResource greenButton}" Width="160" Content="Edit" Click="Edit_Click" Margin="880,0,0,0"/>
                     <Button x:Name="DoneBtn" Style="{StaticResource greenButton}" Width="160" Content="Apply Changes" Click="Apply_Click" Margin="880,0,0,0" Visibility="Collapsed"/>
                     <Button x:Name="PlanRecipeBtn" Style="{StaticResource greenButton}" Width="160" Content="Plan Recipe" Click="Plan_Click" Margin="1040,0,0,0"/>
                 </Grid>
             </Grid>
-            <ScrollViewer Margin="0,85,0,40">
-                <StackPanel Margin="25,25,25,0">
-                    <UniformGrid >
-                        <TextBlock FontSize="44" Text="Description"></TextBlock>
+            <ScrollViewer Margin="0,85,0,0">
+                <StackPanel Width="1183" Margin="0,50,0,0">
+                    <UniformGrid VerticalAlignment="Top" Columns="2" Margin="0,0,0,50">
+                        <TextBlock FontSize="44" Text="Description" TextAlignment="Center"></TextBlock>
                         <TextBox Name="DescriptionBox" FontSize="32" TextWrapping="Wrap" Visibility="Collapsed"></TextBox>
                         <TextBlock x:Name="DescriptionTxt" FontSize="32" TextWrapping="Wrap"></TextBlock>
                     </UniformGrid>
-                    <UniformGrid>
-                        <TextBlock FontSize="44" Text="Directions"></TextBlock>
+                    <UniformGrid VerticalAlignment="Top" Columns="2" Margin="0,0,0,50">
+                        <TextBlock FontSize="44" Text="Directions" TextAlignment="Center"></TextBlock>
                         <TextBox Name="DirectionsBox" FontSize="32" TextWrapping="Wrap" Visibility="Collapsed"></TextBox>
                         <TextBlock x:Name="DirectionsTxt" FontSize="32" TextWrapping="Wrap"></TextBlock>
                     </UniformGrid>
-                    <UniformGrid>
-                        <TextBlock FontSize="44" Text="Ingredients"></TextBlock>
-                        <TextBox Name="IngredientsBox" FontSize="32" TextWrapping="Wrap" Visibility="Collapsed"></TextBox>
-                        <TextBlock x:Name="IngredientsTxt" FontSize="32"></TextBlock>
+                    <UniformGrid VerticalAlignment="Top" Columns="2" Margin="0,0,0,50">
+                        <TextBlock FontSize="44" Text="Ingredients" TextAlignment="Center"></TextBlock>
+                        <ItemsControl Name="IngredientsListCtl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Name="IngredientsGrid">
+                                        <StackPanel x:Name="IngredientsStack" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="{Binding isEditting}">
+                                            <TextBlock Text="{Binding Quantity}" FontSize="32" Padding="5,0,5,0"/>
+                                            <TextBlock Text="{Binding Measure.Name}" FontSize="32" Padding="5,0,5,0"/>
+                                            <TextBlock Text="{Binding Ingredient.Name}" FontSize="32" Padding="5,0,5,0"/>
+                                        </StackPanel>
+                                        <StackPanel x:Name="IngredientsStackEdit" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed" >
+                                            <TextBox Name="QuantityTextBox" FontSize="32" Padding="5,0,5,0"/>
+                                            <ComboBox Name="MeasureComboBox" FontSize="32" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
+                                            <ComboBox Name="IngredientComboBox" FontSize="32" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </UniformGrid>
-                    <UniformGrid>
-                        <TextBlock FontSize="44" Text="Tags"></TextBlock>
+                    <UniformGrid VerticalAlignment="Top">
+                        <TextBlock FontSize="44" Text="Tags" TextAlignment="Center"></TextBlock>
                         <TextBox Name="TagsBox" FontSize="32" TextWrapping="Wrap" Visibility="Collapsed"></TextBox>
                         <TextBlock x:Name="TagsTxt" FontSize="32"></TextBlock>
                     </UniformGrid>
-
                 </StackPanel>
             </ScrollViewer>
         </Grid>

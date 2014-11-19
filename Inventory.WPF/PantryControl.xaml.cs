@@ -255,7 +255,7 @@ namespace Inventory.WPF
             DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
             pantryItemModel.ExpirationDate = expirationDatePicker.SelectedDate;
 
-            if (string.IsNullOrWhiteSpace(descriptionTextBox.Text.Trim()) || string.IsNullOrWhiteSpace(measureName) || quant <= (1.0 / 64.0))
+            if (descriptionTextBox.Text.Trim() == null || string.IsNullOrWhiteSpace(measureName) || quant <= (1.0 / 64.0))
                 return;
 
 
