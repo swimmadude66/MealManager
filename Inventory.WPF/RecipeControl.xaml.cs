@@ -419,12 +419,14 @@ namespace Inventory.WPF
 
         private void SaveRecipe()
         {
-            string name = txtName.Text.Trim();
-            string descrip = txtDescription.Text.Trim();
-            string directions = txtDirections.Text.Trim();
-            string tagstring = txtTags.Text.Trim();
+            RecipeModel recipeItem = new RecipeModel();
+
+            recipeItem.Name = txtName.Text.Trim();
+            recipeItem.Description = txtDescription.Text.Trim();
+            recipeItem.Directions = txtDirections.Text.Trim();
+            recipeItem.Tags = txtTags.Text.Trim();
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            int rid = manager.SaveRecipe(name, descrip, directions, tagstring);
+            int rid = manager.SaveRecipe(recipeItem, false);
             foreach (String s in newtags)
             {
                 manager.SaveTag(s.Substring(0,1).ToUpper() + s.Substring(1).ToLower());
