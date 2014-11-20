@@ -110,7 +110,7 @@ namespace Inventory.WPF
 
         private void changeView()
         {
-            bool newstuff;
+            //bool newstuff;
             if (numWeeks > 1)
             {
                 DayNames.Clear();
@@ -137,6 +137,10 @@ namespace Inventory.WPF
             return Convert.ToInt32(dow.ToString("D"));
         }
 
+        public void refresh()
+        {
+            initSources();
+        }
         //public void btnSubmit_Click(object sender, RoutedEventArgs e)
         //{
         //    if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)

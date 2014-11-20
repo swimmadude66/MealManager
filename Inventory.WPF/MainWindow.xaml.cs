@@ -20,6 +20,7 @@ namespace Inventory.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             TextElement.FontFamilyProperty.OverrideMetadata(
@@ -31,8 +32,9 @@ namespace Inventory.WPF
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     new FontFamily("Segoe UI Light")));
-            
+
             InitializeComponent();
+            recipeCtl.RecipePlanned += Recipe_Planned;
         }
 
         private void PantryControl_Loaded(object sender, RoutedEventArgs e)
@@ -73,6 +75,11 @@ namespace Inventory.WPF
             pantryCtl.Visibility = Visibility.Collapsed;
             recipeCtl.Visibility = Visibility.Collapsed;
             plannerCtl.Visibility = Visibility.Collapsed;
+        }
+
+        private void Recipe_Planned(object sender, EventArgs eventArgs)
+        {
+            plannerCtl.refresh();
         }
     }
 }
