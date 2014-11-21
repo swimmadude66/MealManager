@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace Inventory.WPF
 {
@@ -27,6 +28,7 @@ namespace Inventory.WPF
 
         public String instructions;
         private List<TempRecipeItemModel> recipeItems;
+        public ObservableCollection<RecipeModel> recipes { get; set; }
         private List<String> newtags;
         private List<IngredientModel> searchingredients;
         private RecipeSearchCriteriaModel criteria;
@@ -36,11 +38,10 @@ namespace Inventory.WPF
         {
             InitializeComponent();
             recipeItems = new List<TempRecipeItemModel>();
+            recipes = new ObservableCollection<RecipeModel>();
             newtags = new List<String>();
             searchingredients = new List<IngredientModel>();
-            nextPageStart = 50;
             initSources();
-            addLoadMoreRecipesButton();
             this.DataContext = this;
         }
 
@@ -49,7 +50,12 @@ namespace Inventory.WPF
             //create cards
             //item control
             //uniform grid
-            recipeCardGrid.ItemsSource = getRecipes(50, 0, (bool)rbViewHave.IsChecked);
+            recipes.Clear();
+            List<RecipeModel> firstRecipes = getRecipes(50, 0, (bool)rbViewHave.IsChecked);
+            foreach (RecipeModel recipe in firstRecipes) {
+                recipes.Add(recipe);
+            }
+            nextPageStart = 50;
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
             List<IngredientModel> ingredients = getIngredients();
@@ -66,14 +72,17 @@ namespace Inventory.WPF
             cbTags.ItemsSource = getAllTags();
             cbTags.SelectedIndex = -1;
             cbTags.Text = "";
+            showLoadMoreButton();
         }
 
-        private void addLoadMoreRecipesButton() {
-            if (recipeCardGrid.Items.Count == nextPageStart - 1)
+        private void showLoadMoreButton() {
+            if (recipes.Count == nextPageStart)
             {
-                Button LoadMoreRecipes = new Button();
-                LoadMoreRecipes.Content = "Load 50 More";
-                scrollerRecipes
+                btnLoadMore.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnLoadMore.Visibility = Visibility.Hidden;
             }
         }
 
@@ -132,10 +141,14 @@ namespace Inventory.WPF
                 criteria.Ingredients = searchingredients;
             }
             criteria.have = (bool)rbViewHave.IsChecked;
-            recipeCardGrid.ItemsSource = searchRecipes(50, 0, criteria);
-            recipeCardGrid.Items.Refresh();
+            recipes.Clear();
+            List<RecipeModel> firstRecipes = getRecipes(50, 0, (bool)rbViewHave.IsChecked);
+            foreach (RecipeModel recipe in firstRecipes)
+            {
+                recipes.Add(recipe);
+            }
             nextPageStart = 50;
-            addLoadMoreRecipesButton();
+            showLoadMoreButton();
         }
 
 
@@ -144,6 +157,16 @@ namespace Inventory.WPF
             clearAddRecipe();
             listPanel.Visibility = Visibility.Hidden;
             addPanel.Visibility = Visibility.Visible;
+        }
+
+        private void btnLoadMoreRecipes_Click(object sender, RoutedEventArgs e)
+        {
+            List<RecipeModel> nextRecipes = getRecipes(50, nextPageStart, (bool)rbViewHave.IsChecked);
+            nextPageStart = nextPageStart + 50;
+            foreach (RecipeModel recipe in nextRecipes) {
+                recipes.Add(recipe);
+            }
+            showLoadMoreButton();
         }
 
         private void btnAddIngredient_Click(object sender, RoutedEventArgs e)

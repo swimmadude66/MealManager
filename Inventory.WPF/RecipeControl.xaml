@@ -13,7 +13,7 @@
         <Canvas x:Name="listPanel" Visibility="Visible" Background="#B1C7B6">
             <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="125" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
                 <StackPanel x:Name="stackPanelRecipes">
-                    <ItemsControl x:Name="recipeCardGrid" >
+                    <ItemsControl x:Name="recipeCardGrid" ItemsSource="{Binding recipes}">
                         <ItemsControl.ItemContainerStyle>
                             <Style>
                                 <Setter Property="FrameworkElement.Margin" Value="5"/>
@@ -30,6 +30,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <Button x:Name="btnLoadMore" Content="Load 50 more" Height="25" Click="btnLoadMoreRecipes_Click" Visibility="Hidden"/>
                 </StackPanel>
             </ScrollViewer>
             <!--<DataGrid x:Name="recipeGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
