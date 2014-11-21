@@ -137,11 +137,11 @@ namespace Inventory.WPF
             return Convert.ToInt32(dow.ToString("D"));
         }
 
-        //public void btnSubmit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
-        //        planRecipe();
-        //}
+        public void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
+                planRecipe();
+        }
 
         private void BtnChangeView_Click(object sender, RoutedEventArgs e)
         {
@@ -171,16 +171,16 @@ namespace Inventory.WPF
             return false;
         }
 
-        //private void planRecipe()
-        //{
-        //    DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
-        //    RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
-        //    PlannerItemModel model = new PlannerItemModel();
-        //    model.Date = plannerItemDate;
-        //    model.Recipe = plannerItemRecipe;
-        //    savePlan(model, false);
-        //    initSources();
-        //}
+        private void planRecipe()
+        {
+            DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
+            RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
+            PlannerItemModel model = new PlannerItemModel();
+            model.Date = plannerItemDate;
+            model.Recipe = plannerItemRecipe;
+            savePlan(model, false);
+            initSources();
+        }
 
         //Domain Calls
 

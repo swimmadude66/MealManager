@@ -12,11 +12,17 @@
     <!--<Grid >-->
     <Canvas x:Name="CalendarGrid" Height="800" Background="#B1C7B6">
             <TextBlock x:Name="txtPageTitle" FontSize="70" VerticalAlignment="Top" Text="Planner" Canvas.Left="25"/>
+            <Button x:Name="btnSubmit" Click="btnSubmit_Click"  Content="Submit" Canvas.Top="50" Canvas.Right="25"  Width="80"/>
+            <Label Content="Recipe" Canvas.Top="25" Canvas.Right="360" Width="70" Height="25" />
+            <ComboBox x:Name="RecipeCombo" Canvas.Top="25" Canvas.Right="150"  Height="25" Width="210" IsEditable="True" DisplayMemberPath="Name" IsSynchronizedWithCurrentItem="False"/>
+            <DatePicker x:Name="PlannerDatePicker" Canvas.Top="75" Canvas.Right="150" Width="208"/>
+            <Label Content="Meal Date" Canvas.Top="75" Canvas.Right="360" Height="25"  Width="70"/>
+            <Button x:Name="btnChangeView" Content="Change View Mode" Canvas.Top="50" Canvas.Left="500" Width="157" Click="BtnChangeView_Click"/>
             <DockPanel Canvas.Top="125" Canvas.Left="25" Grid.ColumnSpan="2" x:Name="dpCalendar" Width="1150" Height="575">
                 <ItemsControl x:Name="icDayNames" ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock TextAlignment="Center" Text="{Binding}" TextElement.FontWeight="ExtraBold"/>
+                            <TextBlock TextAlignment="Center" Text="{Binding}" FontSize="25" TextElement.FontWeight="ExtraBold"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
