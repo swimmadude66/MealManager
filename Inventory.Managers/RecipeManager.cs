@@ -101,7 +101,7 @@ namespace Inventory.Managers
         {
             String critstring = criteria.ToString();
             if (criteria.ToString() == "")
-                return getRecipes(50, 0, criteria.have);
+                return getRecipes(Limit, start, criteria.have);
             return _recipeDAO.SearchRecipes(Limit, start, criteria);
             
         }
