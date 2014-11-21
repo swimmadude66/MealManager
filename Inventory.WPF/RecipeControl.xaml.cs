@@ -45,7 +45,7 @@ namespace Inventory.WPF
             //create cards
             //item control
             //uniform grid
-            recipeCardGrid.ItemsSource = getRecipes(50, (bool)rbViewHave.IsChecked);
+            recipeCardGrid.ItemsSource = getRecipes(50, 0, (bool)rbViewHave.IsChecked);
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
             List<IngredientModel> ingredients = getIngredients();
@@ -119,7 +119,7 @@ namespace Inventory.WPF
                 criteria.Ingredients = searchingredients;
             }
             criteria.have = (bool)rbViewHave.IsChecked;
-            recipeCardGrid.ItemsSource = searchRecipes(criteria);
+            recipeCardGrid.ItemsSource = searchRecipes(50, 0, criteria);
             recipeCardGrid.Items.Refresh();
         }
 
@@ -288,10 +288,10 @@ namespace Inventory.WPF
         }
 
         //Domain Calls
-        private List<RecipeModel> getRecipes(int Limit, bool have)
+        private List<RecipeModel> getRecipes(int Limit, int start, bool have)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes(Limit, have);
+            return manager.getRecipes(Limit, start, have);
         }
 
         private List<IngredientModel> getIngredients()
@@ -318,10 +318,10 @@ namespace Inventory.WPF
             return manager.getAllTags();
         }
 
-        private List<RecipeModel> searchRecipes(RecipeSearchCriteriaModel criteria)
+        private List<RecipeModel> searchRecipes(int Limit, int start, RecipeSearchCriteriaModel criteria)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.SearchRecipes(criteria);
+            return manager.SearchRecipes(Limit, start, criteria);
         }
 
         

@@ -18,8 +18,8 @@ namespace TestHarness
         {
             criteria = new RecipeSearchCriteriaModel();
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            int results = manager.SearchRecipes(criteria).Count;
-            Assert.AreEqual(manager.getRecipes(-1).Count, results);
+            int results = manager.SearchRecipes(-1, 0, criteria).Count;
+            Assert.AreEqual(manager.getRecipes(-1, 0, false).Count, results);
 
         }
 
@@ -29,7 +29,7 @@ namespace TestHarness
             criteria = new RecipeSearchCriteriaModel();
             criteria.Name = "Chicken";
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            List<RecipeModel> models = manager.SearchRecipes(criteria);
+            List<RecipeModel> models = manager.SearchRecipes(-1, 0, criteria);
             foreach(RecipeModel model in models){
                 Assert.IsTrue(model.Name.Contains("Chicken"));
             }
@@ -41,7 +41,7 @@ namespace TestHarness
             criteria = new RecipeSearchCriteriaModel();
             criteria.Tags = new List<String> {"chicken", "sandwich"};
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            List<RecipeModel> models = manager.SearchRecipes(criteria);
+            List<RecipeModel> models = manager.SearchRecipes(-1, 0, criteria);
             foreach (RecipeModel model in models)
             {
                 Assert.IsTrue(model.Tags.Contains("chicken") && model.Tags.Contains("sandwich"));
@@ -54,7 +54,7 @@ namespace TestHarness
             criteria = new RecipeSearchCriteriaModel();
             criteria.ID = 7;
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            List<RecipeModel> models = manager.SearchRecipes(criteria);
+            List<RecipeModel> models = manager.SearchRecipes(-1, 0, criteria);
             Assert.IsTrue(models.Count == 1);
         }
 
@@ -72,7 +72,7 @@ namespace TestHarness
                 }
             }
             criteria.Ingredients = new List<IngredientModel> { ing };
-            List<RecipeModel> models = manager.SearchRecipes(criteria);
+            List<RecipeModel> models = manager.SearchRecipes(-1, 0, criteria);
             foreach (RecipeModel model in models)
             {
                 List<int> ingredientIDs = new List<int>();
@@ -97,7 +97,7 @@ namespace TestHarness
                 }
             }
             criteria.Ingredients = ing;
-            List<RecipeModel> models = manager.SearchRecipes(criteria);
+            List<RecipeModel> models = manager.SearchRecipes(-1, 0, criteria);
             foreach (RecipeModel model in models)
             {
                 List<int> ingredientIDs = new List<int>();
@@ -128,7 +128,7 @@ namespace TestHarness
             }
             criteria.Ingredients = new List<IngredientModel> { ing };
             criteria.Name = "Sandwich";
-            List<RecipeModel> models = manager.SearchRecipes(criteria);
+            List<RecipeModel> models = manager.SearchRecipes(-1, 0, criteria);
             foreach (RecipeModel model in models)
             {
                 List<int> ingredientIDs = new List<int>();
