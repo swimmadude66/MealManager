@@ -199,7 +199,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Name LIKE \"%" + criteria.Name + "%\"";
+                        searchquery += " Name LIKE '%" + criteria.Name + "%'";
                         numParams++;
                     }
                     //description
@@ -209,7 +209,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Description LIKE \"%" + criteria.Description + "%\"";
+                        searchquery += " Description LIKE '%" + criteria.Description + "%'";
                         numParams++;
                     }
                     //tags
@@ -221,7 +221,7 @@ namespace Inventory.Data
                             {
                                 searchquery += " AND";
                             }
-                            searchquery += " TagString LIKE \"%" + tag + "%\"";
+                            searchquery += " TagString LIKE '%" + tag + "%'";
                             numParams++;
                         }
                     }
@@ -238,7 +238,7 @@ namespace Inventory.Data
                     {
                         searchquery = filtwrapper + searchquery + ") as init";
 
-                        String ingredSearch = "(Select ingf.* From( ";
+                        String ingredSearch = "(Select ingf.* From ( ";
                         int ingredientcount = 0;
                         foreach (IngredientModel ing in criteria.Ingredients)
                         {
