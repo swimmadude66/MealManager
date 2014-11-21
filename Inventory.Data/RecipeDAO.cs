@@ -11,7 +11,7 @@ namespace Inventory.Data
 {
     public class RecipeDAO : IRecipeDAO
     {
-        public List<RecipeModel> getRecipes(int Limit, bool have)
+        public List<RecipeModel> getRecipes(int Limit, int start, bool have)
         {
             try
             {
@@ -24,7 +24,12 @@ namespace Inventory.Data
                      " Group By rid Having Count(IngredientID) = (Select Count(IngredientID)  From RecipeItem Where RecipeID = rid)) as have ON have.rid = Recipe.ID";
                         if (Limit > 0)
                         {
-                            searchquery += " LIMIT " + Limit;
+                            searchquery += " LIMIT ";
+                            if (start > 0)
+                            {
+                                searchquery += start + ", ";
+                            }
+                            searchquery += Limit + "";
                         }
                         recipes = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
                     }
@@ -34,7 +39,7 @@ namespace Inventory.Data
                         {
                             recipes = (from r in context.Recipe
                                        where r.Name != ""
-                                       select r).OrderBy(v => v.Name).Take(Limit).ToList();
+                                       select r).OrderBy(v => v.Name).Skip(start).Take(Limit).ToList();
                         }
                         else
                         {
@@ -162,7 +167,7 @@ namespace Inventory.Data
             catch { throw; }
         }
 
-        public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria)
+        public List<RecipeModel> SearchRecipes(int Limit, int start, RecipeSearchCriteriaModel criteria)
         {
             try
             {
@@ -248,7 +253,15 @@ namespace Inventory.Data
                         ingredSearch += "as result on result.RecipeID=init.ID";
                         searchquery += " Join " + ingredSearch;
                     }
-                    searchquery += " Limit 25 ";
+                    if (Limit > 0)
+                    {
+                        searchquery += " LIMIT ";
+                        if (start > 0)
+                        {
+                            searchquery += start + ", ";
+                        }
+                        searchquery += Limit + "";
+                    }
                     List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
                     foreach (Recipe recipe in result)
                     {
