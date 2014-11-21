@@ -29,6 +29,8 @@ namespace Inventory.WPF
         private List<TempRecipeItemModel> recipeItems;
         private List<String> newtags;
         private List<IngredientModel> searchingredients;
+        private RecipeSearchCriteriaModel criteria;
+        private int nextPageStart;
 
         public RecipeControl()
         {
@@ -36,7 +38,9 @@ namespace Inventory.WPF
             recipeItems = new List<TempRecipeItemModel>();
             newtags = new List<String>();
             searchingredients = new List<IngredientModel>();
+            nextPageStart = 50;
             initSources();
+            addLoadMoreRecipesButton();
             this.DataContext = this;
         }
 
@@ -62,6 +66,15 @@ namespace Inventory.WPF
             cbTags.ItemsSource = getAllTags();
             cbTags.SelectedIndex = -1;
             cbTags.Text = "";
+        }
+
+        private void addLoadMoreRecipesButton() {
+            if (recipeCardGrid.Items.Count == nextPageStart - 1)
+            {
+                Button LoadMoreRecipes = new Button();
+                LoadMoreRecipes.Content = "Load 50 More";
+                scrollerRecipes
+            }
         }
 
         private void clearAddRecipe()
@@ -105,7 +118,7 @@ namespace Inventory.WPF
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            RecipeSearchCriteriaModel criteria = new RecipeSearchCriteriaModel();
+            criteria = new RecipeSearchCriteriaModel();
             if (!String.IsNullOrEmpty(txtSearchName.Text.Trim()))
             {
                 criteria.Name = txtSearchName.Text.Trim();
@@ -121,7 +134,10 @@ namespace Inventory.WPF
             criteria.have = (bool)rbViewHave.IsChecked;
             recipeCardGrid.ItemsSource = searchRecipes(50, 0, criteria);
             recipeCardGrid.Items.Refresh();
+            nextPageStart = 50;
+            addLoadMoreRecipesButton();
         }
+
 
         private void AddRecipe_Click(object sender, RoutedEventArgs e)
         {
