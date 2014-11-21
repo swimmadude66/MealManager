@@ -19,7 +19,7 @@ namespace TestHarness
             criteria = new RecipeSearchCriteriaModel();
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             int results = manager.SearchRecipes(criteria).Count;
-            Assert.AreEqual(manager.getRecipes().Count, results);
+            Assert.AreEqual(manager.getRecipes(-1).Count, results);
 
         }
 

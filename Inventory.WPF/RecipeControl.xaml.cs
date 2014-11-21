@@ -45,7 +45,7 @@ namespace Inventory.WPF
             //create cards
             //item control
             //uniform grid
-            recipeCardGrid.ItemsSource = getRecipes();
+            recipeCardGrid.ItemsSource = getRecipes(50, (bool)rbViewHave.IsChecked);
             dgIngredients.ItemsSource = recipeItems;
             dgIngredients.Items.Refresh();
             List<IngredientModel> ingredients = getIngredients();
@@ -118,6 +118,7 @@ namespace Inventory.WPF
             {
                 criteria.Ingredients = searchingredients;
             }
+            criteria.have = (bool)rbViewHave.IsChecked;
             recipeCardGrid.ItemsSource = searchRecipes(criteria);
             recipeCardGrid.Items.Refresh();
         }
@@ -262,7 +263,6 @@ namespace Inventory.WPF
                 manager.SaveRecipeItem(rid, m);
             }
 
-
         }
 
         private int getIngredientId(String name)
@@ -288,16 +288,22 @@ namespace Inventory.WPF
         }
 
         //Domain Calls
-        private List<RecipeModel> getRecipes()
+        private List<RecipeModel> getRecipes(int Limit, bool have)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes();
+            return manager.getRecipes(Limit, have);
         }
 
         private List<IngredientModel> getIngredients()
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.getIngredients();
+        }
+
+        private List<PantryItemModel> getPantry()
+        {
+            IPantryManager manager = ManagerFactory.GetPantryManager();
+            return manager.GetPantryContents();
         }
 
         private List<MeasureModel> getMeasures()
