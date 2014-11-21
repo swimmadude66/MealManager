@@ -56,9 +56,7 @@ namespace TestHarness
             PlannerItemModel plan = new PlannerItemModel();
             DateTime testdate = DateTime.Parse("01/01/1970");
             plan.Date = testdate;
-            RecipeSearchCriteriaModel search = new RecipeSearchCriteriaModel();
-            search.ID = 15;
-            plan.Recipe = manager.SearchRecipes(1, 0, search)[0];
+            plan.Recipe = manager.getRecipes(1, 0, false)[0];
             int id = manager.PlanRecipe(plan, false);
             List<String> results = new List<String>();
             List<PlannerItemModel> planned = manager.GetPlannedRecipes(testdate, testdate);
