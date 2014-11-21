@@ -25,6 +25,7 @@ namespace Inventory.WPF
     {
         private List<PantryItemModel> pantry;
         private List<RecipeModel> planned;
+        private List<IngredientModel> compared;
 
         public ShoppingListControl()
         {
@@ -44,7 +45,6 @@ namespace Inventory.WPF
             DateTime? fromDate = fromPicker.SelectedDate;
             DateTime? untilDate = untilPicker.SelectedDate;
             planned = getPlannedRecipes(fromDate, untilDate);
-            List<IngredientModel> shoppingList = new List<IngredientModel>();
             List<int> pantrying = new List<int>();
             foreach (PantryItemModel item in pantry)
             {
@@ -60,12 +60,12 @@ namespace Inventory.WPF
                 {
                     if (!pantrying.Contains(recipeitem.Ingredient.ID) && !ShoppingListIDs.Contains(recipeitem.Ingredient.ID))
                     {
-                        shoppingList.Add(recipeitem.Ingredient);
+                        compared.Add(recipeitem.Ingredient);
                         ShoppingListIDs.Add(recipeitem.Ingredient.ID);
                     }
                 }
             }
-            return shoppingList;
+            return compared;
         }
 
         public List<RecipeModel> getPlannedRecipes(DateTime? begin, DateTime? end)

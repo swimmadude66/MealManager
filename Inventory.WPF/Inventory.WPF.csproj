@@ -117,13 +117,11 @@
     <Compile Include="RecipeControl.xaml.cs">
       <DependentUpon>RecipeControl.xaml</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="ShoppingListControl.xaml.cs">
       <DependentUpon>ShoppingListControl.xaml</DependentUpon>
-=======
+    </Compile>
     <Compile Include="RecipeCardControl.xaml.cs">
       <DependentUpon>RecipeCardControl.xaml</DependentUpon>
->>>>>>> 3fd07364f41f36b1e75645ae21ea726a7e53ac18
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -149,11 +147,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-<<<<<<< HEAD
     <Page Include="ShoppingListControl.xaml">
-=======
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RecipeCardControl.xaml">
->>>>>>> 3fd07364f41f36b1e75645ae21ea726a7e53ac18
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

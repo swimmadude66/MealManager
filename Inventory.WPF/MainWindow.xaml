@@ -23,32 +23,11 @@
 
     </Window.Resources>
     <Viewbox HorizontalAlignment="Left" Stretch="Fill">
-<<<<<<< HEAD
-        <TabControl TabStripPlacement="Left" Height="770" Width="1392">
-            <TabItem Header="Home" Content="Testing"/>
-            <TabItem Header="Pantry">
-                <local:PantryControl/>
-            </TabItem>
-            <TabItem Header="Recipes">
-                <local:RecipeControl/>
-            </TabItem>
-            <TabItem Header="Planner">
-                <local:PlannerControl/>
-            </TabItem>
-            <TabItem Header="Shopping List">
-                <local:ShoppingListControl/>
-            </TabItem>
-            <TabItem Header="Random" Margin="0,-10,0,10">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-        </TabControl>
-=======
         <Grid  Height="800" Width="1400" Background="#B1C7B6">
             <Grid  Background="#056C1C" Margin="0,0,1200,0">
                 <StackPanel CanHorizontallyScroll="True" Margin="0,0,0,0">
                     <TextBlock x:Name="txtApplicationName" FontSize="45" Foreground="White" Text="Meal" Padding="10 0" />
                     <TextBlock x:Name="txtApplicationName2" FontSize="45" Foreground="White" Text="Manager" Padding="10 0" Margin="0 -20 0 0"/>
->>>>>>> 3fd07364f41f36b1e75645ae21ea726a7e53ac18
 
                     <!--<Separator Height="1"></Separator>-->
                     <Button x:Name="PantryBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="PantryBtn_PreviewMouseLeftButtonUp">
@@ -84,12 +63,23 @@
                         </Grid>
                     </Button>
                     <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="ShoppingListBtn" Height="75" Style="{StaticResource greenButton}">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Shopping List" Grid.Column="1"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
                 </StackPanel>
             </Grid>
             <Grid Margin="200,0,0,0" >
                 <local:PantryControl x:Name="pantryCtl" Visibility="Visible"/>
                 <local:RecipeControl x:Name="recipeCtl" Visibility="Collapsed"/>
                 <local:PlannerControl x:Name="plannerCtl" Visibility="Collapsed"/>
+                <local:ShoppingListControl x:Name="shoppingListCtl" Visibility="Collapsed"/>
             </Grid>
         </Grid>
     </Viewbox>
