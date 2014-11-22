@@ -1,0 +1,29 @@
+﻿<UserControl
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+      x:Class="Inventory.WPF.ShoppingListControl" 
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1100">
+
+    <Grid>
+        <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGray">
+            <Label Content="Shopping List" Canvas.Left="10" Canvas.Top="10" Height="72" Width="216" FontSize="32"/>
+            <DataGrid x:Name="listGrid" ItemsSource="{Binding shoppingList}" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DatePicker Name="fromPicker" SelectedDate="{Binding fromDate}" Height="26" Canvas.Left="74" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
+            <DatePicker Name="untilPicker" SelectedDate="{Binding untilDate}" Height="26" Canvas.Left="312" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
+            <Label Content="From:" Height="26" Canvas.Left="27" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
+            <Label Content="Until:" Height="26" Canvas.Left="265" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
+            <Button Click="DoComparison" Content="Compare" Height="28" Canvas.Left="506" Canvas.Top="85" Width="102"/>
+
+        </Canvas>
+        <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">
+        </Canvas>
+    </Grid>
+</UserControl>

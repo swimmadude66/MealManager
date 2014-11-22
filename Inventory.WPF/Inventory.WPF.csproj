@@ -117,6 +117,9 @@
     <Compile Include="RecipeControl.xaml.cs">
       <DependentUpon>RecipeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ShoppingListControl.xaml.cs">
+      <DependentUpon>ShoppingListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RecipeCardControl.xaml.cs">
       <DependentUpon>RecipeCardControl.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RecipeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShoppingListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
