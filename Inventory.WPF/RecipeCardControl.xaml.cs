@@ -16,16 +16,11 @@ using System.Windows.Shapes;
 
 namespace Inventory.WPF
 {
-    /// <summary>
-    /// Interaction logic for UserControl1.xaml
-    /// </summary>
     public partial class RecipeCardControl : UserControl
     {
         public RecipeCardControl()
         {
             InitializeComponent();
-            //lblTitle.Content = recipeItem.
-            //lblDescription.Content = recipeItem.Description;
         }
     }
 }
