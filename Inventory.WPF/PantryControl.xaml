@@ -39,8 +39,8 @@
                                 <TextBlock Text="Notes: " Foreground="White" Padding="5,0,5,0"/>
                                 <TextBox Name="DescriptionTextBox" MinWidth="400" Padding="5,0,5,0"/>
                                 <TextBlock Text="Expires: " Foreground="White" Padding="5,0,5,0"/>
-                                <DatePicker Name="ExpirationDatePicker" DisplayDate="{Binding ExpirationDate}"/>
-                                <Button Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0" Click="FinishBtn_Click"/>
+                                <DatePicker x:Name="ExpirationDatePicker" SelectedDate="{Binding ExpirationDate}"/>
+                                <Button x:Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0" Click="FinishBtn_Click"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

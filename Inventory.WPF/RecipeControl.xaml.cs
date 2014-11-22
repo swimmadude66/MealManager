@@ -31,7 +31,6 @@ namespace Inventory.WPF
         private List<TempRecipeItemModel> recipeItems;
         private List<String> newtags;
         private List<IngredientModel> searchingredients;
-        public bool isEditting { get; set; }
 
         public RecipeControl()
         {
@@ -206,13 +205,14 @@ namespace Inventory.WPF
         {
             RecipeCardControl recipeViewBtn = (RecipeCardControl)sender;
             RecipeModel recipeModel = (RecipeModel)recipeViewBtn.DataContext;
+            recipeModel = getRecipeItems(recipeModel.ID);
             RecipeDetailMenu.DataContext = recipeModel;
             RecipeDetailName.Text = recipeModel.Name.Trim();
             DescriptionTxt.Text = recipeModel.Description.Trim();
             DirectionsTxt.Text = recipeModel.Directions.Trim();
 
             IngredientsListCtl.ItemsSource = recipeModel.Items;
-            
+
             TagsTxt.Text = recipeModel.Tags;
 
             MainRecipesMenu.Visibility = Visibility.Collapsed;
@@ -285,19 +285,18 @@ namespace Inventory.WPF
 
             RecipeDetailNameBox.Visibility = Visibility.Collapsed;
             RecipeDetailName.Visibility = Visibility.Visible;
-            RecipeDetailName.Text = RecipeDetailNameBox.Text;
-
             EditBtn.Visibility = Visibility.Visible;
             PlanRecipeBtn.Visibility = Visibility.Visible;
             DoneBtn.Visibility = Visibility.Collapsed;
-
             DescriptionBox.Visibility = Visibility.Collapsed;
             DescriptionTxt.Visibility = Visibility.Visible;
-            DescriptionTxt.Text =  DescriptionBox.Text;
-
             DirectionsBox.Visibility = Visibility.Collapsed;
             DirectionsTxt.Visibility = Visibility.Visible;
-            DirectionsTxt.Text =  DirectionsBox.Text;
+
+            RecipeDetailName.Text = RecipeDetailNameBox.Text;
+            DirectionsTxt.Text = DirectionsBox.Text;
+            DescriptionTxt.Text = DescriptionBox.Text;
+
         }
 
         private void Plan_Click(object sender, RoutedEventArgs e)
@@ -446,6 +445,12 @@ namespace Inventory.WPF
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.getRecipes(Limit, size, have);
+        }
+
+        private RecipeModel getRecipeItems(int rid)
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            return manager.getRecipeItems(rid);
         }
 
         private List<IngredientModel> getIngredients()
