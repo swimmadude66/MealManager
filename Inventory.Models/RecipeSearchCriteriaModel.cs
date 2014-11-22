@@ -16,9 +16,9 @@ namespace Inventory.Models
         public String Directions { get; set; }
         public List<String> Tags { get; set; }
         public List<IngredientModel> Ingredients { get; set; }
-
-
-        public String toString()
+        public bool have = false;
+        
+        public override String ToString()
         {
             String val = "";
             if(ID != null)

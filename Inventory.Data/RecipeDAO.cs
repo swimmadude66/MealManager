@@ -11,15 +11,53 @@ namespace Inventory.Data
 {
     public class RecipeDAO : IRecipeDAO
     {
-        public List<RecipeModel> getRecipes()
+        public List<RecipeModel> getRecipes(int Limit, int start, bool have)
         {
             try
             {
+                List<RecipeModel> recipeInfo = new List<RecipeModel>();
                 using(var context = new InventoryEntities()){
-                    List<Recipe> recipes = (from r in context.Recipe
-                                            where r.Name != ""
-                                            select r).OrderBy(v=>v.Name).Take(50).ToList();
-                    return RecipeMapper.BindItems(recipes);
+                    List<Recipe> recipes;
+                    if (have)
+                    {
+                        String searchquery = "Select Distinct Recipe.* From Recipe Join(Select RecipeID rid From RecipeItem Where RecipeItem.IngredientID In (Select IngredientID from PantryItem where Quantity > 0)" +
+                     " Group By rid Having Count(IngredientID) = (Select Count(IngredientID)  From RecipeItem Where RecipeID = rid)) as have ON have.rid = Recipe.ID";
+                        if (Limit > 0)
+                        {
+                            searchquery += " LIMIT ";
+                            if (start > 0)
+                            {
+                                searchquery += start + ", ";
+                            }
+                            searchquery += Limit + "";
+                        }
+                        recipes = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
+                    }
+                    else
+                    {
+                        if (Limit >= 0)
+                        {
+                            recipes = (from r in context.Recipe
+                                       where r.Name != ""
+                                       select r).OrderBy(v => v.Name).Skip(start).Take(Limit).ToList();
+                        }
+                        else
+                        {
+                            recipes = (from r in context.Recipe
+                                       where r.Name != ""
+                                       select r).OrderBy(v => v.Name).ToList();
+                        }
+                    }
+                    foreach (Recipe recipe in recipes)
+                    {
+                        RecipeModel model = new RecipeModel();
+                        model.ID = recipe.ID;
+                        model.Name = recipe.Name;
+                        model.Description = recipe.Description;
+                        //any other Recipe specific (not items) info here
+                        recipeInfo.Add(model);
+                    }
+                    return recipeInfo;
                 }
             }
             catch{throw;}
@@ -108,16 +146,16 @@ namespace Inventory.Data
             }
         }
 
-        public List<RecipeItemModel> getRecipeItems(int rid)
+        public RecipeModel getRecipeItems(int rid)
         {
             try
             {
                 using (var context = new InventoryEntities())
                 {
-                    List<RecipeItem> items = (from i in context.RecipeItem
-                                              where i.RecipeID == rid
-                                              select i).ToList();
-                    return RecipeItemMapper.BindItems(items);
+                    Recipe item = (from i in context.Recipe
+                                              where i.ID == rid
+                                              select i).FirstOrDefault();
+                    return RecipeMapper.BindItem(item);
                 }
             }
             catch { throw; }
@@ -145,14 +183,23 @@ namespace Inventory.Data
             catch { throw; }
         }
 
-        public List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria)
+        public List<RecipeModel> SearchRecipes(int Limit, int start, RecipeSearchCriteriaModel criteria)
         {
             try
             {
+                List<RecipeModel> recipeInfo = new List<RecipeModel>();
                 using (var context = new InventoryEntities())
                 {
                     String filtwrapper = "Select * From (";
-                    String basequery = "Select * From Recipe";
+                    String basequery = "Select Distinct * From ";
+                    if(criteria.have){
+                        basequery += "(Select Recipe.* From Recipe Join(Select RecipeID rid From RecipeItem Where RecipeItem.IngredientID In (Select IngredientID from PantryItem where Quantity > 0)" +
+                     " Group By rid Having Count(IngredientID) = (Select Count(IngredientID)  From RecipeItem Where RecipeID = rid)) as have ON have.rid = Recipe.ID) as recipes";
+                    }
+                    else{
+                        basequery += "Recipe";
+                    }
+                    
                     String searchquery = " WHERE";
                     int numParams = 0;
                     //id
@@ -168,7 +215,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Name LIKE \"%" + criteria.Name + "%\"";
+                        searchquery += " Name LIKE '%" + criteria.Name + "%'";
                         numParams++;
                     }
                     //description
@@ -178,7 +225,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Description LIKE \"%" + criteria.Description + "%\"";
+                        searchquery += " Description LIKE '%" + criteria.Description + "%'";
                         numParams++;
                     }
                     //tags
@@ -190,7 +237,7 @@ namespace Inventory.Data
                             {
                                 searchquery += " AND";
                             }
-                            searchquery += " TagString LIKE \"%" + tag + "%\"";
+                            searchquery += " TagString LIKE '%" + tag + "%'";
                             numParams++;
                         }
                     }
@@ -207,7 +254,7 @@ namespace Inventory.Data
                     {
                         searchquery = filtwrapper + searchquery + ") as init";
 
-                        String ingredSearch = "(Select ingf.* From( ";
+                        String ingredSearch = "(Select ingf.* From ( ";
                         int ingredientcount = 0;
                         foreach (IngredientModel ing in criteria.Ingredients)
                         {
@@ -222,9 +269,26 @@ namespace Inventory.Data
                         ingredSearch += "as result on result.RecipeID=init.ID";
                         searchquery += " Join " + ingredSearch;
                     }
-
+                    if (Limit > 0)
+                    {
+                        searchquery += " LIMIT ";
+                        if (start > 0)
+                        {
+                            searchquery += start + ", ";
+                        }
+                        searchquery += Limit + "";
+                    }
                     List<Recipe> result = context.Recipe.SqlQuery(searchquery.Trim()).ToList();
-                    return RecipeMapper.BindItems(result);
+                    foreach (Recipe recipe in result)
+                    {
+                        RecipeModel model = new RecipeModel();
+                        model.ID = recipe.ID;
+                        model.Name = recipe.Name;
+                        model.Description = recipe.Description;
+                        //any other Recipe specific (not items) info here
+                        recipeInfo.Add(model);
+                    }
+                    return recipeInfo;
                 }
             }
             catch
