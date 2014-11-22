@@ -21,11 +21,20 @@ namespace Inventory.WPF
     /// </summary>
     public partial class RecipeCardControl : UserControl
     {
+
+        public event RoutedEventHandler Click;
+
         public RecipeCardControl()
         {
             InitializeComponent();
             //lblTitle.Content = recipeItem.
             //lblDescription.Content = recipeItem.Description;
+        }
+
+        void onButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (this.Click != null)
+                this.Click(this, e);
         }
     }
 }

@@ -14,11 +14,12 @@ namespace Inventory.Data.Interfaces
         int SaveMeasure(string name);
         int getMeasureID(string name);
         List<MeasureModel> getMeasures();
+        IngredientModel getIngredient(int id);
         int getIngredientID(String name);
         List<IngredientModel> getIngredients();
         List<String> getAllTags();
         void SaveTag(String tag);
-        int SaveRecipe(string name, string description, string directions, string tagstring);
+        int SaveRecipe(RecipeModel recipeItem, bool isEdit);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
         List<RecipeModel> SearchRecipes(int Limit, int start, RecipeSearchCriteriaModel criteria);
         int PlanRecipe(PlannerItemModel model, bool isEdit);
