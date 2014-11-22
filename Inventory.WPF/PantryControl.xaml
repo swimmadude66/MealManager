@@ -17,20 +17,19 @@
             </DataGrid.Columns>
         </DataGrid>-->
         <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,10,0,240" VerticalScrollBarVisibility="Auto">
-            <ItemsControl Name="pantryList" >
+            <ItemsControl Name="pantryList">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,0" Background="#FF216A16" Height="50" >
-                            <Button Margin="0,0,0,0" Style="{StaticResource greenButton}" Background="{x:Null}" HorizontalAlignment="Stretch" Click="Button_Click"/>
+                        <Grid Margin="0,0,0,0" Height="50" >
+                            <Button Margin="0,0,0,0" Style="{StaticResource greenButton}" Background="#FF216A16" HorizontalAlignment="Stretch" Click="Button_Click"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
-                                <TextBlock Text="{Binding StringQuantity}" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="{Binding Measure.Name}" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="Notes: " Foreground="White" Padding="25,0,5,0"/>
-                                <TextBlock Text="{Binding Description}" Foreground="White" Padding="5,0,5,0"/>
-                                <TextBlock Text="Expires: " Foreground="White" Padding="25,0,5,0"/>
-                                <TextBlock Text="{Binding ExpirationDateString}" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBlock Text="{Binding StringQuantity}" Foreground="White" Padding="5,0,5,0" Width="50"/>
+                                <TextBlock Text="{Binding Measure.Name}" Foreground="White" Padding="5,0,5,0" Width="100"/>
+                                <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0" Width="150"/>
+                                <TextBlock Text="Notes: " Foreground="White" Padding="25,0,5,0" Width="60"/>
+                                <TextBlock Text="{Binding Description}" Foreground="White" Padding="5,0,5,0" Width="300"/>
+                                <TextBlock Text="Expires: " Foreground="White" Padding="25,0,5,0" Width="80"/>
+                                <TextBlock Text="{Binding ExpirationDateString}" Foreground="White" Padding="5,0,5,0" Width="100"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Visibility="Collapsed">
                                 <TextBox Name="QuantityTextBox" Padding="5,0,5,0"/>
@@ -40,8 +39,8 @@
                                 <TextBlock Text="Notes: " Foreground="White" Padding="5,0,5,0"/>
                                 <TextBox Name="DescriptionTextBox" MinWidth="400" Padding="5,0,5,0"/>
                                 <TextBlock Text="Expires: " Foreground="White" Padding="5,0,5,0"/>
-                                <DatePicker Name="ExpirationDatePicker" DisplayDate="{Binding ExpirationDate}"/>
-                                <Button Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0" Click="FinishBtn_Click"/>
+                                <DatePicker x:Name="ExpirationDatePicker" SelectedDate="{Binding ExpirationDate}"/>
+                                <Button x:Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0" Click="FinishBtn_Click"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

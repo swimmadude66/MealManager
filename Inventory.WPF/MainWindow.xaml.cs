@@ -20,9 +20,21 @@ namespace Inventory.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
+            TextElement.FontFamilyProperty.OverrideMetadata(
+                typeof(TextElement),
+                new FrameworkPropertyMetadata(
+                    new FontFamily("Segoe UI Light")));
+
+            TextBlock.FontFamilyProperty.OverrideMetadata(
+                typeof(TextBlock),
+                new FrameworkPropertyMetadata(
+                    new FontFamily("Segoe UI Light")));
+
             InitializeComponent();
+            recipeCtl.RecipePlanned += Recipe_Planned;
         }
 
         private void HomeBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -71,6 +83,11 @@ namespace Inventory.WPF
             recipeCtl.Visibility = Visibility.Collapsed;
             plannerCtl.Visibility = Visibility.Collapsed;
             shoppingListCtl.Visibility = Visibility.Collapsed;
+        }
+
+        private void Recipe_Planned(object sender, EventArgs eventArgs)
+        {
+            plannerCtl.refresh();
         }
     }
 }

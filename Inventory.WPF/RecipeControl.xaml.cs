@@ -25,6 +25,8 @@ namespace Inventory.WPF
     public partial class RecipeControl : UserControl
     {
 
+        public event EventHandler RecipePlanned;
+
         public String instructions;
         private List<TempRecipeItemModel> recipeItems;
         private List<String> newtags;
@@ -62,6 +64,8 @@ namespace Inventory.WPF
             cbTags.ItemsSource = getAllTags();
             cbTags.SelectedIndex = -1;
             cbTags.Text = "";
+
+            
         }
 
         private void clearAddRecipe()
@@ -76,6 +80,17 @@ namespace Inventory.WPF
             recipeItems.Clear();
             instructions = "";
             newtags.Clear();
+        }
+
+        public bool isValidMealDate(DateTime? mealDate)
+        {
+            DateTime? testedDateTime = mealDate;
+
+            if (testedDateTime != null && testedDateTime.HasValue && (testedDateTime.Value.CompareTo(System.DateTime.Today) >= 0))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void btnSearchAddIngredient_Click(object sender, RoutedEventArgs e)
@@ -186,6 +201,128 @@ namespace Inventory.WPF
             }
         }
 
+        private void RecipeCardViewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeCardControl recipeViewBtn = (RecipeCardControl)sender;
+            RecipeModel recipeModel = (RecipeModel)recipeViewBtn.DataContext;
+            recipeModel = getRecipeItems(recipeModel.ID);
+            RecipeDetailMenu.DataContext = recipeModel;
+            RecipeDetailName.Text = recipeModel.Name.Trim();
+            DescriptionTxt.Text = recipeModel.Description.Trim();
+            DirectionsTxt.Text = recipeModel.Directions.Trim();
+
+            IngredientsListCtl.ItemsSource = recipeModel.Items;
+
+            TagsTxt.Text = recipeModel.Tags;
+
+            MainRecipesMenu.Visibility = Visibility.Collapsed;
+            RecipeDetailMenu.Visibility = Visibility.Visible;
+        }
+
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainRecipesMenu.Visibility = Visibility.Visible;
+            RecipeDetailMenu.Visibility = Visibility.Collapsed;
+
+            RecipeDetailNameBox.Visibility = Visibility.Collapsed;
+            RecipeDetailName.Visibility = Visibility.Visible;
+            //RecipeDetailNameBox.Text = RecipeDetailName.Text;
+
+            EditBtn.Visibility = Visibility.Visible;
+            PlanRecipeBtn.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Collapsed;
+
+            DescriptionBox.Visibility = Visibility.Collapsed;
+            DescriptionTxt.Visibility = Visibility.Visible;
+
+            DirectionsBox.Visibility = Visibility.Collapsed;
+            DirectionsTxt.Visibility = Visibility.Visible;
+
+            if (PlannerGrid.Visibility == Visibility.Visible)
+            {
+                RecipeScrollView.Height += 200;
+                PlannerGrid.Visibility = Visibility.Collapsed;
+            }
+
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeModel recipeModel = (RecipeModel)RecipeDetailMenu.DataContext;
+
+            RecipeDetailName.Visibility = Visibility.Collapsed;
+            RecipeDetailNameBox.Visibility = Visibility.Visible;
+            RecipeDetailNameBox.Text = RecipeDetailName.Text;
+
+            EditBtn.Visibility = Visibility.Collapsed;
+            PlanRecipeBtn.Visibility = Visibility.Collapsed;
+            DoneBtn.Visibility = Visibility.Visible;
+
+            DescriptionTxt.Visibility = Visibility.Collapsed;
+            DescriptionBox.Visibility = Visibility.Visible;
+            DescriptionBox.Text = DescriptionTxt.Text;
+
+            DirectionsTxt.Visibility = Visibility.Collapsed;
+            DirectionsBox.Visibility = Visibility.Visible;
+            DirectionsBox.Text = DirectionsTxt.Text;
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            Button applyBtn = (Button)sender;
+            RecipeModel recipeModel = (RecipeModel)RecipeDetailMenu.DataContext;
+
+            if (string.IsNullOrWhiteSpace(DescriptionBox.Text.ToString()) || string.IsNullOrWhiteSpace(DirectionsBox.Text.ToString()))
+                return;
+
+            recipeModel.Description = DescriptionBox.Text.ToString();
+            recipeModel.Directions = DirectionsBox.Text.ToString();
+
+            IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
+
+            recipeManager.SaveRecipe(recipeModel, true);
+            initSources();
+
+            RecipeDetailNameBox.Visibility = Visibility.Collapsed;
+            RecipeDetailName.Visibility = Visibility.Visible;
+            EditBtn.Visibility = Visibility.Visible;
+            PlanRecipeBtn.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Collapsed;
+            DescriptionBox.Visibility = Visibility.Collapsed;
+            DescriptionTxt.Visibility = Visibility.Visible;
+            DirectionsBox.Visibility = Visibility.Collapsed;
+            DirectionsTxt.Visibility = Visibility.Visible;
+
+            RecipeDetailName.Text = RecipeDetailNameBox.Text;
+            DirectionsTxt.Text = DirectionsBox.Text;
+            DescriptionTxt.Text = DescriptionBox.Text;
+
+        }
+
+        private void Plan_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlannerGrid.Visibility == Visibility.Collapsed)
+            {
+                RecipeScrollView.Height -= 200;
+                PlannerGrid.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnCancelPlannedRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlannerGrid.Visibility == Visibility.Visible)
+            {
+                RecipeScrollView.Height += 200;
+                PlannerGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (isValidMealDate(PlannerDatePicker.SelectedDate))
+                planRecipe();
+        }
+
         private bool AddIngredient()
         {
             string ingredient = "";
@@ -246,12 +383,14 @@ namespace Inventory.WPF
 
         private void SaveRecipe()
         {
-            string name = txtName.Text.Trim();
-            string descrip = txtDescription.Text.Trim();
-            string directions = txtDirections.Text.Trim();
-            string tagstring = txtTags.Text.Trim();
+            RecipeModel recipeItem = new RecipeModel();
+
+            recipeItem.Name = txtName.Text.Trim();
+            recipeItem.Description = txtDescription.Text.Trim();
+            recipeItem.Directions = txtDirections.Text.Trim();
+            recipeItem.Tags = txtTags.Text.Trim();
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            int rid = manager.SaveRecipe(name, descrip, directions, tagstring);
+            int rid = manager.SaveRecipe(recipeItem, false);
             foreach (String s in newtags)
             {
                 manager.SaveTag(s.Substring(0,1).ToUpper() + s.Substring(1).ToLower());
@@ -263,6 +402,20 @@ namespace Inventory.WPF
                 manager.SaveRecipeItem(rid, m);
             }
 
+
+        }
+
+        private void planRecipe()
+        {
+            DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
+            RecipeModel plannerItemRecipe = (RecipeModel)RecipeDetailMenu.DataContext;
+            PlannerItemModel model = new PlannerItemModel();
+            model.Date = plannerItemDate;
+            model.Recipe = plannerItemRecipe;
+            savePlan(model, false);
+            if(RecipePlanned != null)
+                RecipePlanned(this, EventArgs.Empty);
+            initSources();
         }
 
         private int getIngredientId(String name)
@@ -288,22 +441,22 @@ namespace Inventory.WPF
         }
 
         //Domain Calls
-        private List<RecipeModel> getRecipes(int Limit, int start, bool have)
+        private List<RecipeModel> getRecipes(int Limit, int size, bool have)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes(Limit, start, have);
+            return manager.getRecipes(Limit, size, have);
+        }
+
+        private RecipeModel getRecipeItems(int rid)
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            return manager.getRecipeItems(rid);
         }
 
         private List<IngredientModel> getIngredients()
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.getIngredients();
-        }
-
-        private List<PantryItemModel> getPantry()
-        {
-            IPantryManager manager = ManagerFactory.GetPantryManager();
-            return manager.GetPantryContents();
         }
 
         private List<MeasureModel> getMeasures()
@@ -318,19 +471,16 @@ namespace Inventory.WPF
             return manager.getAllTags();
         }
 
-        private List<RecipeModel> searchRecipes(int Limit, int start, RecipeSearchCriteriaModel criteria)
+        private int savePlan(PlannerItemModel model, bool isEdit)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.SearchRecipes(Limit, start, criteria);
+            return manager.PlanRecipe(model, isEdit);
         }
 
-        
-
-        
-
-       
-
-       
-       
+        private List<RecipeModel> searchRecipes(int Limit, int size, RecipeSearchCriteriaModel criteria)
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            return manager.SearchRecipes(Limit, size, criteria);
+        }
     }
 }
