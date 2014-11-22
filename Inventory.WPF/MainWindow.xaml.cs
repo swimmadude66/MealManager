@@ -20,6 +20,7 @@ namespace Inventory.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             TextElement.FontFamilyProperty.OverrideMetadata(
@@ -31,8 +32,9 @@ namespace Inventory.WPF
                 typeof(TextBlock),
                 new FrameworkPropertyMetadata(
                     new FontFamily("Segoe UI Light")));
-            
+
             InitializeComponent();
+            recipeCtl.RecipePlanned += Recipe_Planned;
         }
 
         private void HomeBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -40,6 +42,7 @@ namespace Inventory.WPF
             pantryCtl.Visibility = Visibility.Collapsed;
             recipeCtl.Visibility = Visibility.Collapsed;
             plannerCtl.Visibility = Visibility.Collapsed;
+            shoppingListCtl.Visibility = Visibility.Collapsed;
         }
 
         private void PantryBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -47,6 +50,7 @@ namespace Inventory.WPF
             pantryCtl.Visibility = Visibility.Visible;
             recipeCtl.Visibility = Visibility.Collapsed;
             plannerCtl.Visibility = Visibility.Collapsed;
+            shoppingListCtl.Visibility = Visibility.Collapsed;
         }
 
         private void RecipesBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -54,6 +58,7 @@ namespace Inventory.WPF
             pantryCtl.Visibility = Visibility.Collapsed;
             recipeCtl.Visibility = Visibility.Visible;
             plannerCtl.Visibility = Visibility.Collapsed;
+            shoppingListCtl.Visibility = Visibility.Collapsed;
         }
 
         private void PlannerBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -61,13 +66,28 @@ namespace Inventory.WPF
             pantryCtl.Visibility = Visibility.Collapsed;
             recipeCtl.Visibility = Visibility.Collapsed;
             plannerCtl.Visibility = Visibility.Visible;
+            shoppingListCtl.Visibility = Visibility.Collapsed;
         }
 
+        private void ShoppingListBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            pantryCtl.Visibility = Visibility.Collapsed;
+            recipeCtl.Visibility = Visibility.Collapsed;
+            plannerCtl.Visibility = Visibility.Collapsed;
+            shoppingListCtl.Visibility = Visibility.Visible;
+        }
+        
         private void RandomBtn_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             pantryCtl.Visibility = Visibility.Collapsed;
             recipeCtl.Visibility = Visibility.Collapsed;
             plannerCtl.Visibility = Visibility.Collapsed;
+            shoppingListCtl.Visibility = Visibility.Collapsed;
+        }
+
+        private void Recipe_Planned(object sender, EventArgs eventArgs)
+        {
+            plannerCtl.refresh();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Inventory.Data.Interfaces
         List<RecipeModel> getRecipes(int Limit, int start, bool have);
         List<String> getAllTags();
         void SaveTag(String tag);
-        int SaveRecipe(string name, string description, string directions, string tagstring);
+        int SaveRecipe(RecipeModel recipeItem, bool isEdit);
         RecipeModel getRecipeItems(int rid);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
         List<RecipeModel> SearchRecipes(int Limit, int start, RecipeSearchCriteriaModel criteria);

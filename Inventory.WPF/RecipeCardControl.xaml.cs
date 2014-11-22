@@ -18,9 +18,18 @@ namespace Inventory.WPF
 {
     public partial class RecipeCardControl : UserControl
     {
+
+        public event RoutedEventHandler Click;
+
         public RecipeCardControl()
         {
             InitializeComponent();
+        }
+
+        void onButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (this.Click != null)
+                this.Click(this, e);
         }
     }
 }

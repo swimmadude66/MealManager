@@ -38,6 +38,8 @@ namespace Inventory.WPF
         {
             InitializeComponent();
             RecipeCombo.ItemsSource = getRecipes(-1, 0, false);
+
+            //RecipeCombo.ItemsSource = getRecipes();
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
             numWeeks = 6;
@@ -64,8 +66,6 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            //PlannerDatePicker.SelectedDate = DateTime.Today;
-            //RecipeCombo.SelectedIndex = -1;
             BuildCalendar(DateTime.Today, true);
         }
 
@@ -110,7 +110,7 @@ namespace Inventory.WPF
 
         private void changeView()
         {
-            bool newstuff;
+            //bool newstuff;
             if (numWeeks > 1)
             {
                 DayNames.Clear();
@@ -141,6 +141,11 @@ namespace Inventory.WPF
         {
             if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
                 planRecipe();
+        }
+        
+        public void refresh()
+        {
+            initSources();
         }
 
         private void BtnChangeView_Click(object sender, RoutedEventArgs e)

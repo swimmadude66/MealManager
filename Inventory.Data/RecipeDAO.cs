@@ -106,22 +106,38 @@ namespace Inventory.Data
             catch { throw; }
         }
 
-        public int SaveRecipe(string name, string description, string directions, string tagstring)
+        public int SaveRecipe(RecipeModel recipeItem, bool isEdit)
         {
             try
             {
                 using (var context = new InventoryEntities())
                 {
-                    Recipe r = new Recipe();
-                    r.Name = name;
-                    r.Description = description;
-                    r.Directions = directions;
-                    r.TagString = tagstring;
+                    if (isEdit)
+                    {
+                        Recipe item = (from r in context.Recipe
+                                       where r.ID == recipeItem.ID
+                                       select r).FirstOrDefault();
+                        item.Description = recipeItem.Description;
+                        item.Directions = recipeItem.Directions;
+                        item.TagString = recipeItem.Tags;
 
-                    context.Recipe.Add(r);
-                    context.SaveChanges();
+                        context.SaveChanges();
 
-                    return r.ID;
+                        return item.ID;
+                    }
+                    else
+                    {
+                        Recipe r = new Recipe();
+                        r.Name = recipeItem.Name;
+                        r.Description = recipeItem.Description;
+                        r.Directions = recipeItem.Directions;
+                        r.TagString = recipeItem.Tags;
+
+                        context.Recipe.Add(r);
+                        context.SaveChanges();
+
+                        return r.ID;
+                    }
                 }
             }
             catch
@@ -199,7 +215,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Name LIKE \"%" + criteria.Name + "%\"";
+                        searchquery += " Name LIKE '%" + criteria.Name + "%'";
                         numParams++;
                     }
                     //description
@@ -209,7 +225,7 @@ namespace Inventory.Data
                         {
                             searchquery += " AND";
                         }
-                        searchquery += " Description LIKE \"%" + criteria.Description + "%\"";
+                        searchquery += " Description LIKE '%" + criteria.Description + "%'";
                         numParams++;
                     }
                     //tags
@@ -221,7 +237,7 @@ namespace Inventory.Data
                             {
                                 searchquery += " AND";
                             }
-                            searchquery += " TagString LIKE \"%" + tag + "%\"";
+                            searchquery += " TagString LIKE '%" + tag + "%'";
                             numParams++;
                         }
                     }
@@ -238,7 +254,7 @@ namespace Inventory.Data
                     {
                         searchquery = filtwrapper + searchquery + ") as init";
 
-                        String ingredSearch = "(Select ingf.* From( ";
+                        String ingredSearch = "(Select ingf.* From ( ";
                         int ingredientcount = 0;
                         foreach (IngredientModel ing in criteria.Ingredients)
                         {

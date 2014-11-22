@@ -52,6 +52,11 @@ namespace Inventory.Managers
             return _measureDAO.getMeasures();
         }
 
+        public IngredientModel getIngredient(int ID)
+        {
+            return _ingredientDAO.GetIngredient(ID);
+        }
+
         public int getIngredientID(string name)
         {
             return _ingredientDAO.getIngredientID(name);
@@ -72,9 +77,9 @@ namespace Inventory.Managers
             _recipeDAO.SaveTag(tag);
         }
 
-        public int SaveRecipe(string name, string description, string directions, string tagstring)
+        public int SaveRecipe(RecipeModel recipeItem, bool isEdit)
         {
-            return _recipeDAO.SaveRecipe(name, description, directions, tagstring);
+            return _recipeDAO.SaveRecipe(recipeItem, isEdit);
         }
 
         public int SaveRecipeItem(int recipeid, TempRecipeItemModel model)
@@ -110,6 +115,11 @@ namespace Inventory.Managers
         {
             return _recipeDAO.getRecipeItems(rid);
         }
-       
+
+        public List<IngredientModel> GenerateShoppingList(DateTime? start, DateTime? end)
+        {
+            return _plannerDAO.GenerateShoppingList(start, end);
+        }
+
     }
 }

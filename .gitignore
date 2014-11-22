@@ -1,10 +1,9 @@
 *.suo
 */*/Debug/
 WebRecipeScraper/logs/
-test*
 temp_url.txt
 WebRecipeScraper/local/
 WebRecipeScraper/nohup.out
 allrecipes.csv
-
 */*/Release
+

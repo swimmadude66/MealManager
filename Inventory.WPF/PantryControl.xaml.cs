@@ -42,7 +42,7 @@ namespace Inventory.WPF
             ddlMeasure.ItemsSource = getMeasures();
             txtIngredientName.ItemsSource = getIngredients();
             txtIngredientName.SelectedIndex = -1;
-            ddlMeasure.SelectedIndex = 0;
+            ddlMeasure.SelectedIndex = -1;
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -83,11 +83,10 @@ namespace Inventory.WPF
             lblAddEditHeader.Content = "Add a new panty item";
             txtIngredientName.Text = "";
             txtIngredientDescription.Text = "";
-            txtQuantity.Text = "";
+            txtQuantity.Text = "0";
             ddlMeasure.SelectedIndex = 0;
             dpExpires.SelectedDate = null;
             itemToEdit = null;
-            //pantryGrid.SelectedIndex = -1;
         }
 
         private void editRow(object sender, MouseButtonEventArgs e)
@@ -243,29 +242,43 @@ namespace Inventory.WPF
             StackPanel pantryItemPanel = (StackPanel)pantryItemGrid.Children[1];
             TextBox quantityTextBox = (TextBox)pantryEditItemPanel.FindName("QuantityTextBox");
             pantryItemModel.StringQuantity = quantityTextBox.Text.Trim();
-            double quant = Tools.ToolBox.FractionToDecimal(pantryItemModel.StringQuantity); 
+            double quant = Tools.ToolBox.FractionToDecimal(pantryItemModel.StringQuantity);
+
             ComboBox measureComboBox = (ComboBox)pantryEditItemPanel.FindName("MeasureComboBox");
             String measureName = ((MeasureModel)measureComboBox.SelectedItem).Name.Trim();
-            pantryItemModel.MeasureId = getMeasureID(measureName);
+            
             ComboBox ingredientComboBox = (ComboBox)pantryEditItemPanel.FindName("IngredientComboBox");
             String ingredientName = ((IngredientModel)ingredientComboBox.SelectedItem).Name.Trim();
-            pantryItemModel.IngredientId = getIngredientId(ingredientName);
+            
             TextBox descriptionTextBox = (TextBox)pantryEditItemPanel.FindName("DescriptionTextBox");
-            pantryItemModel.Description = descriptionTextBox.Text.Trim();
-            DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
-            pantryItemModel.ExpirationDate = expirationDatePicker.SelectedDate;
+            String desctext = descriptionTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(descriptionTextBox.Text.Trim()) || string.IsNullOrWhiteSpace(measureName) || quant <= (1.0 / 64.0))
+            DatePicker expirationDatePicker = (DatePicker)pantryEditItemPanel.FindName("ExpirationDatePicker");
+            DateTime? expires = expirationDatePicker.SelectedDate;
+
+            pantryItemPanel.Visibility = Visibility.Visible;
+            pantryEditItemPanel.Visibility = Visibility.Collapsed;
+
+            if ((pantryItemModel.Quantity == quant) && (pantryItemModel.Measure.Name.Equals(measureName)) && (pantryItemModel.Ingredient.Name.Equals(ingredientName)))
+            {
+                if ((pantryItemModel.Description.Equals(desctext)) && (pantryItemModel.ExpirationDate.Equals(expires)))
+                {
+                    return;
+                }
+            }
+
+            if (descriptionTextBox.Text.Trim() == null || string.IsNullOrWhiteSpace(measureName) || quant <= (1.0 / 64.0))
                 return;
 
+            pantryItemModel.MeasureId = getMeasureID(measureName);
+            pantryItemModel.IngredientId = getIngredientId(ingredientName);
+            pantryItemModel.Description = desctext;
+            pantryItemModel.ExpirationDate = expires;
 
             IPantryManager manager = ManagerFactory.GetPantryManager();
             manager.SavePantryItem(pantryItemModel, true);
 
             initSources();
-
-            pantryItemPanel.Visibility = Visibility.Visible;
-            pantryEditItemPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
