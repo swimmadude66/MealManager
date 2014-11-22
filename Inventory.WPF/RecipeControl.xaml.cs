@@ -25,10 +25,13 @@ namespace Inventory.WPF
     public partial class RecipeControl : UserControl
     {
 
+        public event EventHandler RecipePlanned;
+
         public String instructions;
         private List<TempRecipeItemModel> recipeItems;
         private List<String> newtags;
         private List<IngredientModel> searchingredients;
+        public bool isEditting { get; set; }
 
         public RecipeControl()
         {
@@ -62,6 +65,8 @@ namespace Inventory.WPF
             cbTags.ItemsSource = getAllTags();
             cbTags.SelectedIndex = -1;
             cbTags.Text = "";
+
+            
         }
 
         private void clearAddRecipe()
@@ -76,6 +81,17 @@ namespace Inventory.WPF
             recipeItems.Clear();
             instructions = "";
             newtags.Clear();
+        }
+
+        public bool isValidMealDate(DateTime? mealDate)
+        {
+            DateTime? testedDateTime = mealDate;
+
+            if (testedDateTime != null && testedDateTime.HasValue && (testedDateTime.Value.CompareTo(System.DateTime.Today) >= 0))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void btnSearchAddIngredient_Click(object sender, RoutedEventArgs e)
@@ -185,6 +201,218 @@ namespace Inventory.WPF
             }
         }
 
+        private void RecipeCardViewBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeCardControl recipeViewBtn = (RecipeCardControl)sender;
+            RecipeModel recipeModel = (RecipeModel)recipeViewBtn.DataContext;
+            RecipeDetailMenu.DataContext = recipeModel;
+            RecipeDetailName.Text = recipeModel.Name.Trim();
+            DescriptionTxt.Text = recipeModel.Description.Trim();
+            DirectionsTxt.Text = recipeModel.Directions.Trim();
+
+            IngredientsListCtl.ItemsSource = recipeModel.Items;
+            
+            TagsTxt.Text = recipeModel.Tags;
+
+            MainRecipesMenu.Visibility = Visibility.Collapsed;
+            RecipeDetailMenu.Visibility = Visibility.Visible;
+        }
+
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainRecipesMenu.Visibility = Visibility.Visible;
+            RecipeDetailMenu.Visibility = Visibility.Collapsed;
+
+            RecipeDetailNameBox.Visibility = Visibility.Collapsed;
+            RecipeDetailName.Visibility = Visibility.Visible;
+            //RecipeDetailNameBox.Text = RecipeDetailName.Text;
+
+            EditBtn.Visibility = Visibility.Visible;
+            PlanRecipeBtn.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Collapsed;
+
+            DescriptionBox.Visibility = Visibility.Collapsed;
+            DescriptionTxt.Visibility = Visibility.Visible;
+
+            DirectionsBox.Visibility = Visibility.Collapsed;
+            DirectionsTxt.Visibility = Visibility.Visible;
+
+            if (PlannerGrid.Visibility == Visibility.Visible)
+            {
+                RecipeScrollView.Height += 200;
+                PlannerGrid.Visibility = Visibility.Collapsed;
+            }
+
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeModel recipeModel = (RecipeModel)RecipeDetailMenu.DataContext;
+
+            RecipeDetailName.Visibility = Visibility.Collapsed;
+            RecipeDetailNameBox.Visibility = Visibility.Visible;
+            RecipeDetailNameBox.Text = RecipeDetailName.Text;
+
+            EditBtn.Visibility = Visibility.Collapsed;
+            PlanRecipeBtn.Visibility = Visibility.Collapsed;
+            DoneBtn.Visibility = Visibility.Visible;
+
+            DescriptionTxt.Visibility = Visibility.Collapsed;
+            DescriptionBox.Visibility = Visibility.Visible;
+            DescriptionBox.Text = DescriptionTxt.Text;
+
+            DirectionsTxt.Visibility = Visibility.Collapsed;
+            DirectionsBox.Visibility = Visibility.Visible;
+            DirectionsBox.Text = DirectionsTxt.Text;
+
+            //ContentPresenter contentPresenter;
+            //RecipeItemModel recipeItemModel;
+            //DataTemplate dataTemplate;
+            //Grid ingredientsGrid;
+            //StackPanel ingredientStack;
+            //StackPanel ingredientStackEdit;
+            //TextBox quantTextBox;
+            //ComboBox measureComboBox;
+            //ComboBox ingredientComboBox;
+            //for (int i = 0; i < IngredientsListCtl.Items.Count; i++)
+            //{
+            //    recipeItemModel = (RecipeItemModel)IngredientsListCtl.Items[i];
+            //    contentPresenter = (ContentPresenter)IngredientsListCtl.ItemContainerGenerator.ContainerFromIndex(i);
+            //    dataTemplate = (DataTemplate)contentPresenter.ContentTemplate;
+            //    ingredientsGrid = (Grid)(dataTemplate.FindName("IngredientsGrid",contentPresenter));
+            //    ingredientStack = (StackPanel)ingredientsGrid.Children[0];
+            //    ingredientStackEdit = (StackPanel)ingredientsGrid.Children[1];
+            //    quantTextBox = (TextBox)ingredientStackEdit.FindName("QuantityTextBox");
+            //    quantTextBox.Text = recipeItemModel.Quantity.ToString();
+            //    measureComboBox = (ComboBox)ingredientStackEdit.FindName("MeasureComboBox");
+            //    measureComboBox.ItemsSource = cbMeasure.ItemsSource;
+            //    measureComboBox.Text = recipeItemModel.Measure.Name.ToString();
+            //    ingredientComboBox = (ComboBox)ingredientStackEdit.FindName("IngredientComboBox");
+            //    ingredientComboBox.ItemsSource = txtIngredient.ItemsSource;
+            //    ingredientComboBox.Text = recipeItemModel.Ingredient.Name.ToString();
+            //    ingredientStack.Visibility = Visibility.Collapsed;
+            //    ingredientStackEdit.Visibility = Visibility.Visible;
+            //}
+            
+            //IngredientsListCtl
+            //TagsTxt.Visibility = Visibility.Collapsed;
+            //TagsBox.Visibility = Visibility.Visible;
+            //TagsBox.Text = TagsTxt.Text;
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            Button applyBtn = (Button)sender;
+            RecipeModel recipeModel = (RecipeModel)RecipeDetailMenu.DataContext;
+
+            //ContentPresenter contentPresenter;
+            //RecipeItemModel recipeItemModel;
+            //DataTemplate dataTemplate;
+            //Grid ingredientsGrid;
+            //StackPanel ingredientStack;
+            //StackPanel ingredientStackEdit;
+            //TextBox quantTextBox;
+            //ComboBox measureComboBox;
+            //ComboBox ingredientComboBox;
+            //double quant;
+
+            //for (int i = 0; i < IngredientsListCtl.Items.Count; i++)
+            //{
+            //    recipeItemModel = (RecipeItemModel)IngredientsListCtl.Items[i];
+            //    contentPresenter = (ContentPresenter)IngredientsListCtl.ItemContainerGenerator.ContainerFromIndex(i);
+            //    dataTemplate = (DataTemplate)contentPresenter.ContentTemplate;
+            //    ingredientsGrid = (Grid)(dataTemplate.FindName("IngredientsGrid", contentPresenter));
+            //    ingredientStack = (StackPanel)ingredientsGrid.Children[0];
+            //    ingredientStackEdit = (StackPanel)ingredientsGrid.Children[1];
+            //    quantTextBox = (TextBox)ingredientStackEdit.FindName("QuantityTextBox");
+            //    quant = Tools.ToolBox.FractionToDecimal(quantTextBox.Text.Trim()); 
+            //    measureComboBox = (ComboBox)ingredientStackEdit.FindName("MeasureComboBox");
+            //    ingredientComboBox = (ComboBox)ingredientStackEdit.FindName("IngredientComboBox");
+
+            //    if (string.IsNullOrWhiteSpace(ingredientComboBox.Text.ToString()) || measureComboBox.Text.ToString() == null || quant <= (1.0 / 64.0))
+            //        return;
+
+            //    //recipeModel.Items[i] = recipeItemModel;
+            //}
+
+            if (string.IsNullOrWhiteSpace(DescriptionBox.Text.ToString()) || string.IsNullOrWhiteSpace(DirectionsBox.Text.ToString()))
+                return;
+
+            recipeModel.Description = DescriptionBox.Text.ToString();
+            recipeModel.Directions = DirectionsBox.Text.ToString();
+
+            IRecipeManager recipeManager = ManagerFactory.GetRecipeManager();
+
+            //TempRecipeItemModel tempRecipeItemModel;
+
+            //for (int i = 0; i < IngredientsListCtl.Items.Count; i++)
+            //{
+            //    recipeItemModel = (RecipeItemModel)IngredientsListCtl.Items[i];
+            //    contentPresenter = (ContentPresenter)IngredientsListCtl.ItemContainerGenerator.ContainerFromIndex(i);
+            //    dataTemplate = (DataTemplate)contentPresenter.ContentTemplate;
+            //    ingredientsGrid = (Grid)(dataTemplate.FindName("IngredientsGrid", contentPresenter));
+            //    ingredientStack = (StackPanel)ingredientsGrid.Children[0];
+            //    ingredientStackEdit = (StackPanel)ingredientsGrid.Children[1];
+            //    quantTextBox = (TextBox)ingredientStackEdit.FindName("QuantityTextBox");
+            //    quant = Tools.ToolBox.FractionToDecimal(quantTextBox.Text.Trim());
+            //    measureComboBox = (ComboBox)ingredientStackEdit.FindName("MeasureComboBox");
+            //    ingredientComboBox = (ComboBox)ingredientStackEdit.FindName("IngredientComboBox");
+
+            //    tempRecipeItemModel = new TempRecipeItemModel(ingredientComboBox.Text.ToString(), quant, measureComboBox.Text.ToString());
+            //    tempRecipeItemModel.Description = "";
+            //    tempRecipeItemModel.IngredientID = getIngredientId(ingredientComboBox.Text.ToString());
+            //    tempRecipeItemModel.MeasureID = getMeasureID(measureComboBox.Text.ToString());
+            //    recipeManager.SaveRecipeItem(recipeModel.ID, tempRecipeItemModel);
+
+            //    ingredientStack.Visibility = Visibility.Visible;
+            //    ingredientStackEdit.Visibility = Visibility.Collapsed;
+            //}
+
+            
+            recipeManager.SaveRecipe(recipeModel, true);
+            initSources();
+
+            RecipeDetailNameBox.Visibility = Visibility.Collapsed;
+            RecipeDetailName.Visibility = Visibility.Visible;
+            RecipeDetailName.Text = RecipeDetailNameBox.Text;
+
+            EditBtn.Visibility = Visibility.Visible;
+            PlanRecipeBtn.Visibility = Visibility.Visible;
+            DoneBtn.Visibility = Visibility.Collapsed;
+
+            DescriptionBox.Visibility = Visibility.Collapsed;
+            DescriptionTxt.Visibility = Visibility.Visible;
+            DescriptionTxt.Text =  DescriptionBox.Text;
+
+            DirectionsBox.Visibility = Visibility.Collapsed;
+            DirectionsTxt.Visibility = Visibility.Visible;
+            DirectionsTxt.Text =  DirectionsBox.Text;
+        }
+
+        private void Plan_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlannerGrid.Visibility == Visibility.Collapsed)
+            {
+                RecipeScrollView.Height -= 200;
+                PlannerGrid.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnCancelPlannedRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlannerGrid.Visibility == Visibility.Visible)
+            {
+                RecipeScrollView.Height += 200;
+                PlannerGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (isValidMealDate(PlannerDatePicker.SelectedDate))
+                planRecipe();
+        }
+
         private bool AddIngredient()
         {
             string ingredient = "";
@@ -245,12 +473,14 @@ namespace Inventory.WPF
 
         private void SaveRecipe()
         {
-            string name = txtName.Text.Trim();
-            string descrip = txtDescription.Text.Trim();
-            string directions = txtDirections.Text.Trim();
-            string tagstring = txtTags.Text.Trim();
+            RecipeModel recipeItem = new RecipeModel();
+
+            recipeItem.Name = txtName.Text.Trim();
+            recipeItem.Description = txtDescription.Text.Trim();
+            recipeItem.Directions = txtDirections.Text.Trim();
+            recipeItem.Tags = txtTags.Text.Trim();
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            int rid = manager.SaveRecipe(name, descrip, directions, tagstring);
+            int rid = manager.SaveRecipe(recipeItem, false);
             foreach (String s in newtags)
             {
                 manager.SaveTag(s.Substring(0,1).ToUpper() + s.Substring(1).ToLower());
@@ -263,6 +493,19 @@ namespace Inventory.WPF
             }
 
 
+        }
+
+        private void planRecipe()
+        {
+            DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
+            RecipeModel plannerItemRecipe = (RecipeModel)RecipeDetailMenu.DataContext;
+            PlannerItemModel model = new PlannerItemModel();
+            model.Date = plannerItemDate;
+            model.Recipe = plannerItemRecipe;
+            savePlan(model, false);
+            if(RecipePlanned != null)
+                RecipePlanned(this, EventArgs.Empty);
+            initSources();
         }
 
         private int getIngredientId(String name)
@@ -312,19 +555,16 @@ namespace Inventory.WPF
             return manager.getAllTags();
         }
 
+        private int savePlan(PlannerItemModel model, bool isEdit)
+        {
+            IRecipeManager manager = ManagerFactory.GetRecipeManager();
+            return manager.PlanRecipe(model, isEdit);
+        }
+
         private List<RecipeModel> searchRecipes(RecipeSearchCriteriaModel criteria)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.SearchRecipes(criteria);
         }
-
-        
-
-        
-
-       
-
-       
-       
     }
 }

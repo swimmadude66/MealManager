@@ -8,11 +8,11 @@
              x:Class="Inventory.WPF.PlannerControl" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1100" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Grid Background="#B1C7B6">
-        <Grid x:Name="CalendarGrid" Height="800" ShowGridLines="False" >
-            <TextBlock x:Name="txtYear" FontSize="44" VerticalAlignment="Top" FontWeight="SemiBold"/>
-            <DockPanel Margin="0,60,0,230" Grid.ColumnSpan="2" x:Name="dpCalendar">
+             d:DesignHeight="800" d:DesignWidth="1200">
+    <!--<Grid >-->
+    <Canvas x:Name="CalendarGrid" Height="800" Background="#B1C7B6">
+            <TextBlock x:Name="txtPageTitle" FontSize="70" VerticalAlignment="Top" Text="Planner" Canvas.Left="25"/>
+            <DockPanel Canvas.Top="125" Canvas.Left="25" Grid.ColumnSpan="2" x:Name="dpCalendar" Width="1150" Height="575">
                 <ItemsControl x:Name="icDayNames" ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -117,9 +117,9 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </DockPanel>
-        </Grid>
+        </Canvas>
 
-        <Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="220" Margin="10,630,0,10" Width="1090">
+        <!--<Grid x:Name="MainPlannerGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" Height="220" Margin="10,630,0,10" Width="1090">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="27*"/>
                 <ColumnDefinition Width="17*"/>
@@ -131,7 +131,7 @@
             <DatePicker x:Name="PlannerDatePicker" HorizontalAlignment="Left" Margin="451,68,0,0" VerticalAlignment="Top" Width="208"/>
             <Label Content="Meal Date" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.336,25.192" Margin="362,67,0,0"/>
             <Button x:Name="btnChangeView" Content="Change View Mode" HorizontalAlignment="Left" Margin="24,69,0,0" VerticalAlignment="Top" Width="157" Click="BtnChangeView_Click"/>
-        </Grid>
-    </Grid>
+        </Grid>-->
+    <!--</Grid>-->
 
 </UserControl>
