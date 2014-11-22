@@ -115,6 +115,11 @@ namespace Inventory.Managers
         {
             return _recipeDAO.getRecipeItems(rid);
         }
-       
+
+        public List<IngredientModel> GenerateShoppingList(DateTime? start, DateTime? end)
+        {
+            return _plannerDAO.GenerateShoppingList(start, end);
+        }
+
     }
 }

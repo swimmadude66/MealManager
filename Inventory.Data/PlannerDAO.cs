@@ -114,5 +114,39 @@ namespace Inventory.Data
             }
             catch { throw; }
         }
+
+        public List<IngredientModel> GenerateShoppingList(DateTime? start, DateTime? end)
+        {
+            try
+            {
+                using (var context = new InventoryEntities())
+                {
+                    List<Ingredient> shopList = new List<Ingredient>();
+                    String startQuery = "Select * From Ingredient Join (Select need.IngredientID From PantryItem Right Join (Select Distinct IngredientID From RecipeItem Join "+
+                                    "(Select RecipeID From PlannedRecipe Where Active = 1 ";
+
+                    String endquery = ") as planned On planned.RecipeID = RecipeItem.RecipeID) as need "+
+                                    "On PantryItem.IngredientID = need.IngredientID Where PantryItem.IngredientID is NULL) as list on list.IngredientID = Ingredient.ID";
+                    String startfilt = "";
+                    String endfilt = "";
+                    if(start != null){
+                        startfilt = "And Date >= '" + start.Value.Year +"-" + start.Value.Month +"-" + start.Value.Day + "'";
+                    }
+                    if(end != null){
+                        endfilt = "And Date < '" + end.Value.Year +"-" + end.Value.Month +"-" + end.Value.Day + "'";
+                    }
+
+                    String query = startQuery + startfilt + endfilt + endquery;
+                    shopList = context.Ingredient.SqlQuery(query).ToList();
+
+                    return Mappers.IngredientMapper.BindItems(shopList);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }

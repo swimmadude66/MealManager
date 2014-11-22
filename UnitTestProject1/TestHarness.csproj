@@ -63,6 +63,7 @@
     <Compile Include="TestSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestPanty.cs" />
+    <Compile Include="TestShoppingList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Inventory.Data.Factory\Inventory.Data.Factory.csproj">
