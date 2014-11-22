@@ -63,12 +63,24 @@
                         </Grid>
                     </Button>
                     <!--<Separator Height="1"></Separator>-->
+                    <Button x:Name="ShoppingListBtn" Height="75" Style="{StaticResource greenButton}" PreviewMouseLeftButtonUp="ShoppingListBtn_PreviewMouseLeftButtonUp">
+                        <Grid VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="cart.png" VerticalAlignment="Center" Margin="15 12 15 12"/>
+                            <TextBlock Text="Shopping List" Grid.Column="1"  VerticalAlignment="Center" Width="120" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+                    <!--<Separator Height="1"></Separator>-->
                 </StackPanel>
             </Grid>
             <Grid Margin="200,0,0,0" >
                 <local:PantryControl x:Name="pantryCtl" Visibility="Visible"/>
                 <local:RecipeControl x:Name="recipeCtl" Visibility="Collapsed"/>
                 <local:PlannerControl x:Name="plannerCtl" Visibility="Collapsed"/>
+                <local:ShoppingListControl x:Name="shoppingListCtl" Visibility="Collapsed"/>
             </Grid>
         </Grid>
     </Viewbox>

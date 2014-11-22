@@ -111,7 +111,6 @@ namespace Inventory.WPF
 
         private void changeView()
         {
-            bool newstuff;
             if (numWeeks > 1)
             {
                 DayNames.Clear();

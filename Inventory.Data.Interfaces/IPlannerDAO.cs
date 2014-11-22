@@ -12,5 +12,6 @@ namespace Inventory.Data.Interfaces
         int PlanRecipe(PlannerItemModel model, bool isEdit);
         List<PlannerItemModel> GetPlannedRecipes(DateTime? start, DateTime? end);
         void cancelPlan(int id);
+        List<IngredientModel> GenerateShoppingList(DateTime? start, DateTime? end);
     }
 }

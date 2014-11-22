@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Inventory.Models;
 
-namespace Inventory.Data
+namespace Inventory.Data.Mappers
 {
     public static class IngredientMapper
     {
