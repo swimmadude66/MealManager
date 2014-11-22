@@ -64,8 +64,6 @@ namespace Inventory.WPF
 
         private void initSources()
         {
-            //PlannerDatePicker.SelectedDate = DateTime.Today;
-            //RecipeCombo.SelectedIndex = -1;
             BuildCalendar(DateTime.Today, true);
         }
 
@@ -141,11 +139,7 @@ namespace Inventory.WPF
         {
             initSources();
         }
-        //public void btnSubmit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
-        //        planRecipe();
-        //}
+
 
         private void BtnChangeView_Click(object sender, RoutedEventArgs e)
         {
@@ -175,23 +169,12 @@ namespace Inventory.WPF
             return false;
         }
 
-        //private void planRecipe()
-        //{
-        //    DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
-        //    RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
-        //    PlannerItemModel model = new PlannerItemModel();
-        //    model.Date = plannerItemDate;
-        //    model.Recipe = plannerItemRecipe;
-        //    savePlan(model, false);
-        //    initSources();
-        //}
-
         //Domain Calls
 
-        private List<RecipeModel> getRecipes()
+        private List<RecipeModel> getRecipes(int Limit, int start, bool have)
         {
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
-            return manager.getRecipes();
+            return manager.getRecipes(Limit, start, have);
         }
 
         private List<PlannerItemModel> getPlannerItems(DateTime? start, DateTime? end)

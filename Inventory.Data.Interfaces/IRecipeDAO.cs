@@ -9,12 +9,12 @@ namespace Inventory.Data.Interfaces
 {
     public interface IRecipeDAO
     {
-        List<RecipeModel> getRecipes();
+        List<RecipeModel> getRecipes(int Limit, int size, bool have);
         List<String> getAllTags();
         void SaveTag(String tag);
         int SaveRecipe(RecipeModel recipeItem, bool isEdit);
-        List<RecipeItemModel> getRecipeItems(int rid);
+        RecipeModel getRecipeItems(int rid);
         int SaveRecipeItem(int recipeid, TempRecipeItemModel model);
-        List<RecipeModel> SearchRecipes(RecipeSearchCriteriaModel criteria);
+        List<RecipeModel> SearchRecipes(int Limit, int size, RecipeSearchCriteriaModel criteria);
     }
 }
