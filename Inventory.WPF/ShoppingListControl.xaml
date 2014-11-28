@@ -6,16 +6,30 @@
       xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
       x:Class="Inventory.WPF.ShoppingListControl" 
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1100">
+      d:DesignHeight="800" d:DesignWidth="1200">
 
     <Grid>
         <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGray">
             <Label Content="Shopping List" Canvas.Left="10" Canvas.Top="10" Height="72" Width="216" FontSize="32"/>
-            <DataGrid x:Name="listGrid" ItemsSource="{Binding shoppingList}" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
+            <!--<DataGrid x:Name="listGrid" ItemsSource="{Binding shoppingList}" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
                 </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
+            <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="10,140,0,10" Width="1180" Height="660">
+                <ItemsControl x:Name="shoppingListCtl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,0" Height="50">
+                                <Button Margin="0,0,0,0" Style="{StaticResource greenPanelButton}" Background="#FF216A16" HorizontalAlignment="Stretch"/>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                                    <TextBlock Text="{Binding Name}" Foreground="White" Padding="5,0,5,0" Width="200"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <DatePicker Name="fromPicker" SelectedDate="{Binding fromDate}" Height="26" Canvas.Left="74" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
             <DatePicker Name="untilPicker" SelectedDate="{Binding untilDate}" Height="26" Canvas.Left="312" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
             <Label Content="From:" Height="26" Canvas.Left="27" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
