@@ -9,7 +9,7 @@
       d:DesignHeight="800" d:DesignWidth="1200">
 
     <Grid>
-        <Canvas x:Name="listPanel" Visibility="Visible" Background="LightGray">
+        <Canvas x:Name="listPanel" Visibility="Visible">
             <Label Content="Shopping List" Canvas.Left="10" Canvas.Top="10" Height="72" Width="216" FontSize="32"/>
             <!--<DataGrid x:Name="listGrid" ItemsSource="{Binding shoppingList}" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
