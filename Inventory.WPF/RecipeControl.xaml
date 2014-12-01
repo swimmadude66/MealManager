@@ -8,28 +8,30 @@
       x:Class="Inventory.WPF.RecipeControl" 
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200">
-
     <Grid>
         <Grid x:Name="MainRecipesMenu">
             <Canvas x:Name="listPanel" Visibility="Visible" Background="#B1C7B6">
                 <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="125" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
-                    <ItemsControl x:Name="recipeCardGrid" >
-                        <ItemsControl.ItemContainerStyle>
-                            <Style>
-                                <Setter Property="FrameworkElement.Margin" Value="5"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="2" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:RecipeCardControl HorizontalContentAlignment="Stretch" Padding="0 0 0 10" Height="255" Click="RecipeCardViewBtn_Click"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <StackPanel x:Name="stackPanelRecipes">
+                        <ItemsControl x:Name="recipeCardGrid" ItemsSource="{Binding recipes}">
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.Margin" Value="5"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="2" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:RecipeCardControl HorizontalContentAlignment="Stretch" Padding="0 0 0 10" Height="255" Click="RecipeCardViewBtn_Click"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button x:Name="btnLoadMore" Content="Load 50 more" Height="25" Click="btnLoadMoreRecipes_Click" Visibility="Hidden"/>
+                    </StackPanel>
                 </ScrollViewer>
 
                 <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Top="701" Width="1200"/>
@@ -44,8 +46,9 @@
                 <Label Content="Description" Canvas.Left="768" Canvas.Top="25"/>
                 <Label Content="Ingredients" Canvas.Left="651" Canvas.Top="75"/>
                 <Button x:Name="btnClearSearch" Content="Clear" Canvas.Left="1089" Canvas.Top="75" Width="75" Click="btnClearSearch_Click"/>
-                <RadioButton x:Name="rbViewHave" Content="Have" Canvas.Left="478" Canvas.Top="62" GroupName="View" IsChecked="True"/>
-                <RadioButton x:Name="rbViewAll" Content="All" Canvas.Left="478" Canvas.Top="88" GroupName="View" IsChecked="False"/>
+                <RadioButton x:Name="rbViewAll" Content="All" Canvas.Left="480" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="True" GroupName="View"/>
+                <RadioButton x:Name="rbViewHave" Content="Have" Canvas.Left="520" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="False" GroupName="View"/>
+
             </Canvas>
             <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">
                 <Image  HorizontalAlignment="Left" Height="224" VerticalAlignment="Top" Width="500" Canvas.Left="50" Canvas.Top="50"/>

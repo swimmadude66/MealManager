@@ -37,6 +37,8 @@ namespace Inventory.WPF
         public PlannerControl()
         {
             InitializeComponent();
+            RecipeCombo.ItemsSource = getRecipes(-1, 0, false);
+
             //RecipeCombo.ItemsSource = getRecipes();
             DayNames = new ObservableCollection<string>();
             Days = new ObservableCollection<Day>();
@@ -135,11 +137,16 @@ namespace Inventory.WPF
             return Convert.ToInt32(dow.ToString("D"));
         }
 
+        public void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (isValidMealDate(PlannerDatePicker.SelectedDate) && RecipeCombo.SelectedIndex >=0)
+                planRecipe();
+        }
+        
         public void refresh()
         {
             initSources();
         }
-
 
         private void BtnChangeView_Click(object sender, RoutedEventArgs e)
         {
@@ -167,6 +174,17 @@ namespace Inventory.WPF
                 return true;
             }
             return false;
+        }
+
+        private void planRecipe()
+        {
+            DateTime plannerItemDate = (DateTime)PlannerDatePicker.SelectedDate;
+            RecipeModel plannerItemRecipe = (RecipeModel)RecipeCombo.SelectedItem;
+            PlannerItemModel model = new PlannerItemModel();
+            model.Date = plannerItemDate;
+            model.Recipe = plannerItemRecipe;
+            savePlan(model, false);
+            initSources();
         }
 
         //Domain Calls

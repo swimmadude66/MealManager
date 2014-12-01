@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace Inventory.WPF
 {
-    /// <summary>
-    /// Interaction logic for UserControl1.xaml
-    /// </summary>
     public partial class RecipeCardControl : UserControl
     {
 
@@ -27,8 +24,6 @@ namespace Inventory.WPF
         public RecipeCardControl()
         {
             InitializeComponent();
-            //lblTitle.Content = recipeItem.
-            //lblDescription.Content = recipeItem.Description;
         }
 
         void onButtonClick(object sender, RoutedEventArgs e)
