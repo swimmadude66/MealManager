@@ -29,7 +29,7 @@ namespace Inventory.WPF
         {
             InitializeComponent();
             shoppingList = getShoppingList(DateTime.Today, DateTime.Today.AddDays(7));
-            listGrid.ItemsSource = shoppingList;
+            shoppingListCtl.ItemsSource = shoppingList;
         }
 
         public void DoComparison(object sender, RoutedEventArgs e)
@@ -37,7 +37,7 @@ namespace Inventory.WPF
             DateTime? fromDate = fromPicker.SelectedDate;
             DateTime? untilDate = untilPicker.SelectedDate;
             shoppingList = getShoppingList(fromDate, untilDate);
-            listGrid.ItemsSource = shoppingList;
+            shoppingListCtl.ItemsSource = shoppingList;
         }
 
 

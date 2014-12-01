@@ -272,6 +272,7 @@ namespace Inventory.WPF
 
             pantryItemModel.MeasureId = getMeasureID(measureName);
             pantryItemModel.IngredientId = getIngredientId(ingredientName);
+            pantryItemModel.Quantity = quant;
             pantryItemModel.Description = desctext;
             pantryItemModel.ExpirationDate = expires;
 
