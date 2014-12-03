@@ -8,33 +8,33 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200">
 
-    <Grid>
+    <Grid Background="#B1C7B6">
         <Canvas x:Name="listPanel" Visibility="Visible">
-            <Label Content="Shopping List" Canvas.Left="10" Canvas.Top="10" Height="72" Width="216" FontSize="32"/>
+            <TextBlock Text="Shopping List" Canvas.Left="25" FontSize="70" />
             <!--<DataGrid x:Name="listGrid" ItemsSource="{Binding shoppingList}" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1100" Height="547" VerticalAlignment="Top" Canvas.Top="154" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" Width="185"/>
                 </DataGrid.Columns>
             </DataGrid>-->
-            <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="10,140,0,10" Width="1180" Height="660">
-                <ItemsControl x:Name="shoppingListCtl">
+            <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="125" Width="1200" Height="660">
+                <ItemsControl x:Name="shoppingListCtl" Width="1200" Padding="50,0,50,0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="0,0,0,0" Height="50">
+                            <Grid Margin="0,0,0,2" Height="50" Width="1100">
                                 <Button Margin="0,0,0,0" Style="{StaticResource greenPanelButton}" Background="#FF216A16" HorizontalAlignment="Stretch"/>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
-                                    <TextBlock Text="{Binding Name}" Foreground="White" Padding="5,0,5,0" Width="200"/>
+                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="28" Padding="25,0,5,0" Width="400"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <DatePicker x:Name="dpfrom" Height="26" Canvas.Left="74" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
-            <DatePicker x:Name="dpuntil" Height="26" Canvas.Left="312" Canvas.Top="87" Width="152" RenderTransformOrigin="-0.171,0.308"/>
-            <Label Content="From:" Height="26" Canvas.Left="27" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
-            <Label Content="Until:" Height="26" Canvas.Left="265" Canvas.Top="87" Width="42" RenderTransformOrigin="0.69,0.462"/>
-            <Button Click="btn_compare_clicked" Content="Generate List" Height="28" Canvas.Left="506" Canvas.Top="85" Width="102"/>
+            <DatePicker x:Name="dpfrom" SelectedDate="{Binding fromDate}" Height="26" Canvas.Left="700" Canvas.Top="25" Width="175" />
+            <DatePicker x:Name="dpuntil" SelectedDate="{Binding untilDate}" Height="26" Canvas.Left="700" Canvas.Top="75" Width="175" />
+            <Label Content="From:" Height="25" Canvas.Left="650" Canvas.Top="25" Width="42" />
+            <Label Content="Until:" Height="25" Canvas.Left="650" Canvas.Top="75" Width="42" />
+            <Button Click="btn_compare_click" Content="Compare" Style="{StaticResource smallGreenButton}" Height="25" Canvas.Left="950" Canvas.Top="50"  Width="100"/>
 
         </Canvas>
         <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">

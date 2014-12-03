@@ -108,6 +108,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddRecipeControl.xaml.cs">
+      <DependentUpon>AddRecipeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlannerControl.xaml.cs">
       <DependentUpon>PlannerControl.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
     <Compile Include="ShoppingListControl.xaml.cs">
       <DependentUpon>ShoppingListControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddRecipeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

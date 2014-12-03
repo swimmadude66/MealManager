@@ -12,7 +12,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">
+                        <!--<Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">-->
+                        <Border Name="ButtonBorder" BorderBrush="{x:Null}" Background="#056C1C">
                             <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -37,8 +38,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">
-                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <!--<Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">-->
+                        <Border Name="ButtonBorder" BorderBrush="{x:Null}" Background="#056C1C">
+                                <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -62,7 +64,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">
+                        <!--<Border Name="ButtonBorder" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1" Background="#056C1C">-->
+                        <Border Name="ButtonBorder" BorderBrush="{x:Null}" Background="#056C1C">
                             <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
