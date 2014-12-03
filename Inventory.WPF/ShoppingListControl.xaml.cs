@@ -28,18 +28,23 @@ namespace Inventory.WPF
         public ShoppingListControl()
         {
             InitializeComponent();
-            shoppingList = getShoppingList(DateTime.Today, DateTime.Today.AddDays(7));
-            shoppingListCtl.ItemsSource = shoppingList;
+            dpfrom.SelectedDate = DateTime.Today;
+            dpuntil.SelectedDate = DateTime.Today.AddDays(7);
+            DoComparison();
         }
 
-        public void DoComparison(object sender, RoutedEventArgs e)
+        public void DoComparison()
         { 
-            DateTime? fromDate = fromPicker.SelectedDate;
-            DateTime? untilDate = untilPicker.SelectedDate;
+            DateTime? fromDate = dpfrom.SelectedDate;
+            DateTime? untilDate = dpuntil.SelectedDate;
             shoppingList = getShoppingList(fromDate, untilDate);
             shoppingListCtl.ItemsSource = shoppingList;
         }
 
+        private void btn_compare_clicked(object sender, RoutedEventArgs e)
+        {
+            DoComparison();
+        }
 
         //Domain Calls
         public List<IngredientModel> getShoppingList(DateTime? begin, DateTime? end)
@@ -47,6 +52,8 @@ namespace Inventory.WPF
             IRecipeManager manager = ManagerFactory.GetRecipeManager();
             return manager.GenerateShoppingList(begin, end);
         }
+
+        
         
     }
 }

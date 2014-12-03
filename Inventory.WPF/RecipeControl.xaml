@@ -48,9 +48,8 @@
                 <Label Content="Description" Canvas.Left="768" Canvas.Top="25"/>
                 <Label Content="Ingredients" Canvas.Left="651" Canvas.Top="75"/>
                 <Button x:Name="btnClearSearch" Content="Clear" Style="{StaticResource smallGreenButton}" Canvas.Left="1089" Canvas.Top="75" Height="25" Width="75" Click="btnClearSearch_Click"/>
-                <RadioButton x:Name="rbViewAll" Content="All" Canvas.Left="480" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="True" GroupName="View"/>
-                <RadioButton x:Name="rbViewHave" Content="Have" Canvas.Left="520" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="False" GroupName="View"/>
-
+                <RadioButton x:Name="rbViewAll" Content="All" Canvas.Left="480" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="False" GroupName="View"/>
+                <RadioButton x:Name="rbViewHave" Content="Have" Canvas.Left="520" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="True" GroupName="View"/>
             </Canvas>
             <Canvas  x:Name="addPanel" Visibility="Hidden" Background="#B1C7B6">
                 <Image  HorizontalAlignment="Left" Height="224" VerticalAlignment="Top" Width="500" Canvas.Left="50" Canvas.Top="50"/>

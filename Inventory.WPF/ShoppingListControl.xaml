@@ -30,11 +30,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <DatePicker Name="fromPicker" SelectedDate="{Binding fromDate}" Height="26" Canvas.Left="700" Canvas.Top="25" Width="175" />
-            <DatePicker Name="untilPicker" SelectedDate="{Binding untilDate}" Height="26" Canvas.Left="700" Canvas.Top="75" Width="175" />
+            <DatePicker x:Name="dpfrom" SelectedDate="{Binding fromDate}" Height="26" Canvas.Left="700" Canvas.Top="25" Width="175" />
+            <DatePicker x:Name="dpuntil" SelectedDate="{Binding untilDate}" Height="26" Canvas.Left="700" Canvas.Top="75" Width="175" />
             <Label Content="From:" Height="25" Canvas.Left="650" Canvas.Top="25" Width="42" />
             <Label Content="Until:" Height="25" Canvas.Left="650" Canvas.Top="75" Width="42" />
-            <Button Click="DoComparison" Content="Compare" Style="{StaticResource smallGreenButton}" Height="25" Canvas.Left="950" Canvas.Top="50"  Width="100"/>
+            <Button Click="btn_compare_click" Content="Compare" Style="{StaticResource smallGreenButton}" Height="25" Canvas.Left="950" Canvas.Top="50"  Width="100"/>
 
         </Canvas>
         <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">
