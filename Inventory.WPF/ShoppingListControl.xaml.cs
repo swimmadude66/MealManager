@@ -41,7 +41,7 @@ namespace Inventory.WPF
             shoppingListCtl.ItemsSource = shoppingList;
         }
 
-        private void btn_compare_clicked(object sender, RoutedEventArgs e)
+        private void btn_compare_click(object sender, RoutedEventArgs e)
         {
             DoComparison();
         }
