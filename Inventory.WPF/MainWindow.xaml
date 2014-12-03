@@ -20,9 +20,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="TextBox">
+        <!--<Style TargetType="TextBox">
             <Setter Property="Background" Value="Transparent" />
-        </Style>
+        </Style>-->
 
     </Window.Resources>
     <Viewbox HorizontalAlignment="Left" Stretch="Fill">

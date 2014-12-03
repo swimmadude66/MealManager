@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Inventory.WPF" x:Class="Inventory.WPF.PantryControl" 
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
-    <Grid>
+    <Canvas Background="#B1C7B6">
         <!--<DataGrid x:Name="pantryGrid" MouseDoubleClick="editRow" AutoGenerateColumns="False" HorizontalAlignment="Left" Width="1090" Height="580" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient.Name}" IsReadOnly="True" Width="185"/>
@@ -17,32 +17,32 @@
             </DataGrid.Columns>
         </DataGrid>-->
 
-        <TextBlock x:Name="txtPageTitle" Text="Pantry" FontSize="70" Margin="25 0 775 650"/>
-        <ScrollViewer HorizontalAlignment="Left" Width="1180" Margin="10,125,0,200" VerticalScrollBarVisibility="Auto">
-            <ItemsControl Name="pantryList">
+        <TextBlock x:Name="txtPageTitle" Text="Pantry" FontSize="70" Canvas.Left="25"/>
+        <ScrollViewer Canvas.Top="125" Width="1200" Height="475">
+            <ItemsControl Name="pantryList" Width="1200" Padding="50,0,50,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,0" Height="50" >
+                        <Grid Margin="0,0,0,2" Height="50" Width="1100">
                             <Button Margin="0,0,0,0" Style="{StaticResource greenButton}" Background="#FF216A16" HorizontalAlignment="Stretch" Click="Button_Click"/>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
-                                <TextBlock Text="{Binding StringQuantity}" Foreground="White" Padding="5,0,5,0" Width="50"/>
-                                <TextBlock Text="{Binding Measure.Name}" Foreground="White" Padding="5,0,5,0" Width="100"/>
-                                <TextBlock Text="{Binding Ingredient.Name}" Foreground="White" Padding="5,0,5,0" Width="150"/>
-                                <TextBlock Text="Notes: " Foreground="White" Padding="25,0,5,0" Width="60"/>
-                                <TextBlock Text="{Binding Description}" Foreground="White" Padding="5,0,5,0" Width="300"/>
-                                <TextBlock Text="Expires: " Foreground="White" Padding="25,0,5,0" Width="80"/>
-                                <TextBlock Text="{Binding ExpirationDateString}" Foreground="White" Padding="5,0,5,0" Width="100"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0">
+                                <TextBlock Text="{Binding StringQuantity}" FontSize="22" Foreground="White" Padding="5,0,5,0" Width="75"/>
+                                <TextBlock Text="{Binding Measure.Name}" FontSize="22" Foreground="White" Padding="5,0,5,0" Width="125"/>
+                                <TextBlock Text="{Binding Ingredient.Name}" FontSize="22" Foreground="White" Padding="5,0,5,0" Width="250"/>
+                                <TextBlock Text="Notes: " Foreground="White" FontSize="22" Padding="25,0,5,0" Width="85"/>
+                                <TextBlock Text="{Binding Description}" FontSize="22" Foreground="White" Padding="5,0,5,0" Width="315"/>
+                                <TextBlock Text="Expires: " Foreground="White" FontSize="22" Padding="25,0,5,0" Width="100"/>
+                                <TextBlock Text="{Binding ExpirationDateString}"  FontSize="22" Foreground="White" Padding="5,0,5,0" Width="100"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" Visibility="Collapsed">
-                                <TextBox Name="QuantityTextBox" Padding="5,0,5,0"/>
-                                <ComboBox Name="MeasureComboBox" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
-                                <TextBlock Text="of" Foreground="White" Padding="5,0,5,0"/>
-                                <ComboBox Name="IngredientComboBox" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
-                                <TextBlock Text="Notes: " Foreground="White" Padding="5,0,5,0"/>
-                                <TextBox Name="DescriptionTextBox" MinWidth="400" Padding="5,0,5,0"/>
-                                <TextBlock Text="Expires: " Foreground="White" Padding="5,0,5,0"/>
-                                <DatePicker x:Name="ExpirationDatePicker" SelectedDate="{Binding ExpirationDate}"/>
-                                <Button x:Name="FinishBtn" Content="Finished Editing" Tag="{Binding Ingredient}" Padding="5,0,5,0" Click="FinishBtn_Click"/>
+                                <TextBox Name="QuantityTextBox" FontSize="22" Padding="5,0,5,0"/>
+                                <ComboBox Name="MeasureComboBox" FontSize="22" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
+                                <TextBlock Text="of" FontSize="22" Foreground="White" Padding="5,0,5,0"/>
+                                <ComboBox Name="IngredientComboBox" FontSize="22" DisplayMemberPath="Name" IsEditable="True" Padding="5,0,5,0"/>
+                                <TextBlock Text=" Notes:" FontSize="22" Foreground="White" Padding="5,0,5,0"/>
+                                <TextBox Name="DescriptionTextBox" FontSize="22" MinWidth="300" Padding="5,0,5,0"/>
+                                <TextBlock Text="Expires:" FontSize="22" Foreground="White" Padding="5,0,5,0"/>
+                                <DatePicker x:Name="ExpirationDatePicker" FontSize="22" SelectedDate="{Binding ExpirationDate}"/>
+                                <Button x:Name="FinishBtn" FontSize="22" Content="Done" Style="{StaticResource smallGreenButton}" Tag="{Binding Ingredient}" Margin="10,0,5,0" Padding="5,0,5,0" Width="100" Click="FinishBtn_Click"/>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
@@ -62,7 +62,7 @@
         <DatePicker Name="dpExpires" HorizontalAlignment="Left" Margin="560,635,0,0" VerticalAlignment="Top" Height="24" FirstDayOfWeek="Monday"/>
         <Label Content="Expiration" Name="lblExpires" HorizontalAlignment="Left" Margin="480,635,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtIngredientDescription" HorizontalAlignment="Left" Height="75" Margin="560,675,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="432"/>
-        <Button Name="btnSubmit" Content="Submit" HorizontalAlignment="Left" Margin="120,745,0,0" VerticalAlignment="Top" Width="75" Click="btnSubmit_Click"/>
-        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="210,745,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
-    </Grid>
+        <Button Name="btnSubmit" Content="Submit" Style="{StaticResource smallGreenButton}" HorizontalAlignment="Left" Margin="120,745,0,0" VerticalAlignment="Top" Height="25" Width="100" Click="btnSubmit_Click"/>
+        <Button Name="btnCancel" Content="Cancel" Style="{StaticResource smallGreenButton}" HorizontalAlignment="Left" Margin="230,745,0,0" VerticalAlignment="Top" Height="25" Width="100" Click="btnCancel_Click"/>
+    </Canvas>
 </UserControl>

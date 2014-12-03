@@ -11,14 +11,14 @@
     <Grid>
         <Grid x:Name="MainRecipesMenu">
             <Canvas x:Name="listPanel" Visibility="Visible" Background="#B1C7B6">
-                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="125" VerticalAlignment="Top" Width="1200" Height="547" Padding="25 0 25 0">
-                    <StackPanel x:Name="stackPanelRecipes">
-                        <ItemsControl x:Name="recipeCardGrid" ItemsSource="{Binding recipes}">
-                            <ItemsControl.ItemContainerStyle>
-                                <Style>
-                                    <Setter Property="FrameworkElement.Margin" Value="5"/>
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Canvas.Top="125" VerticalAlignment="Top" Width="1200" Height="625">
+                    <StackPanel x:Name="stackPanelRecipes" Width="1200">
+                        <ItemsControl x:Name="recipeCardGrid" ItemsSource="{Binding recipes}" Width="1100">
+                            <!--<ItemsControl.ItemContainerStyle>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.Margin" Value="5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>-->
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid Columns="2" />
@@ -26,31 +26,33 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:RecipeCardControl HorizontalContentAlignment="Stretch" Padding="0 0 0 10" Height="255" Click="RecipeCardViewBtn_Click"/>
+                                    <Canvas Width="600" Height="275">
+                                        <local:RecipeCardControl Canvas.Left="25" Canvas.Top="0" Height="255" Width="500" Click="RecipeCardViewBtn_Click"/>
+                                    </Canvas>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Button x:Name="btnLoadMore" Content="Load 50 more" Height="25" Click="btnLoadMoreRecipes_Click" Visibility="Hidden"/>
+                        <Button x:Name="btnLoadMore" Content="Load 50 more" Style="{StaticResource smallGreenButton}" Height="25" Width="1100" Margin="50,0,50,0" Click="btnLoadMoreRecipes_Click" Visibility="Hidden"/>
                     </StackPanel>
                 </ScrollViewer>
 
-                <Button x:Name="btnAddRecipe" Content="Add Recipe" Height="46" Click="AddRecipe_Click" Canvas.Top="701" Width="1200"/>
+                <Button x:Name="btnAddRecipe" Content="Add Recipe" Style="{StaticResource smallGreenButton}" Height="50" Click="AddRecipe_Click" Canvas.Bottom="0" Width="1200"/>
                 <TextBox x:Name="txtSearchName" Height="23" Canvas.Left="520" TextWrapping="Wrap" Text="" Canvas.Top="25" Width="219"/>
                 <TextBox x:Name="txtSearchDescription" Height="23" Canvas.Left="843" TextWrapping="Wrap" Text="" Canvas.Top="25" Width="217"/>
                 <TextBlock x:Name="txtPageTitle" Text="Recipes" FontSize="70" Canvas.Left="25"/>
                 <ComboBox x:Name="cbSearchIngredients" Height="23" Canvas.Left="726" IsEditable="True" DisplayMemberPath="Name" Text="" Canvas.Top="75" Width="226"/>
                 <TextBlock x:Name="txtSearchIngredientsList" Canvas.Left="612" TextWrapping="Wrap" Text="" Canvas.Top="106" Height="43" Width="226"/>
-                <Button x:Name="btnSearchAddIngredient" Content="Add" Canvas.Left="985" Canvas.Top="75" Width="75" Click="btnSearchAddIngredient_Click"/>
-                <Button x:Name="btnSearch" Content="Search" Canvas.Left="1089" Canvas.Top="25" Width="75" Click="btnSearch_Click"/>
+                <Button x:Name="btnSearchAddIngredient" Content="Add" Style="{StaticResource smallGreenButton}" Canvas.Left="985" Canvas.Top="75" Height="25" Width="75" Click="btnSearchAddIngredient_Click"/>
+                <Button x:Name="btnSearch" Content="Search" Style="{StaticResource smallGreenButton}" Canvas.Left="1089" Canvas.Top="25" Height="25" Width="75" Click="btnSearch_Click"/>
                 <Label Content="Name" Canvas.Left="478" Canvas.Top="25"/>
                 <Label Content="Description" Canvas.Left="768" Canvas.Top="25"/>
                 <Label Content="Ingredients" Canvas.Left="651" Canvas.Top="75"/>
-                <Button x:Name="btnClearSearch" Content="Clear" Canvas.Left="1089" Canvas.Top="75" Width="75" Click="btnClearSearch_Click"/>
+                <Button x:Name="btnClearSearch" Content="Clear" Style="{StaticResource smallGreenButton}" Canvas.Left="1089" Canvas.Top="75" Height="25" Width="75" Click="btnClearSearch_Click"/>
                 <RadioButton x:Name="rbViewAll" Content="All" Canvas.Left="480" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="True" GroupName="View"/>
                 <RadioButton x:Name="rbViewHave" Content="Have" Canvas.Left="520" Canvas.Top="75" Height="25" VerticalContentAlignment="Center" IsChecked="False" GroupName="View"/>
 
             </Canvas>
-            <Canvas  x:Name="addPanel" Visibility="Hidden" Background="LightGray">
+            <Canvas  x:Name="addPanel" Visibility="Hidden" Background="#B1C7B6">
                 <Image  HorizontalAlignment="Left" Height="224" VerticalAlignment="Top" Width="500" Canvas.Left="50" Canvas.Top="50"/>
                 <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" Canvas.Left="674" Canvas.Top="50"/>
                 <Label Content="Name" x:Name="lblName" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="606" Canvas.Top="50"/>
@@ -62,7 +64,7 @@
                 <Label x:Name="lblQuantity" Content="Quantity" Canvas.Left="50" Canvas.Top="434"/>
                 <ComboBox x:Name="cbMeasure" Canvas.Left="120" Canvas.Top="465" Width="120" IsEditable="True" DisplayMemberPath="Name"/>
                 <Label x:Name="lblMeasure" Content="Measure" Canvas.Left="50" Canvas.Top="461"/>
-                <Button x:Name="btnAddIngredient" Content="Add" HorizontalAlignment="Left" Margin="425,469,0,0" VerticalAlignment="Top" Width="75" Click="btnAddIngredient_Click"/>
+                <Button x:Name="btnAddIngredient" Content="Add" Style="{StaticResource smallGreenButton}" HorizontalAlignment="Left" Margin="425,469,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnAddIngredient_Click"/>
                 <DataGrid x:Name="dgIngredients" HorizontalAlignment="Left" Margin="50,500,0,0" VerticalAlignment="Top" Width="450" Height="250" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" Binding="{Binding QuantityString}" IsReadOnly="True" Width="50"/>
@@ -75,10 +77,10 @@
                 <Label x:Name="lblTags" Content="Tags" Canvas.Left="610" Canvas.Top="588"/>
                 <TextBlock x:Name="txtTags" Canvas.Left="674" TextWrapping="Wrap" Canvas.Top="647" Height="61" Width="374"/>
                 <ComboBox x:Name="cbTags" Canvas.Left="674" Canvas.Top="592" Width="260" IsEditable="True"/>
-                <Button x:Name="btnAdd_Tag" Content="Add Tag" Canvas.Left="973" Canvas.Top="592" Width="75" Click="btnAdd_Tag_Click"/>
-                <Button x:Name="btnSaveRecipe" Content="Save Recipe" Canvas.Left="859" Canvas.Top="730" Width="75" Click="btnSaveRecipe_Click"/>
+                <Button x:Name="btnAdd_Tag" Content="Add Tag" Style="{StaticResource smallGreenButton}" Canvas.Left="973" Canvas.Top="592" Height="25" Width="75" Click="btnAdd_Tag_Click"/>
+                <Button x:Name="btnSaveRecipe" Content="Save Recipe" Style="{StaticResource smallGreenButton}" Canvas.Left="859" Canvas.Top="730" Height="25" Width="75" Click="btnSaveRecipe_Click"/>
                 <Label x:Name="lblError" Content="" Canvas.Left="578" Canvas.Top="724" Width="256"/>
-                <Button x:Name="btnCancel" Content="Cancel" Canvas.Left="973" Canvas.Top="730" Width="75" Click="btnCancel_Click"/>
+                <Button x:Name="btnCancel" Content="Cancel" Style="{StaticResource smallGreenButton}" Canvas.Left="973" Canvas.Top="730" Height="25" Width="75" Click="btnCancel_Click"/>
             </Canvas>
         </Grid>
         <Grid x:Name="RecipeDetailMenu" Visibility="Collapsed">
