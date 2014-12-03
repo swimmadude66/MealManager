@@ -11,6 +11,7 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>C:\Users\Connor\Documents\MealManager\libs\</ReferencePath>
+    <ReferencePath>
+    </ReferencePath>
   </PropertyGroup>
 </Project>
