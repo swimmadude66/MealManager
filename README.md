@@ -7,7 +7,9 @@ Meal Planner and Kitchen Assistant for CS 4911-B Fall 2014
 <b>Install</b>
 
   Download the setup.exe from the Setup Folder
+  
   Follow the Instructions in the installer
+  
   Right now, the installer only installs the meal manager app. In the future, a small MySQL db and .NET 4.0 will be included.
 
 <b>Source</b>
